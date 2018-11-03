@@ -1,6 +1,4 @@
-﻿
-using Model.MetadataClasses.Types;
-using Model.MetadataDefinitions;
+﻿using Model.MetadataDefinitions;
 using Model.MetadataExtensions;
 using System;
 using System.Collections.Generic;
@@ -8,14 +6,14 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 
-namespace Model.MetadataClasses
+namespace Model.MetadataClasses.Types.Members
 {
     internal class MethodMetadata
     {
         #region vars
         private string m_Name;
         private IEnumerable<TypeBasicInfo> m_GenericArguments;
-        private Tuple<AccessLevelEnum, AbstractEnum, StaticEnum, VirtualEnum> m_Modifiers;
+        private Tuple<AccessLevelEnum, AbstractEnum, StaticEnum, VirtualEnum, OverrideEnum> m_Modifiers;
         private TypeBasicInfo m_ReturnType;
         private bool m_Extension;
         private IEnumerable<ParameterMetadata> m_Parameters;
@@ -60,7 +58,7 @@ namespace Model.MetadataClasses
             return method.IsDefined(typeof(ExtensionAttribute), true);
         }
 
-        private static Tuple<AccessLevelEnum, AbstractEnum, StaticEnum, VirtualEnum> EmitModifiers(MethodBase method)
+        private static Tuple<AccessLevelEnum, AbstractEnum, StaticEnum, VirtualEnum, OverrideEnum> EmitModifiers(MethodBase method)
         {
             AccessLevelEnum _access = AccessLevelEnum.Private;
             if (method.IsPublic)
@@ -82,7 +80,14 @@ namespace Model.MetadataClasses
             if (method.IsVirtual)
                 _virtual = VirtualEnum.Virtual;
 
-            return new Tuple<AccessLevelEnum, AbstractEnum, StaticEnum, VirtualEnum>(_access, _abstract, _static, _virtual);
+            OverrideEnum _override = OverrideEnum.NotOverride;
+            Type baseType = method.DeclaringType.BaseType;
+            if (baseType != null && baseType.GetMethod(method.Name).DeclaringType != method.DeclaringType)
+            {
+                _override = OverrideEnum.Override;
+            }
+
+            return new Tuple<AccessLevelEnum, AbstractEnum, StaticEnum, VirtualEnum, OverrideEnum>(_access, _abstract, _static, _virtual, _override);
         }
         #endregion
     }

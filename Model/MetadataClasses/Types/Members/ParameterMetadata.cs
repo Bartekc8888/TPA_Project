@@ -1,7 +1,4 @@
-﻿
-using Model.MetadataClasses.Types;
-
-namespace Model.MetadataClasses
+﻿namespace Model.MetadataClasses.Types.Members
 {
     internal class ParameterMetadata
     {

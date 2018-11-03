@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Linq;
 using Model.MetadataExtensions;
-using Model.MetadataClasses.Types;
+using System;
 
-namespace Model.MetadataClasses
+namespace Model.MetadataClasses.Types.Members
 {
     internal class PropertyMetadata
     {
@@ -16,13 +16,13 @@ namespace Model.MetadataClasses
         {
             return from prop in props
                    where prop.GetGetMethod().GetVisible() || prop.GetSetMethod().GetVisible()
-                   select new PropertyMetadata(prop.Name, TypeBasicInfo.EmitReference(prop.PropertyType));
+                   select new PropertyMetadata(prop.Name, prop.PropertyType);
         }
 
-        private PropertyMetadata(string propertyName, TypeBasicInfo propertyType)
+        private PropertyMetadata(string propertyName, Type type)
         {
             m_Name = propertyName;
-            m_TypeMetadata = propertyType;
+            m_TypeMetadata = TypeBasicInfo.EmitReference(type);
         }
     }
 }
