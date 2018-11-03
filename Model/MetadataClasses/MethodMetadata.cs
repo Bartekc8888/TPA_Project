@@ -1,4 +1,5 @@
 ﻿
+using Model.MetadataClasses.Types;
 using Model.MetadataDefinitions;
 using Model.MetadataExtensions;
 using System;
@@ -13,9 +14,9 @@ namespace Model.MetadataClasses
     {
         #region vars
         private string m_Name;
-        private IEnumerable<TypeMetadata> m_GenericArguments;
+        private IEnumerable<TypeBasicInfo> m_GenericArguments;
         private Tuple<AccessLevelEnum, AbstractEnum, StaticEnum, VirtualEnum> m_Modifiers;
-        private TypeMetadata m_ReturnType;
+        private TypeBasicInfo m_ReturnType;
         private bool m_Extension;
         private IEnumerable<ParameterMetadata> m_Parameters;
         #endregion
@@ -31,7 +32,7 @@ namespace Model.MetadataClasses
         private MethodMetadata(MethodBase method)
         {
             m_Name = method.Name;
-            m_GenericArguments = !method.IsGenericMethodDefinition ? null : TypeMetadata.EmitGenericArguments(method.GetGenericArguments());
+            m_GenericArguments = !method.IsGenericMethodDefinition ? null : TypeBasicInfo.EmitGenericArguments(method.GetGenericArguments());
             m_ReturnType = EmitReturnType(method);
             m_Parameters = EmitParameters(method.GetParameters());
             m_Modifiers = EmitModifiers(method);
@@ -42,16 +43,16 @@ namespace Model.MetadataClasses
         private static IEnumerable<ParameterMetadata> EmitParameters(IEnumerable<ParameterInfo> parms)
         {
             return from parm in parms
-                   select new ParameterMetadata(parm.Name, TypeMetadata.EmitReference(parm.ParameterType));
+                   select new ParameterMetadata(parm.Name, TypeBasicInfo.EmitReference(parm.ParameterType));
         }
 
-        private static TypeMetadata EmitReturnType(MethodBase method)
+        private static TypeBasicInfo EmitReturnType(MethodBase method)
         {
             MethodInfo methodInfo = method as MethodInfo;
             if (methodInfo == null)
                 return null;
 
-            return TypeMetadata.EmitReference(methodInfo.ReturnType);
+            return TypeBasicInfo.EmitReference(methodInfo.ReturnType);
         }
 
         private static bool EmitExtension(MethodBase method)
@@ -61,13 +62,13 @@ namespace Model.MetadataClasses
 
         private static Tuple<AccessLevelEnum, AbstractEnum, StaticEnum, VirtualEnum> EmitModifiers(MethodBase method)
         {
-            AccessLevelEnum _access = AccessLevelEnum.IsPrivate;
+            AccessLevelEnum _access = AccessLevelEnum.Private;
             if (method.IsPublic)
-                _access = AccessLevelEnum.IsPublic;
+                _access = AccessLevelEnum.Public;
             else if (method.IsFamily)
-                _access = AccessLevelEnum.IsProtected;
+                _access = AccessLevelEnum.Protected;
             else if (method.IsFamilyAndAssembly)
-                _access = AccessLevelEnum.IsProtectedInternal;
+                _access = AccessLevelEnum.ProtectedInternal;
 
             AbstractEnum _abstract = AbstractEnum.NotAbstract;
             if (method.IsAbstract)
