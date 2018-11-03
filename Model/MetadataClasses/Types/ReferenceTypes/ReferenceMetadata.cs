@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Model.MetadataClasses.Types.ReferenceTypes
 {
     internal class ReferenceMetadata : TypeMetadata
     {
-        private TypeMetadata m_BaseType;
-        private IEnumerable<TypeMetadata> m_ImplementedInterfaces;
+        private TypeBasicInfo m_BaseType;
+        private IEnumerable<TypeBasicInfo> m_ImplementedInterfaces;
 
         internal ReferenceMetadata(Type type) : base(type)
         {
@@ -14,18 +15,18 @@ namespace Model.MetadataClasses.Types.ReferenceTypes
             m_ImplementedInterfaces = EmitImplements(type.GetInterfaces());
         }
 
-        private static TypeMetadata EmitExtends(Type baseType)
+        private static TypeBasicInfo EmitExtends(Type baseType)
         {
             if (baseType == null || baseType == typeof(Object) || baseType == typeof(ValueType) || baseType == typeof(Enum))
                 return null;
 
-            return EmitReference(baseType);
+            return TypeBasicInfo.EmitReference(baseType);
         }
 
-        private IEnumerable<TypeMetadata> EmitImplements(IEnumerable<Type> interfaces)
+        private IEnumerable<TypeBasicInfo> EmitImplements(IEnumerable<Type> interfaces)
         {
             return from currentInterface in interfaces
-                   select EmitReference(currentInterface);
+                   select TypeBasicInfo.EmitReference(currentInterface);
         }
     }
 }

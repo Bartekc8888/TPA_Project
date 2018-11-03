@@ -1,7 +1,7 @@
 ﻿
 namespace Model.MetadataDefinitions
 {
-    internal enum StaticEnum
+    public enum StaticEnum
     {
         NotStatic, Static
     }

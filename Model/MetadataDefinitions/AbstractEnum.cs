@@ -1,7 +1,7 @@
 ﻿
 namespace Model.MetadataDefinitions
 {
-    internal enum AbstractEnum
+    public enum AbstractEnum
     {
         NotAbstract, Abstract
     }

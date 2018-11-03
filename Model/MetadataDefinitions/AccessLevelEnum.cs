@@ -1,7 +1,7 @@
 ﻿
 namespace Model.MetadataDefinitions
 {
-    internal enum AccessLevelEnum
+    public enum AccessLevelEnum
     {
         Public, Protected, Internal, ProtectedInternal, Private
     }

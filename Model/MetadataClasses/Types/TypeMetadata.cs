@@ -12,7 +12,6 @@ namespace Model.MetadataClasses
         #region fields
         private TypeBasicInfo m_TypeBasicInfo;
         private TypeBasicInfo m_DeclaringType;
-        private IEnumerable<TypeBasicInfo> m_GenericArguments;
 
         private IEnumerable<FieldMetadata> m_fields;
         private IEnumerable<MethodMetadata> m_Methods;

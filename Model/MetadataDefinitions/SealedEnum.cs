@@ -1,7 +1,7 @@
 ﻿
 namespace Model.MetadataDefinitions
 {
-    internal enum SealedEnum
+    public enum SealedEnum
     {
         Sealed, NotSealed
     }
