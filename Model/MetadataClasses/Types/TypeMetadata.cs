@@ -3,17 +3,17 @@ using Model.MetadataExtensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Model.MetadataClasses
 {
-    class TypeMetadata
+    public class TypeMetadata
     {
         #region fields
         private string m_typeName;
         private string m_NamespaceName;
-        private TypeMetadata m_BaseType;
         private IEnumerable<TypeMetadata> m_GenericArguments;
+
+
         private Tuple<AccessLevelEnum, SealedEnum, AbstractEnum> m_Modifiers;
         private TypeKind m_TypeKind;
         private IEnumerable<Attribute> m_Attributes;
@@ -26,7 +26,7 @@ namespace Model.MetadataClasses
         #endregion
 
         #region constructors
-        internal TypeMetadata(Type type)
+        public TypeMetadata(Type type)
         {
             m_typeName = type.Name;
             m_DeclaringType = EmitDeclaringType(type.DeclaringType);
@@ -34,15 +34,14 @@ namespace Model.MetadataClasses
             m_Methods = MethodMetadata.EmitMethods(type.GetMethods());
             m_NestedTypes = EmitNestedTypes(type.GetNestedTypes());
             m_ImplementedInterfaces = EmitImplements(type.GetInterfaces());
-            m_GenericArguments = !type.IsGenericTypeDefinition ? null : TypeMetadata.EmitGenericArguments(type.GetGenericArguments());
+            m_GenericArguments = !type.IsGenericTypeDefinition ? null : EmitGenericArguments(type.GetGenericArguments());
             m_Modifiers = EmitModifiers(type);
-            m_BaseType = EmitExtends(type.BaseType);
+            
             m_Properties = PropertyMetadata.EmitProperties(type.GetProperties());
             m_TypeKind = GetTypeKind(type);
             m_Attributes = type.GetCustomAttributes(false).Cast<Attribute>();
         }
 
-        //constructors
         private TypeMetadata(string typeName, string namespaceName)
         {
             m_typeName = typeName;
@@ -78,6 +77,7 @@ namespace Model.MetadataClasses
         {
             if (declaringType == null)
                 return null;
+
             return EmitReference(declaringType);
         }
 
@@ -122,13 +122,6 @@ namespace Model.MetadataClasses
             if (type.IsAbstract)
                 _abstract = AbstractEnum.Abstract;
             return new Tuple<AccessLevelEnum, SealedEnum, AbstractEnum>(_access, _sealed, _abstract);
-        }
-
-        private static TypeMetadata EmitExtends(Type baseType)
-        {
-            if (baseType == null || baseType == typeof(Object) || baseType == typeof(ValueType) || baseType == typeof(Enum))
-                return null;
-            return EmitReference(baseType);
         }
         #endregion
     }

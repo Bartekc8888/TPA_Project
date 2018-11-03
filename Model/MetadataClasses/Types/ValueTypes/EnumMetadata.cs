@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Model.MetadataClasses
+namespace Model.MetadataClasses.Types.ValueTypes
 {
-    class EnumMetadata : TypeMetadata
+    internal class EnumMetadata : ValueMetadata
     {
         EnumMetadata(Type type) : base(type)
         {

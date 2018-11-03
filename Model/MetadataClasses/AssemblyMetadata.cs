@@ -9,17 +9,17 @@ namespace Model.MetadataClasses
 {
     public class AssemblyMetadata
     {
-        private string m_Name;
-        private IEnumerable<NamespaceMetadata> m_Namespaces;
+        private string name;
+        private IEnumerable<NamespaceMetadata> namespaces;
 
         internal AssemblyMetadata(Assembly assembly)
         {
-            m_Name = assembly.ManifestModule.Name;
-            m_Namespaces = from Type _type in assembly.GetTypes()
-                           where _type.GetVisible()
-                           group _type by _type.GetNamespace() into _group
-                           orderby _group.Key
-                           select new NamespaceMetadata(_group.Key, _group);
+            name = assembly.ManifestModule.Name;
+            namespaces = from Type _type in assembly.GetTypes()
+                         where _type.GetVisible()
+                         group _type by _type.GetNamespace() into _group
+                         orderby _group.Key
+                         select new NamespaceMetadata(_group.Key, _group);
         }
     }
 }
