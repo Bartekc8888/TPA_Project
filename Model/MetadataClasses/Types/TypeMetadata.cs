@@ -4,40 +4,41 @@ using Model.MetadataExtensions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace Model.MetadataClasses
 {
     public class TypeMetadata
     {
         #region fields
-        private TypeBasicInfo m_TypeBasicInfo;
-        private TypeBasicInfo m_DeclaringType;
+        public TypeBasicInfo TypeBasicInfo { get; private set; }
+        public TypeBasicInfo DeclaringType { get; private set; }
 
-        private IEnumerable<FieldMetadata> m_fields;
-        private IEnumerable<MethodMetadata> m_Methods;
-        private IEnumerable<PropertyMetadata> m_Properties;
-        private IEnumerable<EventMetadata> m_events;
+        public IEnumerable<FieldMetadata> Fields { get; private set; }
+        public IEnumerable<MethodMetadata> Methods { get; private set; }
+        public IEnumerable<PropertyMetadata> Properties { get; private set; }
+        public IEnumerable<EventMetadata> Events { get; private set; }
         // indexers
         // operator
-        private IEnumerable<MethodMetadata> m_Constructors;
+        public IEnumerable<ConstructorMetadata> Constructors { get; private set; }
         // descturctor
         // static_constructor
-        private IEnumerable<TypeBasicInfo> m_NestedTypes;
+        public IEnumerable<TypeBasicInfo> NestedTypes { get; private set; }
         #endregion
 
         #region constructors
         public TypeMetadata(Type type)
         {
-            m_TypeBasicInfo = new TypeBasicInfo(type);
-            m_DeclaringType = TypeBasicInfo.EmitDeclaringType(type.DeclaringType);
+            TypeBasicInfo = new TypeBasicInfo(type);
+            DeclaringType = TypeBasicInfo.EmitDeclaringType(type.DeclaringType);
 
-            m_fields = FieldMetadata.EmitFields(type.GetFields());
-            m_events = EventMetadata.EmitEvents(type.GetEvents());
-            m_Constructors = MethodMetadata.EmitMethods(type.GetConstructors());
-            m_Methods = MethodMetadata.EmitMethods(type.GetMethods());
-            m_NestedTypes = EmitNestedTypes(type.GetNestedTypes());
-            m_Properties = PropertyMetadata.EmitProperties(type.GetProperties());
-
+            BindingFlags flagsToGetAll = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.DeclaredOnly;
+            Fields = FieldMetadata.EmitFields(type.GetFields(flagsToGetAll));
+            Methods = MethodMetadata.EmitMethods(type.GetMethods(flagsToGetAll));
+            Properties = PropertyMetadata.EmitProperties(type.GetProperties(flagsToGetAll));
+            Events = EventMetadata.EmitEvents(type.GetEvents(flagsToGetAll));
+            Constructors = ConstructorMetadata.EmitConstructors(type.GetConstructors(flagsToGetAll));
+            NestedTypes = EmitNestedTypes(type.GetNestedTypes(flagsToGetAll));
         }
         #endregion
 

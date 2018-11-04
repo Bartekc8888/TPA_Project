@@ -36,7 +36,7 @@ namespace ModelTest.MetadataClasses.Types
         }
 
         [TestMethod]
-        public void TypeBasicInfoPublicTest()
+        public void PublicTest()
         {
             TypeBasicInfo basicInfo = new TypeBasicInfo(typeof(TestingPublicClass));
             Assert.AreEqual(typeof(TestingPublicClass).Name, basicInfo.TypeName);
@@ -46,7 +46,7 @@ namespace ModelTest.MetadataClasses.Types
         }
 
         [TestMethod]
-        public void TypeBasicInfoInternalTest()
+        public void InternalTest()
         {
             TypeBasicInfo basicInfo = new TypeBasicInfo(typeof(TestingInternalClass));
             Assert.AreEqual(typeof(TestingInternalClass).Name, basicInfo.TypeName);
@@ -56,7 +56,7 @@ namespace ModelTest.MetadataClasses.Types
         }
 
         [TestMethod]
-        public void TypeBasicInfoProtectedTest()
+        public void ProtectedTest()
         {
             TypeBasicInfo basicInfo = new TypeBasicInfo(typeof(TestingProtectedClass));
             Assert.AreEqual(typeof(TestingProtectedClass).Name, basicInfo.TypeName);
@@ -66,7 +66,7 @@ namespace ModelTest.MetadataClasses.Types
         }
 
         [TestMethod]
-        public void TypeBasicInfoProtectedInternalTest()
+        public void ProtectedInternalTest()
         {
             TypeBasicInfo basicInfo = new TypeBasicInfo(typeof(TestingProtectedInternalClass));
             Assert.AreEqual(typeof(TestingProtectedInternalClass).Name, basicInfo.TypeName);
@@ -76,7 +76,7 @@ namespace ModelTest.MetadataClasses.Types
         }
 
         [TestMethod]
-        public void TypeBasicInfoPrivateTest()
+        public void PrivateTest()
         {
             TypeBasicInfo basicInfo = new TypeBasicInfo(typeof(TestingPrivateClass));
             Assert.AreEqual(typeof(TestingPrivateClass).Name, basicInfo.TypeName);
@@ -86,7 +86,7 @@ namespace ModelTest.MetadataClasses.Types
         }
 
         [TestMethod]
-        public void TypeBasicInfoAbstractTest()
+        public void AbstractTest()
         {
             TypeBasicInfo basicInfo = new TypeBasicInfo(typeof(TestingAbstractClass));
             Assert.AreEqual(typeof(TestingAbstractClass).Name, basicInfo.TypeName);
@@ -96,7 +96,7 @@ namespace ModelTest.MetadataClasses.Types
         }
 
         [TestMethod]
-        public void TypeBasicInfoSealedTest()
+        public void SealedTest()
         {
             TypeBasicInfo basicInfo = new TypeBasicInfo(typeof(TestingSealedClass));
             Assert.AreEqual(typeof(TestingSealedClass).Name, basicInfo.TypeName);
@@ -106,7 +106,7 @@ namespace ModelTest.MetadataClasses.Types
         }
 
         [TestMethod]
-        public void TypeBasicInfoGenericTest()
+        public void GenericTest()
         {
             TypeBasicInfo basicInfo = new TypeBasicInfo(typeof(TestingGenericClass<TestingProtectedClass, TestingPrivateClass>));
             Assert.AreEqual(typeof(TestingGenericClass<TestingProtectedClass, TestingPrivateClass>).Name, basicInfo.TypeName);

@@ -1,6 +1,6 @@
 ﻿namespace Model.MetadataClasses.Types.Members
 {
-    internal class ParameterMetadata
+    public class ParameterMetadata
     {
         private string m_Name;
         private TypeBasicInfo m_TypeMetadata;

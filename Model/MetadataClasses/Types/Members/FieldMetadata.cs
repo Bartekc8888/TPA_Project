@@ -5,10 +5,10 @@ using System.Reflection;
 
 namespace Model.MetadataClasses.Types.Members
 {
-    internal class FieldMetadata
+    public class FieldMetadata
     {
-        private string m_Name;
-        private TypeBasicInfo m_TypeMetadata;
+        public string Name { get; private set; }
+        public TypeBasicInfo TypeMetadata { get; private set; }
 
         internal static IEnumerable<FieldMetadata> EmitFields(IEnumerable<FieldInfo> fieldsInfo)
         {
@@ -18,8 +18,8 @@ namespace Model.MetadataClasses.Types.Members
 
         private FieldMetadata(string propertyName, Type type)
         {
-            m_Name = propertyName;
-            m_TypeMetadata = TypeBasicInfo.EmitReference(type);
+            Name = propertyName;
+            TypeMetadata = TypeBasicInfo.EmitReference(type);
         }
     }
 }

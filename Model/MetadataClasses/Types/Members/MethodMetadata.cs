@@ -8,33 +8,31 @@ using System.Runtime.CompilerServices;
 
 namespace Model.MetadataClasses.Types.Members
 {
-    internal class MethodMetadata
+    public class MethodMetadata
     {
         #region vars
-        private string m_Name;
-        private IEnumerable<TypeBasicInfo> m_GenericArguments;
-        private Tuple<AccessLevelEnum, AbstractEnum, StaticEnum, VirtualEnum, OverrideEnum> m_Modifiers;
-        private TypeBasicInfo m_ReturnType;
-        private bool m_Extension;
-        private IEnumerable<ParameterMetadata> m_Parameters;
+        public string Name { get; private set; }
+        public IEnumerable<TypeBasicInfo> GenericArguments { get; private set; }
+        public Tuple<AccessLevelEnum, AbstractEnum, StaticEnum, VirtualEnum, OverrideEnum> Modifiers { get; private set; }
+        public TypeBasicInfo ReturnType { get; private set; }
+        public bool Extension { get; private set; }
+        public IEnumerable<ParameterMetadata> Parameters { get; private set; }
         #endregion
 
         internal static IEnumerable<MethodMetadata> EmitMethods(IEnumerable<MethodBase> methods)
         {
             return from MethodBase _currentMethod in methods
-                   where _currentMethod.GetVisible()
                    select new MethodMetadata(_currentMethod);
         }
 
-        //constructor
-        private MethodMetadata(MethodBase method)
+        public MethodMetadata(MethodBase method)
         {
-            m_Name = method.Name;
-            m_GenericArguments = !method.IsGenericMethodDefinition ? null : TypeBasicInfo.EmitGenericArguments(method.GetGenericArguments());
-            m_ReturnType = EmitReturnType(method);
-            m_Parameters = EmitParameters(method.GetParameters());
-            m_Modifiers = EmitModifiers(method);
-            m_Extension = EmitExtension(method);
+            Name = method.Name;
+            GenericArguments = !method.IsGenericMethodDefinition ? null : TypeBasicInfo.EmitGenericArguments(method.GetGenericArguments());
+            ReturnType = EmitReturnType(method);
+            Parameters = EmitParameters(method.GetParameters());
+            Modifiers = EmitModifiers(method);
+            Extension = EmitExtension(method);
         }
 
         #region methods
@@ -82,9 +80,13 @@ namespace Model.MetadataClasses.Types.Members
 
             OverrideEnum _override = OverrideEnum.NotOverride;
             Type baseType = method.DeclaringType.BaseType;
-            if (baseType != null && baseType.GetMethod(method.Name).DeclaringType != method.DeclaringType)
+            if (baseType != null)
             {
-                _override = OverrideEnum.Override;
+                MethodInfo methodInfo = baseType.GetMethod(method.Name);
+                if (methodInfo != null && methodInfo.DeclaringType != method.DeclaringType)
+                {
+                    _override = OverrideEnum.Override;
+                }
             }
 
             return new Tuple<AccessLevelEnum, AbstractEnum, StaticEnum, VirtualEnum, OverrideEnum>(_access, _abstract, _static, _virtual, _override);
