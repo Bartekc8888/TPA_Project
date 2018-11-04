@@ -48,6 +48,8 @@
     <Reference Include="System.Core" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExtractionTools\TypeMetadataFactoryTest.cs" />
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="MetadataClasses\Types\TypeMetadataTest.cs" />
     <Compile Include="MetadataClasses\Types\TypeBasicInfoTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

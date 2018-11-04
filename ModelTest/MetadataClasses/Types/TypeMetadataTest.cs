@@ -11,7 +11,7 @@ namespace ModelTest
     [TestClass]
     public class TypeMetadataTest
     {
-        public class TestClass
+        internal class TestClass
         {
             public float floatField;
             protected double doubleField;

@@ -2,7 +2,7 @@
 
 namespace Model.MetadataClasses.Types.ReferenceTypes
 {
-    internal class DelegateMetadata : ReferenceMetadata
+    public class DelegateMetadata : ReferenceMetadata
     {
         internal DelegateMetadata(Type type) : base(type)
         {

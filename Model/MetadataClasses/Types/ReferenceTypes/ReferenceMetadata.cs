@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Model.MetadataClasses.Types.ReferenceTypes
 {
-    internal class ReferenceMetadata : TypeMetadata
+    public class ReferenceMetadata : TypeMetadata
     {
         private TypeBasicInfo m_BaseType;
         private IEnumerable<TypeBasicInfo> m_ImplementedInterfaces;

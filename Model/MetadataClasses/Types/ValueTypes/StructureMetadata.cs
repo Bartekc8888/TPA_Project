@@ -2,7 +2,7 @@
 
 namespace Model.MetadataClasses.Types.ValueTypes
 {
-    internal class StructureMetadata : ValueMetadata
+    public class StructureMetadata : ValueMetadata
     {
         internal StructureMetadata(Type type) : base(type)
         {

@@ -2,7 +2,7 @@
 
 namespace Model.MetadataClasses.Types.ValueTypes
 {
-    internal class EnumMetadata : ValueMetadata
+    public class EnumMetadata : ValueMetadata
     {
         internal EnumMetadata(Type type) : base(type)
         {

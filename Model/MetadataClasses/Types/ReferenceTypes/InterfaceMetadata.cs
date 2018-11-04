@@ -2,7 +2,7 @@
 
 namespace Model.MetadataClasses.Types.ReferenceTypes
 {
-    internal class InterfaceMetadata : ReferenceMetadata
+    public class InterfaceMetadata : ReferenceMetadata
     {
         internal InterfaceMetadata(Type type) : base(type)
         {
