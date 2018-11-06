@@ -79,14 +79,11 @@ namespace Model.MetadataClasses.Types.Members
                 _virtual = VirtualEnum.Virtual;
 
             OverrideEnum _override = OverrideEnum.NotOverride;
-            Type baseType = method.DeclaringType.BaseType;
-            if (baseType != null)
+
+            MethodInfo methodInfo = method as MethodInfo;
+            if (methodInfo != null && methodInfo.GetBaseDefinition().DeclaringType != methodInfo.DeclaringType)
             {
-                MethodInfo methodInfo = baseType.GetMethod(method.Name);
-                if (methodInfo != null && methodInfo.DeclaringType != method.DeclaringType)
-                {
-                    _override = OverrideEnum.Override;
-                }
+                _override = OverrideEnum.Override;
             }
 
             return new Tuple<AccessLevelEnum, AbstractEnum, StaticEnum, VirtualEnum, OverrideEnum>(_access, _abstract, _static, _virtual, _override);

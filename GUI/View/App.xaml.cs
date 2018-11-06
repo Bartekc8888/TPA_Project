@@ -7,5 +7,6 @@ namespace GUI.View
     /// </summary>
     public partial class App : Application
     {
+
     }
 }

@@ -25,11 +25,7 @@ namespace Model.MetadataClasses
         public IEnumerable<MethodMetadata> Methods { get; private set; }
         public IEnumerable<PropertyMetadata> Properties { get; private set; }
         public IEnumerable<EventMetadata> Events { get; private set; }
-        // indexers
-        // operator
         public IEnumerable<ConstructorMetadata> Constructors { get; private set; }
-        // descturctor
-        // static_constructor
         public IEnumerable<TypeBasicInfo> NestedTypes { get; private set; }
         #endregion
 

@@ -41,27 +41,12 @@ namespace GUI.View
 
         private void AnalizeButton_Click(object sender, RoutedEventArgs e)
         {
-            TreeViewItem item = new TreeViewItem();
-            item.Header = "Some class";
-            item.Tag = "Icons/Class.png";
-
-            item.Items.Add(null);
-            item.Expanded += ItemExpanded;
-
-            ReflectionTreeView.Items.Add(item);
+            
         }
 
         private void ItemExpanded(object sender, RoutedEventArgs e)
         {
-            TreeViewItem item = (TreeViewItem)sender;
 
-            // check if not initialized
-            if (item.Items.Count == 1 && item.Items[0] == null)
-            {
-                item.Items.Clear();
-
-                string typeName = (string)item.Tag;
-            }
         }
     }
 }
