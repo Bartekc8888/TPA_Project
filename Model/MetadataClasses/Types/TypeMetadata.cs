@@ -1,5 +1,7 @@
-﻿using Model.MetadataClasses.Types;
+﻿using Model.ExtractionTools;
+using Model.MetadataClasses.Types;
 using Model.MetadataClasses.Types.Members;
+using Model.MetadataDefinitions;
 using Model.MetadataExtensions;
 using System;
 using System.Collections.Generic;
@@ -11,8 +13,13 @@ namespace Model.MetadataClasses
     public class TypeMetadata
     {
         #region fields
+        public TypeTypesEnum TypeEnum { get; private set; }
+
         public TypeBasicInfo TypeBasicInfo { get; private set; }
         public TypeBasicInfo DeclaringType { get; private set; }
+
+        public TypeBasicInfo BaseType { get; private set; }
+        public IEnumerable<TypeBasicInfo> ImplementedInterfaces { get; private set; }
 
         public IEnumerable<FieldMetadata> Fields { get; private set; }
         public IEnumerable<MethodMetadata> Methods { get; private set; }
@@ -29,8 +36,13 @@ namespace Model.MetadataClasses
         #region constructors
         public TypeMetadata(Type type)
         {
+            TypeEnum = TypeEnumFactory.CreateTypeMetadataClass(type);
+
             TypeBasicInfo = new TypeBasicInfo(type);
             DeclaringType = TypeBasicInfo.EmitDeclaringType(type.DeclaringType);
+
+            BaseType = EmitExtends(type.BaseType);
+            ImplementedInterfaces = EmitImplements(type.GetInterfaces());
 
             BindingFlags flagsToGetAll = BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance | BindingFlags.Static | BindingFlags.DeclaredOnly;
             Fields = FieldMetadata.EmitFields(type.GetFields(flagsToGetAll));
@@ -48,6 +60,20 @@ namespace Model.MetadataClasses
             return from _type in nestedTypes
                    where _type.GetVisible()
                    select new TypeBasicInfo(_type);
+        }
+
+        private static TypeBasicInfo EmitExtends(Type baseType)
+        {
+            if (baseType == null || baseType == typeof(Object) || baseType == typeof(ValueType) || baseType == typeof(Enum))
+                return null;
+
+            return TypeBasicInfo.EmitReference(baseType);
+        }
+
+        private IEnumerable<TypeBasicInfo> EmitImplements(IEnumerable<Type> interfaces)
+        {
+            return from currentInterface in interfaces
+                   select TypeBasicInfo.EmitReference(currentInterface);
         }
         #endregion
     }

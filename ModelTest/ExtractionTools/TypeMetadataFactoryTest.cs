@@ -1,9 +1,7 @@
-﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Model.ExtractionTools;
 using Model.MetadataClasses;
-using Model.MetadataClasses.Types.ReferenceTypes;
-using Model.MetadataClasses.Types.ValueTypes;
+using Model.MetadataDefinitions;
 
 namespace ModelTest.ExtractionTools
 {
@@ -46,59 +44,59 @@ namespace ModelTest.ExtractionTools
         [TestMethod]
         public void EnumTest()
         {
-            TypeMetadata typeMetadata = TypeMetadataFactory.CreateTypeMetadataClass(typeof(TestClass.TestEnum));
+            TypeMetadata typeMetadata = new TypeMetadata(typeof(TestClass.TestEnum));
 
-            Assert.IsTrue(typeMetadata is EnumMetadata);
+            Assert.IsTrue(typeMetadata.TypeEnum == TypeTypesEnum.Enum);
         }
 
         [TestMethod]
         public void PrimitiveTest()
         {
-            TypeMetadata typeMetadata = TypeMetadataFactory.CreateTypeMetadataClass(typeof(long));
+            TypeMetadata typeMetadata = new TypeMetadata(typeof(long));
 
-            Assert.IsTrue(typeMetadata is PrimitiveMetadata);
+            Assert.IsTrue(typeMetadata.TypeEnum == TypeTypesEnum.Primitive);
         }
 
         [TestMethod]
         public void StructureTest()
         {
-            TypeMetadata typeMetadata = TypeMetadataFactory.CreateTypeMetadataClass(typeof(TestClass.StructureTest));
+            TypeMetadata typeMetadata = new TypeMetadata(typeof(TestClass.StructureTest));
 
-            Assert.IsTrue(typeMetadata is StructureMetadata);
+            Assert.IsTrue(typeMetadata.TypeEnum == TypeTypesEnum.Structure);
         }
 
         [TestMethod]
         public void ArrayTest()
         {
             TestClass testClass = new TestClass();
-            TypeMetadata typeMetadata = TypeMetadataFactory.CreateTypeMetadataClass(testClass.ArrayTest.GetType());
+            TypeMetadata typeMetadata = new TypeMetadata(testClass.ArrayTest.GetType());
 
-            Assert.IsTrue(typeMetadata is ArrayMetadata);
+            Assert.IsTrue(typeMetadata.TypeEnum == TypeTypesEnum.Array);
         }
 
         [TestMethod]
         public void ClassTest()
         {
             TestClass testClass = new TestClass();
-            TypeMetadata typeMetadata = TypeMetadataFactory.CreateTypeMetadataClass(testClass.GetType());
+            TypeMetadata typeMetadata = new TypeMetadata(testClass.GetType());
 
-            Assert.IsTrue(typeMetadata is ClassMetadata);
+            Assert.IsTrue(typeMetadata.TypeEnum == TypeTypesEnum.Class);
         }
 
         [TestMethod]
         public void DelegateTest()
         {
-            TypeMetadata typeMetadata = TypeMetadataFactory.CreateTypeMetadataClass(typeof(TestClass.TestDelegate));
+            TypeMetadata typeMetadata = new TypeMetadata(typeof(TestClass.TestDelegate));
 
-            Assert.IsTrue(typeMetadata is DelegateMetadata);
+            Assert.IsTrue(typeMetadata.TypeEnum == TypeTypesEnum.Delegate);
         }
 
         [TestMethod]
         public void InterfaceTest()
         {
-            TypeMetadata typeMetadata = TypeMetadataFactory.CreateTypeMetadataClass(typeof(ITestInterface));
+            TypeMetadata typeMetadata = new TypeMetadata(typeof(ITestInterface));
 
-            Assert.IsTrue(typeMetadata is InterfaceMetadata);
+            Assert.IsTrue(typeMetadata.TypeEnum == TypeTypesEnum.Interface);
         }
     }
 }

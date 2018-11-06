@@ -54,10 +54,27 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Logic\RelayCommand.cs" />
+    <Compile Include="Logic\TypesTreeItemViewModel.cs" />
+    <Compile Include="Logic\TypesTreeViewModel.cs" />
+    <Compile Include="View\TypesView\BaseTypeView.cs" />
+    <Compile Include="View\TypesView\MethodTypes\MethodView.cs" />
+    <Compile Include="View\TypesView\ReferenceTypes\ArrayView.cs" />
+    <Compile Include="View\TypesView\ReferenceTypes\ClassView.cs" />
+    <Compile Include="View\TypesView\ReferenceTypes\DelegateView.cs" />
+    <Compile Include="View\TypesView\ReferenceTypes\InterfaceView.cs" />
+    <Compile Include="View\TypesView\ReferenceTypes\ReferenceView.cs" />
+    <Compile Include="View\TypesView\TypeViewAbstract.cs" />
+    <Compile Include="View\TypesView\ValueTypes\EnumView.cs" />
+    <Compile Include="View\TypesView\ValueTypes\PrimitiveView.cs" />
+    <Compile Include="View\TypesView\ValueTypes\StructureView.cs" />
+    <Compile Include="View\TypesView\ValueTypes\ValueView.cs" />
+    <Compile Include="View\TypesView\ViewTypeFactory.cs" />
     <Page Include="View\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
+    <Compile Include="Logic\PathToIconConverter.cs" />
     <Compile Include="View\App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
@@ -93,6 +110,55 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <ProjectReference Include="..\Model\Model.csproj">
+      <Project>{35E4E22C-A782-4DF2-A1A0-6812C8119A0A}</Project>
+      <Name>Model</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\Class.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\Enumerator.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\Event.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\Field.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\Interface.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\Namespace.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\Property.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\Structure.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\Value.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\Delegate.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Resource Include="Icons\Method.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Icons\Collection.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

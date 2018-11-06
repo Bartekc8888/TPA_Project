@@ -13,6 +13,7 @@ namespace Model.MetadataClasses.Types
         public IEnumerable<TypeBasicInfo> GenericArguments { get; private set; }
         public Tuple<AccessLevelEnum, SealedEnum, AbstractEnum> Modifiers { get; private set; }
         public IEnumerable<Attribute> Attributes { get; private set; }
+        public Type InfoType { get; private set; }
 
         public TypeBasicInfo(Type type)
         {
@@ -21,25 +22,13 @@ namespace Model.MetadataClasses.Types
             GenericArguments = !type.IsGenericTypeDefinition && !type.IsConstructedGenericType ? null : EmitGenericArguments(type.GetGenericArguments());
             Modifiers = EmitModifiers(type);
             Attributes = type.GetCustomAttributes(false).Cast<Attribute>();
-        }
 
-        private TypeBasicInfo(string typeName, string namespaceName)
-        {
-            this.TypeName = typeName;
-            NamespaceName = namespaceName;
-        }
-
-        private TypeBasicInfo(string typeName, string namespaceName, IEnumerable<TypeBasicInfo> genericArguments) : this(typeName, namespaceName)
-        {
-            GenericArguments = genericArguments;
+            InfoType = type;
         }
 
         internal static TypeBasicInfo EmitReference(Type type)
         {
-            if (!type.IsGenericType)
-                return new TypeBasicInfo(type.Name, type.GetNamespace());
-            else
-                return new TypeBasicInfo(type.Name, type.GetNamespace(), EmitGenericArguments(type.GetGenericArguments()));
+            return new TypeBasicInfo(type);
         }
 
         internal static IEnumerable<TypeBasicInfo> EmitGenericArguments(IEnumerable<Type> arguments)
