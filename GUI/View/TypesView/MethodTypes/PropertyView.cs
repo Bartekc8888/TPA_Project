@@ -10,6 +10,9 @@ namespace TPA_project.View.TypesView.MethodTypes
 {
     public class PropertyView : TypeViewAbstract
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger
+              (System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         PropertyMetadata metadata;
         public override string Description => "Property";
         public override string IconPath => "Icons/Property.png";
@@ -22,6 +25,8 @@ namespace TPA_project.View.TypesView.MethodTypes
 
         public PropertyView(PropertyMetadata metadata) : base()
         {
+            log.Debug("Creating Property View");
+
             this.metadata = metadata;
             mName = metadata.Name;
             if (metadata.TypeMetadata != null)
@@ -32,6 +37,8 @@ namespace TPA_project.View.TypesView.MethodTypes
 
         public override IList<TypeViewAbstract> CreateChildren()
         {
+            log.Debug("Set members");
+
             List<TypeViewAbstract> typeViewList = new List<TypeViewAbstract>();
 
             typeViewList.AddRange(EmitMethod(metadata.propertyMethods).Select(elem => ViewTypeFactory.CreateTypeViewClass(elem)));

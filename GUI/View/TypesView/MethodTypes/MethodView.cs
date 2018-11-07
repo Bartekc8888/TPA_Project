@@ -7,6 +7,9 @@ namespace GUI.View.TypesView.MethodTypes
 {
     public class MethodView : TypeViewAbstract
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger
+              (System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         public override string Description => CheckIfFinalizer();
         public override string IconPath => "Icons/Method.png";
         public override bool HaveChildren => false;
@@ -18,6 +21,8 @@ namespace GUI.View.TypesView.MethodTypes
 
         public MethodView(MethodMetadata metadata) : base()
         {
+            log.Debug("Creating Method View");
+
             mName = metadata.Name + GetParameters(metadata.Parameters);
             if (metadata.ReturnType != null)
             {
@@ -27,12 +32,16 @@ namespace GUI.View.TypesView.MethodTypes
 
         public override IList<TypeViewAbstract> CreateChildren()
         {
+            log.Error("Cannot create members");
+
             throw new NotSupportedException();
         }
 
         private string CheckIfFinalizer()
         {
-            if(mName=="Finalize")
+            log.Debug("Checking if method is finalizer");
+
+            if (mName=="Finalize")
             {
                 return "Finalizer";
             }
@@ -44,6 +53,8 @@ namespace GUI.View.TypesView.MethodTypes
 
         protected string GetParameters(IEnumerable<ParameterMetadata> methodParameters)
         {
+            log.Debug("Set parameters");
+
             string parameters = "(";
             methodParameters.ToList().ForEach(parameter => parameters += parameter.TypeMetadata.TypeName + " " + parameter.Name + ", ");
             if (parameters.EndsWith(", "))

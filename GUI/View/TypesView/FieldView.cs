@@ -9,6 +9,9 @@ namespace TPA_project.View.TypesView
 {
     public class FieldView : TypeViewAbstract
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger
+              (System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         private TypeMetadata typeMetadata;
         public override string Description => "Field";
         public override string IconPath => "Icons/Field.png";
@@ -21,6 +24,8 @@ namespace TPA_project.View.TypesView
 
         public FieldView(FieldMetadata metadata) : base()
         {
+            log.Debug("Creating Field View");
+
             typeMetadata = new TypeMetadata(metadata.TypeMetadata.InfoType);
             mName = metadata.Name;
             if (metadata.TypeMetadata != null)
@@ -31,6 +36,8 @@ namespace TPA_project.View.TypesView
 
         public override IList<TypeViewAbstract> CreateChildren()
         {
+            log.Debug("Set members");
+
             List<TypeViewAbstract> typeViewList = new List<TypeViewAbstract>();
 
             typeViewList.AddRange(typeMetadata.Constructors.Select(elem => ViewTypeFactory.CreateTypeViewClass(elem)));

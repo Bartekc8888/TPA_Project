@@ -8,6 +8,8 @@ namespace TPA_project.View.TypesView.MethodTypes
 {
     public class IndexerView : TypeViewAbstract
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger
+              (System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public override string Description => "Indexer";
         public override string IconPath => "Icons/Property.png";
@@ -20,6 +22,8 @@ namespace TPA_project.View.TypesView.MethodTypes
 
         public IndexerView(IndexerMetadata metadata) : base()
         {
+            log.Debug("Creating Indexer View");
+
             mName = metadata.Name;
             if (metadata.TypeMetadata != null)
             {
@@ -29,6 +33,7 @@ namespace TPA_project.View.TypesView.MethodTypes
 
         public override IList<TypeViewAbstract> CreateChildren()
         {
+            log.Error("Cannot create children");
             throw new NotSupportedException();
         }
     }

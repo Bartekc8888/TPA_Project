@@ -17,6 +17,7 @@ namespace GUIText
         static void Main(string[] args)
         {
             log.Info("Starting program");
+
             string checkIfWpf = Console.ReadLine();
 
             if(checkIfWpf=="w")
@@ -31,6 +32,8 @@ namespace GUIText
 
         private static void RunApplication()
         {
+            log.Info("Running window application");
+
             var application = new App();
             application.InitializeComponent();
             application.Run();

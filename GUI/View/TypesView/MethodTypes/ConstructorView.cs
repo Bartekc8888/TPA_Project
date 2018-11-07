@@ -30,6 +30,7 @@ namespace GUI.View.TypesView.MethodTypes
 
         public override IList<TypeViewAbstract> CreateChildren()
         {
+            log.Error("Cannot create children");
             throw new NotSupportedException();
         }
 

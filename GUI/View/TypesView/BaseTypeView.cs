@@ -7,11 +7,16 @@ namespace GUI.View.TypesView
 {
     public abstract class BaseTypeView : TypeViewAbstract
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger
+              (System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         protected TypeMetadata mTypeMetadata;
         protected string mName;
 
         public BaseTypeView(TypeMetadata type, string name)
         {
+            log.Debug("Creating BaseType View");
+
             mTypeMetadata = type;
             mName = name;
         }
@@ -22,6 +27,8 @@ namespace GUI.View.TypesView
 
         public override IList<TypeViewAbstract> CreateChildren()
         {
+            log.Debug("Set members");
+
             List<TypeViewAbstract> typeViewList = new List<TypeViewAbstract>();
 
             typeViewList.AddRange(mTypeMetadata.Constructors.Select(elem => ViewTypeFactory.CreateTypeViewClass(elem)));

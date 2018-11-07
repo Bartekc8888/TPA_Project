@@ -14,6 +14,9 @@ namespace GUI.View.TypesView
 {
     public static class ViewTypeFactory
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger
+              (System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         public static TypeViewAbstract CreateTypeViewClass(TypeMetadata type, string Name = "")
         {
             switch (type.TypeEnum)
@@ -34,12 +37,14 @@ namespace GUI.View.TypesView
                     return new StructureView(type, Name);
                 case TypeTypesEnum.Unknown:
                 default:
+                    log.Error("Unknown types type enum.");
                     throw new NotSupportedException("Unknown types type enum.");
+
             }
         }
 
         public static TypeViewAbstract CreateTypeViewClass(FieldMetadata metadata)
-        {
+        { 
             return new FieldView(metadata);
         }
 
