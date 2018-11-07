@@ -10,6 +10,9 @@ namespace GUI.Logic
 {
     public class TypesTreeItemViewModel : INotifyPropertyChanged
     {
+        private static readonly log4net.ILog log = log4net.LogManager.GetLogger
+              (System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+
         public event PropertyChangedEventHandler PropertyChanged = (s, e) => {};
 
         public TypeViewAbstract CurrentType { get; }
@@ -36,6 +39,7 @@ namespace GUI.Logic
 
         public bool IsExpanded
         {
+
             get
             {
                 return isExpanded;
@@ -60,6 +64,8 @@ namespace GUI.Logic
 
         public TypesTreeItemViewModel(TypeViewAbstract type)
         {
+            log.Info("Creating TypesTreeItemViewModel");
+
             CurrentType = type;
 
             ExpandCommand = new RelayCommand(Expand);
@@ -77,11 +83,15 @@ namespace GUI.Logic
 
         private void Expand()
         {
+            log.Info("Set members of current type");
+
             Children = new ObservableCollection<TypesTreeItemViewModel>(CurrentType.CreateChildren().Select(child => new TypesTreeItemViewModel(child)));
         }
 
         private bool HasChildren()
         {
+            log.Info("Set members of current type");
+
             return CurrentType.HaveChildren;
         }
     }

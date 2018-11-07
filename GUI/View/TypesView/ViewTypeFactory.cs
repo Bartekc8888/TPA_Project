@@ -7,6 +7,8 @@ using GUI.View.TypesView.MethodTypes;
 using System;
 using Model.MetadataClasses.Types.Members;
 using Model.MetadataClasses.Types;
+using TPA_project.View.TypesView.MethodTypes;
+using TPA_project.View.TypesView;
 
 namespace GUI.View.TypesView
 {
@@ -36,9 +38,34 @@ namespace GUI.View.TypesView
             }
         }
 
+        public static TypeViewAbstract CreateTypeViewClass(FieldMetadata metadata)
+        {
+            return new FieldView(metadata);
+        }
+
+        public static TypeViewAbstract CreateTypeViewClass(ConstructorMetadata metadata)
+        {
+            return new ConstructorView(metadata);
+        }
+
         public static TypeViewAbstract CreateTypeViewClass(MethodMetadata metadata)
         {
             return new MethodView(metadata);
+        }
+
+        public static TypeViewAbstract CreateTypeViewClass(PropertyMetadata metadata)
+        {
+            return new PropertyView(metadata);
+        }
+
+        public static TypeViewAbstract CreateTypeViewClass(IndexerMetadata metadata)
+        {
+            return new IndexerView(metadata);
+        }
+
+        public static TypeViewAbstract CreateTypeViewClass(EventMetadata metadata)
+        {
+            return new EventView(metadata);
         }
 
         public static TypeViewAbstract CreateTypeViewClass(MemberAbstract member)

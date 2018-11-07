@@ -60,7 +60,7 @@
 
                 <Button x:Name="AnalizeButton" Click="AnalizeButton_Click" Grid.Column="1" Margin="5 5" Content="Analizuj" VerticalAlignment="Center"/>
             </Grid>
-            
+
         </Grid>
     </Border>
 </Window>

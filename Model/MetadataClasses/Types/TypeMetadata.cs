@@ -24,6 +24,7 @@ namespace Model.MetadataClasses
         public IEnumerable<FieldMetadata> Fields { get; private set; }
         public IEnumerable<MethodMetadata> Methods { get; private set; }
         public IEnumerable<PropertyMetadata> Properties { get; private set; }
+        public IEnumerable<IndexerMetadata> Indexers { get; private set; }
         public IEnumerable<EventMetadata> Events { get; private set; }
         public IEnumerable<ConstructorMetadata> Constructors { get; private set; }
         public IEnumerable<TypeBasicInfo> NestedTypes { get; private set; }
@@ -44,6 +45,7 @@ namespace Model.MetadataClasses
             Fields = FieldMetadata.EmitFields(type.GetFields(flagsToGetAll));
             Methods = MethodMetadata.EmitMethods(type.GetMethods(flagsToGetAll));
             Properties = PropertyMetadata.EmitProperties(type.GetProperties(flagsToGetAll));
+            Indexers = IndexerMetadata.EmitIndexers(type.GetProperties(flagsToGetAll));
             Events = EventMetadata.EmitEvents(type.GetEvents(flagsToGetAll));
             Constructors = ConstructorMetadata.EmitConstructors(type.GetConstructors(flagsToGetAll));
             NestedTypes = EmitNestedTypes(type.GetNestedTypes(flagsToGetAll));

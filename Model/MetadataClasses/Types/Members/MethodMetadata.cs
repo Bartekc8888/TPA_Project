@@ -21,7 +21,7 @@ namespace Model.MetadataClasses.Types.Members
 
         internal static IEnumerable<MethodMetadata> EmitMethods(IEnumerable<MethodBase> methods)
         {
-            return from MethodBase _currentMethod in methods
+            return from MethodBase _currentMethod in methods where !(_currentMethod.IsSpecialName)
                    select new MethodMetadata(_currentMethod);
         }
 

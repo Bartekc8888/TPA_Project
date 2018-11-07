@@ -8,7 +8,6 @@ namespace Model.MetadataClasses.Types.Members
     {
         public ConstructorMetadata(MethodBase method) : base(method)
         {
-
         }
 
         internal static IEnumerable<ConstructorMetadata> EmitConstructors(IEnumerable<MethodBase> methods)

@@ -26,9 +26,9 @@ namespace GUI.View.TypesView
 
             typeViewList.AddRange(mTypeMetadata.Constructors.Select(elem => ViewTypeFactory.CreateTypeViewClass(elem)));
             typeViewList.AddRange(mTypeMetadata.Methods.Select(elem => ViewTypeFactory.CreateTypeViewClass(elem)));
-
-            typeViewList.AddRange(mTypeMetadata.Fields.Select(elem => ViewTypeFactory.CreateTypeViewClass(elem)));
             typeViewList.AddRange(mTypeMetadata.Properties.Select(elem => ViewTypeFactory.CreateTypeViewClass(elem)));
+            typeViewList.AddRange(mTypeMetadata.Indexers.Select(elem => ViewTypeFactory.CreateTypeViewClass(elem)));
+            typeViewList.AddRange(mTypeMetadata.Fields.Select(elem => ViewTypeFactory.CreateTypeViewClass(elem)));
             typeViewList.AddRange(mTypeMetadata.NestedTypes.Select(elem => ViewTypeFactory.CreateTypeViewClass(elem)));
             typeViewList.AddRange(mTypeMetadata.Events.Select(elem => ViewTypeFactory.CreateTypeViewClass(elem)));
 
