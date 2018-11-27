@@ -1,9 +1,8 @@
-﻿using GUI.Logic;
-using System;
+﻿using System;
 using System.Windows;
-using System.Windows.Controls;
+using ViewModel.Logic;
 
-namespace GUI.View
+namespace GUI
 {
     /// <summary>
     /// Logika interakcji dla klasy MainWindow.xaml

@@ -1,13 +1,12 @@
-﻿<Window x:Class="GUI.View.MainWindow"
+﻿<Window x:Class="GUI.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:GUI.View"
-        xmlns:logic="clr-namespace:GUI.Logic"
+        xmlns:logic="clr-namespace:ViewModel.Logic;assembly=ViewModel_Assembly"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800" MinHeight="300" MinWidth="450">
-
+    
     <Border Padding="10">
         <Grid>
             <Grid.RowDefinitions>
@@ -30,7 +29,8 @@
 
             <TextBlock Grid.Row="1" Margin="0 5" Text="Zawartość pliku" FontWeight="Bold" VerticalAlignment="Center"/>
 
-            <TreeView Grid.Row="2" x:Name="ReflectionTreeView" ItemsSource="{Binding Items}">
+            <TreeView Grid.Row="2" x:Name="ReflectionTreeView" ItemsSource="{Binding (logic:TypesTreeViewModel.Items)}"
+                      d:DataContext="{logic:TypesTreeViewModel}">
 
                 <TreeView.ItemContainerStyle>
                     <Style TargetType="{x:Type TreeViewItem}">
@@ -39,7 +39,7 @@
                 </TreeView.ItemContainerStyle>
 
                 <TreeView.ItemTemplate>
-                    <HierarchicalDataTemplate ItemsSource="{Binding Children}">
+                    <HierarchicalDataTemplate ItemsSource="{Binding Children}" DataType="logic:TypesTreeItemViewModel">
                         <StackPanel Orientation="Horizontal">
                             <Image Width="20" Margin="3" 
                                                Source="{Binding TypeIcon,
