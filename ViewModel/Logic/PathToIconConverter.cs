@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Globalization;
+using System.Reflection;
 using System.Windows.Data;
 using System.Windows.Media.Imaging;
+using log4net;
 
 namespace ViewModel.Logic
 {
     [ValueConversion(typeof(string), typeof(BitmapImage))]
     public class PathToIconConverter : IValueConverter
     {
-        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger
-               (System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ILog Log = LogManager.GetLogger
+               (MethodBase.GetCurrentMethod().DeclaringType);
 
         public static readonly PathToIconConverter Instance = new PathToIconConverter();
 

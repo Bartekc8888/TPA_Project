@@ -1,19 +1,21 @@
 ﻿
+using System;
+using System.Reflection;
+using log4net;
 using Model.MetadataClasses;
+using Model.MetadataClasses.Types;
+using Model.MetadataClasses.Types.Members;
 using Model.MetadataDefinitions;
+using ViewModel.View.TypesView.MethodTypes;
 using ViewModel.View.TypesView.ReferenceTypes;
 using ViewModel.View.TypesView.ValueTypes;
-using ViewModel.View.TypesView.MethodTypes;
-using System;
-using Model.MetadataClasses.Types.Members;
-using Model.MetadataClasses.Types;
 
 namespace ViewModel.View.TypesView
 {
     public static class ViewTypeFactory
     {
-        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger
-              (System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ILog Log = LogManager.GetLogger
+              (MethodBase.GetCurrentMethod().DeclaringType);
 
         public static TypeViewAbstract CreateTypeViewClass(TypeMetadata type, string name = "")
         {

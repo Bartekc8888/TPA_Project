@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using Microsoft.Win32;
 using ViewModel.Logic;
 
 namespace GUI
@@ -19,7 +20,7 @@ namespace GUI
 
         private void PathButton_Click(object sender, RoutedEventArgs e)
         {
-            Microsoft.Win32.OpenFileDialog dialog = new Microsoft.Win32.OpenFileDialog
+            OpenFileDialog dialog = new OpenFileDialog
             {
                 // Set filter for file extension and default file extension 
                 DefaultExt = ".exe",

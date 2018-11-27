@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Reflection;
+using log4net;
 using ViewModel.Logic;
 
 namespace CLI
 {
     class CommandLineView
     {
-        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger
-            (System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ILog Log = LogManager.GetLogger
+            (MethodBase.GetCurrentMethod().DeclaringType);
 
         private TypesTreeViewModel _viewModel;
         private TypesTreeItemViewModel _currentItem;

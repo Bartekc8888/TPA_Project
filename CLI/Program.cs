@@ -1,11 +1,13 @@
 ﻿using System;
+using System.Reflection;
+using log4net;
 
 namespace CLI
 {
     class Program
     {
-        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger
-               (System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ILog Log = LogManager.GetLogger
+               (MethodBase.GetCurrentMethod().DeclaringType);
 
         [STAThread]
         static void Main(string[] args)

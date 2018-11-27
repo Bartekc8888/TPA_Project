@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Model.MetadataClasses;
 using Model.MetadataClasses.Types;
 using Model.MetadataClasses.Types.Members;
 

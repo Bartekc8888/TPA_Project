@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Reflection;
+using log4net;
 using Model.MetadataClasses.Types.Members;
 
 namespace ViewModel.View.TypesView.MethodTypes
 {
     public class ConstructorView : MethodView
     {
-        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger
-               (System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ILog Log = LogManager.GetLogger
+               (MethodBase.GetCurrentMethod().DeclaringType);
 
         public override string Description => "Constructor";
         public override string IconPath => "Icons/Method.png";

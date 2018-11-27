@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Model.MetadataClasses.Types.Members
+﻿namespace Model.MetadataClasses.Types.Members
 {
     public abstract class MemberAbstract
     {

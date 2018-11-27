@@ -1,15 +1,15 @@
-﻿using Model.MetadataClasses;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
+using log4net;
 using Model.MetadataClasses.Types;
 
 namespace ViewModel.View.TypesView
 {
     public abstract class BaseTypeView : TypeViewAbstract
     {
-        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger
-              (System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ILog Log = LogManager.GetLogger
+              (MethodBase.GetCurrentMethod().DeclaringType);
 
         protected TypeMetadata mTypeMetadata;
         protected string mName;

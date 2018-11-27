@@ -1,12 +1,13 @@
-﻿using Model.MetadataClasses;
+﻿using System.Reflection;
+using log4net;
 using Model.MetadataClasses.Types;
 
 namespace ViewModel.View.TypesView.ReferenceTypes
 {
     public class ClassView : ReferenceView
     {
-        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger
-              (System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ILog Log = LogManager.GetLogger
+              (MethodBase.GetCurrentMethod().DeclaringType);
 
         public ClassView(TypeMetadata type, string name) : base(type, name)
         {

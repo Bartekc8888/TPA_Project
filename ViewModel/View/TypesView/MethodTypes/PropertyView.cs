@@ -1,13 +1,14 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using log4net;
 using Model.MetadataClasses.Types.Members;
 
 namespace ViewModel.View.TypesView.MethodTypes
 {
     public class PropertyView : TypeViewAbstract
     {
-        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger
+        private static readonly ILog Log = LogManager.GetLogger
               (MethodBase.GetCurrentMethod().DeclaringType);
 
         PropertyMetadata metadata;

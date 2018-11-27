@@ -1,13 +1,15 @@
-﻿using ViewModel.View.TypesView;
-using System.Collections.ObjectModel;
+﻿using System.Collections.ObjectModel;
+using System.Reflection;
+using log4net;
 using ViewModel.ExtractionTools;
+using ViewModel.View.TypesView;
 
 namespace ViewModel.Logic
 {
     public class TypesTreeViewModel
     {
-        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger
-              (System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
+        private static readonly ILog Log = LogManager.GetLogger
+              (MethodBase.GetCurrentMethod().DeclaringType);
 
         public ObservableCollection<TypesTreeItemViewModel> Items { get; }
 

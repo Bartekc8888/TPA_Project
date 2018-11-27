@@ -1,10 +1,9 @@
-﻿using Model.MetadataDefinitions;
-using Model.MetadataExtensions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
+using Model.MetadataDefinitions;
 
 namespace Model.MetadataClasses.Types.Members
 {

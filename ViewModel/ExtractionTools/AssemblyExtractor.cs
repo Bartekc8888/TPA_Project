@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System;
+using System.Reflection;
 using Model.MetadataClasses;
 
 namespace ViewModel.ExtractionTools
@@ -8,7 +9,7 @@ namespace ViewModel.ExtractionTools
         public AssemblyExtractor(string assemblyFile)
         {
             if (string.IsNullOrEmpty(assemblyFile))
-                throw new System.ArgumentNullException();
+                throw new ArgumentNullException();
 
             Assembly assembly = Assembly.LoadFrom(assemblyFile);
             AssemblyModel = new AssemblyMetadata(assembly);
