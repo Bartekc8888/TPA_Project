@@ -1,6 +1,6 @@
 ﻿using ViewModel.View.TypesView;
-using Model.MetadataClasses;
 using System.Collections.ObjectModel;
+using ViewModel.ExtractionTools;
 
 namespace ViewModel.Logic
 {
@@ -9,13 +9,14 @@ namespace ViewModel.Logic
         private static readonly log4net.ILog Log = log4net.LogManager.GetLogger
               (System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
-        public ObservableCollection<TypesTreeItemViewModel> Items { get; set; }
+        public ObservableCollection<TypesTreeItemViewModel> Items { get; }
 
         public TypesTreeViewModel()
         {
             Log.Info("Creating TreeVIewModel");
 
-            TypeViewAbstract view = ViewTypeFactory.CreateTypeViewClass(new TypeMetadata(typeof(TypeMetadata)));
+            AssemblyExtractor assemblyExtractor = new AssemblyExtractor(@"C:\Users\barte\Desktop\tpaProject\TPA_Project\GUI\bin\Debug\log4net.dll");
+            TypeViewAbstract view = ViewTypeFactory.CreateTypeViewClass(assemblyExtractor.AssemblyModel);
             TypesTreeItemViewModel item = new TypesTreeItemViewModel(view);
             Items = new ObservableCollection<TypesTreeItemViewModel> { item };
         }

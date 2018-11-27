@@ -1,7 +1,7 @@
-﻿using Model.MetadataDefinitions;
-using System;
+﻿using System;
+using Model.MetadataDefinitions;
 
-namespace Model.ExtractionTools
+namespace Model.MetadataClasses.Types
 {
     public static class TypeEnumFactory
     {

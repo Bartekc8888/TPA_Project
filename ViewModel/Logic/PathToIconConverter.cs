@@ -8,14 +8,14 @@ namespace ViewModel.Logic
     [ValueConversion(typeof(string), typeof(BitmapImage))]
     public class PathToIconConverter : IValueConverter
     {
-        private static readonly log4net.ILog log = log4net.LogManager.GetLogger
+        private static readonly log4net.ILog Log = log4net.LogManager.GetLogger
                (System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public static readonly PathToIconConverter Instance = new PathToIconConverter();
 
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            log.Debug("Converting icon's string to image");
+            Log.Debug("Converting icon's string to image");
 
             string iconPath = (string)value;
 
@@ -29,7 +29,7 @@ namespace ViewModel.Logic
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            log.Error("Error when try to convert back");
+            Log.Error("Error when try to convert back");
 
             throw new NotImplementedException();
         }

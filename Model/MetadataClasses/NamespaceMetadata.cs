@@ -1,20 +1,19 @@
-﻿
-using Model.ExtractionTools;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using Model.MetadataClasses.Types;
 
 namespace Model.MetadataClasses
 {
-    internal class NamespaceMetadata
+    public class NamespaceMetadata
     {
-        private string m_NamespaceName;
-        private IEnumerable<TypeMetadata> m_Types;
+        public string NamespaceName { get; }
+        public IEnumerable<TypeMetadata> Types { get; }
 
-        internal NamespaceMetadata(string name, IEnumerable<Type> types)
+        public NamespaceMetadata(string name, IEnumerable<Type> types)
         {
-            m_NamespaceName = name;
-            m_Types = from type in types orderby type.Name select new TypeMetadata(type);
+            NamespaceName = name;
+            Types = from type in types orderby type.Name select new TypeMetadata(type);
         }
     }
 }

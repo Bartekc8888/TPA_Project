@@ -6,8 +6,8 @@ namespace Model.MetadataClasses.Types.Members
 {
     public abstract class MemberAbstract
     {
-        public string Name { get; private set; }
-        public TypeBasicInfo TypeMetadata { get; private set; }
+        public string Name { get; }
+        public TypeBasicInfo TypeMetadata { get; }
 
         public MemberAbstract(string name, TypeBasicInfo typeInfo)
         {

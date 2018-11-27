@@ -44,11 +44,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ExtractionTools\AssemblyExtractor.cs" />
     <Compile Include="Logic\PathToIconConverter.cs" />
     <Compile Include="Logic\RelayCommand.cs" />
     <Compile Include="Logic\TypesTreeItemViewModel.cs" />
     <Compile Include="Logic\TypesTreeViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="View\TypesView\AssemblyView.cs" />
     <Compile Include="View\TypesView\BaseTypeView.cs" />
     <Compile Include="View\TypesView\EventView.cs" />
     <Compile Include="View\TypesView\FieldView.cs" />
@@ -56,6 +58,7 @@
     <Compile Include="View\TypesView\MethodTypes\IndexerView.cs" />
     <Compile Include="View\TypesView\MethodTypes\MethodView.cs" />
     <Compile Include="View\TypesView\MethodTypes\PropertyView.cs" />
+    <Compile Include="View\TypesView\NamespaceView.cs" />
     <Compile Include="View\TypesView\ReferenceTypes\ArrayView.cs" />
     <Compile Include="View\TypesView\ReferenceTypes\ClassView.cs" />
     <Compile Include="View\TypesView\ReferenceTypes\DelegateView.cs" />

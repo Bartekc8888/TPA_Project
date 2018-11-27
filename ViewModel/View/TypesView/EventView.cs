@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Model.MetadataClasses;
+using Model.MetadataClasses.Types;
 using Model.MetadataClasses.Types.Members;
 
 namespace ViewModel.View.TypesView

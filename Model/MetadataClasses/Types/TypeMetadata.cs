@@ -1,14 +1,12 @@
-﻿using Model.ExtractionTools;
-using Model.MetadataClasses.Types;
-using Model.MetadataClasses.Types.Members;
-using Model.MetadataDefinitions;
-using Model.MetadataExtensions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using Model.MetadataClasses.Types.Members;
+using Model.MetadataDefinitions;
+using Model.MetadataExtensions;
 
-namespace Model.MetadataClasses
+namespace Model.MetadataClasses.Types
 {
     public class TypeMetadata
     {

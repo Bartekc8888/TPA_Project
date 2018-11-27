@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Model.MetadataClasses;
+using Model.MetadataClasses.Types;
 using Model.MetadataClasses.Types.Members;
 
 namespace ViewModel.View.TypesView
@@ -14,21 +14,18 @@ namespace ViewModel.View.TypesView
         public override string Description => "Field";
         public override string IconPath => "Icons/Field.png";
         public override bool HaveChildren => true;
-        public override string TypeName => mTypeName;
-        public override string Name => mName;
-
-        private string mTypeName;
-        private string mName;
+        public override string TypeName { get; }
+        public override string Name { get; }
 
         public FieldView(FieldMetadata metadata) : base()
         {
             Log.Debug("Creating Field View");
 
             typeMetadata = new TypeMetadata(metadata.TypeMetadata.InfoType);
-            mName = metadata.Name;
+            Name = metadata.Name;
             if (metadata.TypeMetadata != null)
             {
-                mTypeName = metadata.TypeMetadata.TypeName;
+                TypeName = metadata.TypeMetadata.TypeName;
             }
         }
 

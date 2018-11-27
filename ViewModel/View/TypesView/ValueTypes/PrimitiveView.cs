@@ -1,4 +1,5 @@
 ﻿using Model.MetadataClasses;
+using Model.MetadataClasses.Types;
 
 namespace ViewModel.View.TypesView.ValueTypes
 {

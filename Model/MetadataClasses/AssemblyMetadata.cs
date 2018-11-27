@@ -9,13 +9,15 @@ namespace Model.MetadataClasses
 {
     public class AssemblyMetadata
     {
-        private string name;
-        private IEnumerable<NamespaceMetadata> namespaces;
+        public string TypeName { get; }
+        public string Name { get; }
+        public IEnumerable<NamespaceMetadata> Namespaces { get; }
 
-        internal AssemblyMetadata(Assembly assembly)
+        public AssemblyMetadata(Assembly assembly)
         {
-            name = assembly.ManifestModule.Name;
-            namespaces = from Type _type in assembly.GetTypes()
+            TypeName = assembly.GetType().Name;
+            Name = assembly.ManifestModule.Name;
+            Namespaces = from Type _type in assembly.GetTypes()
                          where _type.GetVisible()
                          group _type by _type.GetNamespace() into _group
                          orderby _group.Key

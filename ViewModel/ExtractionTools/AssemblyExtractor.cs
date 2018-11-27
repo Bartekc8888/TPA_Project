@@ -1,7 +1,7 @@
-﻿using Model.MetadataClasses;
-using System.Reflection;
+﻿using System.Reflection;
+using Model.MetadataClasses;
 
-namespace Model.ExtractionTools
+namespace ViewModel.ExtractionTools
 {
     public class AssemblyExtractor
     {
@@ -19,6 +19,6 @@ namespace Model.ExtractionTools
             AssemblyModel = new AssemblyMetadata(assembly);
         }
 
-        public AssemblyMetadata AssemblyModel { get; private set; }
+        public AssemblyMetadata AssemblyModel { get; }
     }
 }
