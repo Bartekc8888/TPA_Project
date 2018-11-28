@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Reflection;
+using System.Threading;
 using log4net;
 using ViewModel.Logic;
 
@@ -45,7 +46,14 @@ namespace CLI
                     _previousTypes.Push(temp);
                 }
 
-                PrintTypeWithChildren(_currentItem);
+                if (_currentItem != null)
+                {
+                    PrintTypeWithChildren(_currentItem);
+                }
+                else
+                {
+                    PrintHeaders(_viewModel.Items);
+                }
             }
         }
 

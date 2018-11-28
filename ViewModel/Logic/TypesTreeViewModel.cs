@@ -3,8 +3,11 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Reflection;
+using System.Threading;
 using System.Windows;
+using System.Windows.Data;
 using System.Windows.Input;
+using System.Windows.Threading;
 using log4net;
 using ViewModel.ExtractionTools;
 using ViewModel.View.TypesView;
@@ -41,6 +44,7 @@ namespace ViewModel.Logic
         }
 
         public ICommand ExpandCommand { get; set; }
+        private object _itemsLock;
 
         public TypesTreeViewModel()
         {
@@ -49,6 +53,9 @@ namespace ViewModel.Logic
             SelectedPath = "";
             Items = new ObservableCollection<TypesTreeItemViewModel>();
             ExpandCommand = new RelayCommand(ExtractData);
+
+            _itemsLock = new object();
+            BindingOperations.EnableCollectionSynchronization(Items, _itemsLock);
         }
         
         public bool IsPathValid()
@@ -64,11 +71,12 @@ namespace ViewModel.Logic
                 AssemblyExtractor assemblyExtractor = new AssemblyExtractor(SelectedPath);
                 TypeViewAbstract view = ViewTypeFactory.CreateTypeViewClass(assemblyExtractor.AssemblyModel);
                 TypesTreeItemViewModel item = new TypesTreeItemViewModel(view);
-                Application.Current.Dispatcher.Invoke(() =>
+                
+                lock (_itemsLock)
                 {
                     Items.Clear();
                     Items.Add(item);
-                });
+                };
             }
         }
     }
