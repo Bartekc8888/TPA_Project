@@ -14,6 +14,8 @@
                 <RowDefinition Height="40"/>
                 <RowDefinition Height="*"/>
                 <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
             </Grid.RowDefinitions>
             <Grid Grid.Row="0" Margin="5">
                 <Grid.ColumnDefinitions>
@@ -57,9 +59,27 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <Button x:Name="AnalizeButton" Command="{Binding Path=ExpandCommand}" Click="AnalizeButton_Click" Grid.Column="1" Margin="5 5" Content="Analizuj" VerticalAlignment="Center"/>
+                <Button x:Name="AnalizeButton" Command="{Binding Path=AnalyzeCommand}" Click="AnalizeButton_Click" Grid.Column="1" Margin="5 5" Content="Analizuj" VerticalAlignment="Center"/>
             </Grid>
+            <Grid Grid.Row="4" Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="120"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
 
+                <TextBlock Grid.Column="0" Text="Ścieżka serializacji" FontWeight="Bold" VerticalAlignment="Center"/>
+                <TextBox x:Name="SerializationText" Text="{Binding Path=SerializationPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="10 0 10 0" Grid.Column="1" VerticalAlignment="Center"/>
+            </Grid>
+            <Grid Grid.Row="5" Margin="5">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Button x:Name="SerializeButton" Grid.Column="1" Command="{Binding Path=SerializeCommand}" Content="Serialize" Margin="10 0 10 0" VerticalAlignment="Center"/>
+                <Button x:Name="DeserializeButton" Grid.Column="2" Command="{Binding Path=DeserializeCommand}" Content="Deserialize" Margin="10 0 10 0" VerticalAlignment="Center"/>
+            </Grid>
         </Grid>
     </Border>
 </Window>

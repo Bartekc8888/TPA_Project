@@ -7,22 +7,21 @@ namespace Model.MetadataClasses.Types
 {
     public class TypeBasicInfo
     {
+        public string FullTypeName { get; }
         public string TypeName { get; private set; }
         public string NamespaceName { get; private set; }
         public IEnumerable<TypeBasicInfo> GenericArguments { get; private set; }
         public Tuple<AccessLevelEnum, SealedEnum, AbstractEnum> Modifiers { get; private set; }
         public IEnumerable<Attribute> Attributes { get; private set; }
-        public Type InfoType { get; private set; }
 
         public TypeBasicInfo(Type type)
         {
+            FullTypeName = type.AssemblyQualifiedName;
             TypeName = type.Name;
             NamespaceName = type.Namespace;
             GenericArguments = !type.IsGenericTypeDefinition && !type.IsConstructedGenericType ? null : EmitGenericArguments(type.GetGenericArguments());
             Modifiers = EmitModifiers(type);
             Attributes = type.GetCustomAttributes(false).Cast<Attribute>();
-
-            InfoType = type;
         }
 
         internal static TypeBasicInfo EmitReference(Type type)

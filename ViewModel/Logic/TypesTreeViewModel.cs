@@ -3,11 +3,8 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Reflection;
-using System.Threading;
-using System.Windows;
 using System.Windows.Data;
 using System.Windows.Input;
-using System.Windows.Threading;
 using log4net;
 using ViewModel.ExtractionTools;
 using ViewModel.View.TypesView;
@@ -42,8 +39,23 @@ namespace ViewModel.Logic
                 PropertyChanged(this, new PropertyChangedEventArgs(nameof(SelectedPath)));
             }
         }
+        
+        private string _serializationPath;
+        public string SerializationPath
+        {
+            get => _serializationPath;
+            set
+            {
+                _serializationPath = value;
+                PropertyChanged(this, new PropertyChangedEventArgs(nameof(SerializationPath)));
+            }
+        }
 
-        public ICommand ExpandCommand { get; set; }
+        public ICommand AnalyzeCommand { get; set; }
+
+        public ICommand SerializeCommand { get; set; }
+        public ICommand DeserializeCommand { get; set; }
+
         private object _itemsLock;
 
         public TypesTreeViewModel()
@@ -51,8 +63,12 @@ namespace ViewModel.Logic
             Log.Info("Creating TreeVIewModel");
 
             SelectedPath = "";
+            SerializationPath = "";
             Items = new ObservableCollection<TypesTreeItemViewModel>();
-            ExpandCommand = new RelayCommand(ExtractData);
+            AnalyzeCommand = new RelayCommand(ExtractData);
+            
+            SerializeCommand = new RelayCommand(SerializeData);
+            DeserializeCommand = new RelayCommand(DeserializeData);
 
             _itemsLock = new object();
             BindingOperations.EnableCollectionSynchronization(Items, _itemsLock);
@@ -76,7 +92,33 @@ namespace ViewModel.Logic
                 {
                     Items.Clear();
                     Items.Add(item);
-                };
+                }
+            }
+        }
+
+        public void SerializeData()
+        {
+            if (!String.IsNullOrEmpty(SerializationPath) && _items.Count > 0)
+            {
+                TypeViewAbstract typeViewAbstract = _items[0].CurrentType;
+                // Serialize(typeViewAbstract, SerializationPath)
+            }
+        }
+
+        public void DeserializeData()
+        {
+            if (!String.IsNullOrEmpty(SerializationPath))
+            {
+                // TypeViewAbstract typeViewAbstract = Deserialize(SerializationPath)
+                
+//                TypeViewAbstract view = ViewTypeFactory.CreateTypeViewClass(typeViewAbstract);
+//                TypesTreeItemViewModel item = new TypesTreeItemViewModel(view);
+//                
+//                lock (_itemsLock)
+//                {
+//                    Items.Clear();
+//                    Items.Add(item);
+//                }
             }
         }
     }

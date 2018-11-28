@@ -14,6 +14,8 @@ namespace CLI
             (MethodBase.GetCurrentMethod().DeclaringType);
 
         private const string ExitCharacter = "0";
+        private const string SerializationMode = "W";
+        private const string DeserializationMode = "L";
 
         private TypesTreeViewModel _viewModel;
         private TypesTreeItemViewModel _currentItem;
@@ -110,9 +112,17 @@ namespace CLI
                               Environment.NewLine;
             }
 
-            itemString += Environment.NewLine + "Press selected number to expand or 0 to come back";
+            itemString += GetMainMenuString();
             Console.Clear();
             Console.WriteLine(itemString);
+        }
+
+        private string GetMainMenuString()
+        {
+            string menuString = Environment.NewLine + "Press selected number to expand or 0 to come back";
+            menuString += Environment.NewLine + "Press 'w' to start serialization or 'l' to start deserialization";
+
+            return menuString;
         }
 
         private void PrintHeaders(ObservableCollection<TypesTreeItemViewModel> items)
@@ -147,28 +157,46 @@ namespace CLI
                 string chosen = Console.ReadLine();
                 bool isNumber = int.TryParse(chosen, out int parsedNumber);
 
-                if (parsedNumber > 0 && isNumber)
+                if (isNumber)
                 {
-                    viewModelItem = GetExpandableByIndex(parsedNumber);
-                    if (viewModelItem != null)
+                    if (parsedNumber > 0)
                     {
+                        viewModelItem = GetExpandableByIndex(parsedNumber);
+                        if (viewModelItem != null)
+                        {
+                            didUserChoose = true;
+                        }
+                    }
+
+                    if (parsedNumber == 0)
+                    {
+                        _isGoingBack = true;
+                        if (_previousTypes.Count != 0)
+                        {
+                            viewModelItem = _previousTypes.Pop();
+                        }
+                        else
+                        {
+                            viewModelItem = _currentItem;
+                        }
+
                         didUserChoose = true;
                     }
                 }
-
-                if (parsedNumber == 0 && isNumber)
+                else if (chosen != null)
                 {
-                    _isGoingBack = true;
-                    if (_previousTypes.Count != 0)
+
+                    if (SerializationMode.Equals(chosen.ToUpper()))
                     {
-                        viewModelItem = _previousTypes.Pop();
-                    }
-                    else
-                    {
-                        viewModelItem = _currentItem;
+                        HandleSerializationMode();
+                        return null;
                     }
 
-                    didUserChoose = true;
+                    if (DeserializationMode.Equals(chosen.ToUpper()))
+                    {
+                        HandleDeserializationMode();
+                        return null;
+                    }
                 }
             } while (!didUserChoose);
 
@@ -204,6 +232,26 @@ namespace CLI
             }
 
             return viewModelItem;
+        }
+
+        private void HandleSerializationMode()
+        {
+            Console.Clear();
+            Console.WriteLine("Give a path for serialization file: " + Environment.NewLine);
+            string givenPath = Console.ReadLine();
+
+            _viewModel.SerializationPath = givenPath;
+            _viewModel.SerializeData();
+        }
+
+        private void HandleDeserializationMode()
+        {
+            Console.Clear();
+            Console.WriteLine("Give a path for deserialization file: " + Environment.NewLine);
+            string givenPath = Console.ReadLine();
+
+            _viewModel.SerializationPath = givenPath;
+            _viewModel.DeserializeData();
         }
     }
 }
