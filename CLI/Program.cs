@@ -14,7 +14,8 @@ namespace CLI
         {
             Log.Info("Starting program");
 
-            CommandLineView cm = new CommandLineView();
+            CommandLineView commandLine = new CommandLineView();
+            commandLine.Run();
         }
     }
 }

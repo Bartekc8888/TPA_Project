@@ -24,7 +24,7 @@ namespace ViewModel.Logic
         private ObservableCollection<TypesTreeItemViewModel> mChildren;
         public ObservableCollection<TypesTreeItemViewModel> Children
         {
-            get { return mChildren; }
+            get => mChildren;
             private set
             {
                 mChildren = value;

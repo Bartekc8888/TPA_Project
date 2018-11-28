@@ -22,31 +22,21 @@ namespace GUI
         {
             OpenFileDialog dialog = new OpenFileDialog
             {
-                // Set filter for file extension and default file extension 
                 DefaultExt = ".exe",
                 Filter = "Executable Files (*.exe)|*.exe|DLL Files (*.dll)|*.dll"
             };
 
-            // Display OpenFileDialog by calling ShowDialog method 
-            Nullable<bool> result = dialog.ShowDialog();
-
-            // Get the selected file name and display in a TextBox 
+            bool? result = dialog.ShowDialog();
             if (result == true)
             {
-                // Open document 
                 string filename = dialog.FileName;
-                this.PathText.Text = filename;
+                PathText.Text = filename;
             }
         }
 
         private void AnalizeButton_Click(object sender, RoutedEventArgs e)
         {
             
-        }
-
-        private void ItemExpanded(object sender, RoutedEventArgs e)
-        {
-
         }
     }
 }

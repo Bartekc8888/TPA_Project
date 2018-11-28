@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:logic="clr-namespace:ViewModel.Logic;assembly=ViewModel_Assembly"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800" MinHeight="300" MinWidth="450">
+        Title="MainWindow" Height="450" Width="800" MinHeight="300" MinWidth="450" d:DataContext="{d:DesignInstance logic:TypesTreeViewModel}">
     
     <Border Padding="10">
         <Grid>
@@ -23,14 +23,13 @@
                 </Grid.ColumnDefinitions>
 
                 <TextBlock Grid.Column="0" Text="Ścieżka" FontWeight="Bold" VerticalAlignment="Center"/>
-                <TextBox x:Name="PathText" Margin="10 0 10 0" Grid.Column="1" VerticalAlignment="Center"/>
+                <TextBox x:Name="PathText" Text="{Binding Path=SelectedPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="10 0 10 0" Grid.Column="1" VerticalAlignment="Center"/>
                 <Button x:Name="PathButton" Click="PathButton_Click" Grid.Column="2" Content="..." VerticalAlignment="Center"/>
             </Grid>
 
             <TextBlock Grid.Row="1" Margin="0 5" Text="Zawartość pliku" FontWeight="Bold" VerticalAlignment="Center"/>
 
-            <TreeView Grid.Row="2" x:Name="ReflectionTreeView" ItemsSource="{Binding (logic:TypesTreeViewModel.Items)}"
-                      d:DataContext="{logic:TypesTreeViewModel}">
+            <TreeView Grid.Row="2" x:Name="ReflectionTreeView" ItemsSource="{Binding Items}">
 
                 <TreeView.ItemContainerStyle>
                     <Style TargetType="{x:Type TreeViewItem}">
@@ -58,7 +57,7 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <Button x:Name="AnalizeButton" Click="AnalizeButton_Click" Grid.Column="1" Margin="5 5" Content="Analizuj" VerticalAlignment="Center"/>
+                <Button x:Name="AnalizeButton" Command="{Binding Path=ExpandCommand}" Click="AnalizeButton_Click" Grid.Column="1" Margin="5 5" Content="Analizuj" VerticalAlignment="Center"/>
             </Grid>
 
         </Grid>
