@@ -71,13 +71,13 @@ namespace ViewModel.View.TypesView
                 case PropertyMetadata propertyMetadata:
                     return new PropertyView(propertyMetadata);
                 default:
-                    return CreateTypeViewClass(new TypeMetadata(member.TypeMetadata.InfoType), member.Name);
+                    return CreateTypeViewClass(new TypeMetadata(Type.GetType(member.TypeMetadata.FullTypeName)), member.Name);
             }
         }
 
         public static TypeViewAbstract CreateTypeViewClass(TypeBasicInfo basicInfo)
         {
-            return CreateTypeViewClass(new TypeMetadata(basicInfo.InfoType));
+            return CreateTypeViewClass(new TypeMetadata(Type.GetType(basicInfo.FullTypeName)));
         }
 
         public static TypeViewAbstract CreateTypeViewClass(AssemblyMetadata assemblyMetadata)

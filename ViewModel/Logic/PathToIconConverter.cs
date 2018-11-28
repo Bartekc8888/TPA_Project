@@ -26,7 +26,7 @@ namespace ViewModel.Logic
                 iconPath = "Icons/Enumerator.png";
             }
 
-            return new BitmapImage(new Uri(@"ViewModel_Assembly;;;component/" + iconPath, UriKind.Relative));
+            return new BitmapImage(new Uri($"pack://application:,,,/" + iconPath));
         }
 
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)

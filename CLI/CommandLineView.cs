@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Reflection;
+using System.Threading;
 using log4net;
 using ViewModel.Logic;
 
@@ -12,14 +13,15 @@ namespace CLI
         private static readonly ILog Log = LogManager.GetLogger
             (MethodBase.GetCurrentMethod().DeclaringType);
 
+        private const string ExitCharacter = "0";
+        private const string SerializationMode = "W";
+        private const string DeserializationMode = "L";
+
         private TypesTreeViewModel _viewModel;
         private TypesTreeItemViewModel _currentItem;
         private Stack<TypesTreeItemViewModel> _previousTypes;
 
-        public List<TypesTreeItemViewModel> pairs;
-
-        private int i = 1;
-        private bool isGoingBack;
+        private bool _isGoingBack;
 
         public CommandLineView()
         {
@@ -27,14 +29,18 @@ namespace CLI
 
             _previousTypes = new Stack<TypesTreeItemViewModel>();
             _viewModel = new TypesTreeViewModel();
+        }
 
+        public void Run()
+        {
+            GetFileFromUser();
+            
             PrintHeaders(_viewModel.Items);
             while (true)
             {
-                i = 1;
                 TypesTreeItemViewModel temp = _currentItem;
                 _currentItem = NewChosen();
-                if (isGoingBack)
+                if (_isGoingBack)
                 {
                 }
                 else
@@ -42,16 +48,42 @@ namespace CLI
                     _previousTypes.Push(temp);
                 }
 
-                printTypeWithChildren(_currentItem);
+                if (_currentItem != null)
+                {
+                    PrintTypeWithChildren(_currentItem);
+                }
+                else
+                {
+                    PrintHeaders(_viewModel.Items);
+                }
             }
         }
 
-        public void printTypeWithChildren(TypesTreeItemViewModel item)
+        private void GetFileFromUser()
+        {
+            do
+            {
+                Console.WriteLine("Give a path to assembly file or type in " + ExitCharacter + " to exit.");
+                _viewModel.SelectedPath = Console.ReadLine();
+            } while (!_viewModel.IsPathValid() && !ExitCharacter.Equals(_viewModel.SelectedPath));
+
+            if (!ExitCharacter.Equals(_viewModel.SelectedPath))
+            {
+               _viewModel.ExtractData();
+            }
+            else
+            {
+                Environment.Exit(0);
+            }
+        }
+
+        private void PrintTypeWithChildren(TypesTreeItemViewModel item)
         {
             Log.Debug("Printing current type with members");
 
             string itemString = "";
             string name = item.ItemDescription;
+            int index = 1;
 
             itemString += item.ItemDescription + " " + item.ItemType + " " + item.ItemName + Environment.NewLine;
             item.IsExpanded = true;
@@ -65,37 +97,46 @@ namespace CLI
 
                 if (tva.CanExpand)
                 {
-                    itemString += i.ToString();
-                    if (i >= 10)
-                        itemString += "   " + tva.ItemDescription + " " + tva.ItemType + " " + tva.ItemName +
-                                      Environment.NewLine;
-                    else
-                        itemString += "    " + tva.ItemDescription + " " + tva.ItemType + " " + tva.ItemName +
-                                      Environment.NewLine;
-                    i++;
+                    itemString += index.ToString();
+                    
+                    if (index < 10)
+                        itemString += " ";
+                    index++;
                 }
                 else
                 {
-                    itemString += "     " + tva.ItemDescription + " " + tva.ItemType + " " + tva.ItemName +
-                                  Environment.NewLine;
+                    itemString += "  ";
                 }
+                
+                itemString += "   " + tva.ItemDescription + " " + tva.ItemType + " " + tva.ItemName +
+                              Environment.NewLine;
             }
 
-            itemString += Environment.NewLine + "Press selected number to expand or 0 to come back";
+            itemString += GetMainMenuString();
             Console.Clear();
             Console.WriteLine(itemString);
+        }
+
+        private string GetMainMenuString()
+        {
+            string menuString = Environment.NewLine + "Press selected number to expand or 0 to come back";
+            menuString += Environment.NewLine + "Press 'w' to start serialization or 'l' to start deserialization";
+
+            return menuString;
         }
 
         private void PrintHeaders(ObservableCollection<TypesTreeItemViewModel> items)
         {
             string itemString = "Found types" + Environment.NewLine;
+            int index = 1;
+            
             foreach (TypesTreeItemViewModel itemViewModel in items)
             {
-                itemString += i.ToString();
+                itemString += index.ToString();
                 itemString += "   " + itemViewModel.ItemDescription + " " + itemViewModel.ItemType + " " +
                               itemViewModel.ItemName + Environment.NewLine;
 
-                i++;
+                index++;
             }
 
             itemString += Environment.NewLine + "Press selected number to expand or 0 to come back";
@@ -107,48 +148,64 @@ namespace CLI
         {
             Log.Debug("User chooses new type");
 
-            isGoingBack = false;
-            TypesTreeItemViewModel tva = null;
-            int n;
-            bool isNumber;
+            _isGoingBack = false;
+            TypesTreeItemViewModel viewModelItem = null;
             bool didUserChoose = false;
 
             do
             {
                 string chosen = Console.ReadLine();
-                isNumber = int.TryParse(chosen, out n);
+                bool isNumber = int.TryParse(chosen, out int parsedNumber);
 
-                if (n > 0 && isNumber)
+                if (isNumber)
                 {
-                    tva = GetExpandableByIndex(n);
-                    if (tva != null)
+                    if (parsedNumber > 0)
                     {
+                        viewModelItem = GetExpandableByIndex(parsedNumber);
+                        if (viewModelItem != null)
+                        {
+                            didUserChoose = true;
+                        }
+                    }
+
+                    if (parsedNumber == 0)
+                    {
+                        _isGoingBack = true;
+                        if (_previousTypes.Count != 0)
+                        {
+                            viewModelItem = _previousTypes.Pop();
+                        }
+                        else
+                        {
+                            viewModelItem = _currentItem;
+                        }
+
                         didUserChoose = true;
                     }
                 }
-
-                if (n == 0 && isNumber)
+                else if (chosen != null)
                 {
-                    isGoingBack = true;
-                    if (_previousTypes.Count != 0)
+
+                    if (SerializationMode.Equals(chosen.ToUpper()))
                     {
-                        tva = _previousTypes.Pop();
-                    }
-                    else
-                    {
-                        tva = _currentItem;
+                        HandleSerializationMode();
+                        return null;
                     }
 
-                    didUserChoose = true;
+                    if (DeserializationMode.Equals(chosen.ToUpper()))
+                    {
+                        HandleDeserializationMode();
+                        return null;
+                    }
                 }
             } while (!didUserChoose);
 
-            return tva;
+            return viewModelItem;
         }
 
         private TypesTreeItemViewModel GetExpandableByIndex(int index)
         {
-            TypesTreeItemViewModel tva = null;
+            TypesTreeItemViewModel viewModelItem;
 
             if (_previousTypes.Count > 0)
             {
@@ -156,7 +213,7 @@ namespace CLI
                 int offset = 0;
                 while ((index + offset) <= _currentItem.Children.Count && !foundExpandable)
                 {
-                    var child = _currentItem.Children[offset];
+                    TypesTreeItemViewModel child = _currentItem.Children[offset];
                     if (!child.CanExpand)
                     {
                         offset += 1;
@@ -167,14 +224,34 @@ namespace CLI
                     }
                 }
                 
-                tva = _currentItem.Children[index + offset - 1];
+                viewModelItem = _currentItem.Children[index + offset - 1];
             }
             else
             {
-                tva = _viewModel.Items[index - 1];
+                viewModelItem = _viewModel.Items[index - 1];
             }
 
-            return tva;
+            return viewModelItem;
+        }
+
+        private void HandleSerializationMode()
+        {
+            Console.Clear();
+            Console.WriteLine("Give a path for serialization file: " + Environment.NewLine);
+            string givenPath = Console.ReadLine();
+
+            _viewModel.SerializationPath = givenPath;
+            _viewModel.SerializeData();
+        }
+
+        private void HandleDeserializationMode()
+        {
+            Console.Clear();
+            Console.WriteLine("Give a path for deserialization file: " + Environment.NewLine);
+            string givenPath = Console.ReadLine();
+
+            _viewModel.SerializationPath = givenPath;
+            _viewModel.DeserializeData();
         }
     }
 }

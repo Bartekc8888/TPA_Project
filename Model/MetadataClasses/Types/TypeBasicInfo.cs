@@ -29,19 +29,18 @@ namespace Model.MetadataClasses.Types
         public IEnumerable<AttributeMetadata> Attributes { get; set; }
         //[XmlIgnore]
         [DataMember]
-        public Type InfoType { get; set; }
+        public string FullTypeName { get; set; }
 
         public TypeBasicInfo() { }
 
         public TypeBasicInfo(Type type)
         {
+            FullTypeName = type.AssemblyQualifiedName;
             TypeName = type.Name;
             NamespaceName = type.Namespace;
             GenericArguments = !type.IsGenericTypeDefinition && !type.IsConstructedGenericType ? null : EmitGenericArguments(type.GetGenericArguments());
             Modifiers = EmitModifiers(type);
             Attributes = AttributeMetadata.EmitAttributes(type);
-
-            InfoType = type;
         }
 
         internal static TypeBasicInfo EmitReference(Type type)
@@ -64,12 +63,12 @@ namespace Model.MetadataClasses.Types
 
         public static Tuple<AccessLevelEnum, SealedEnum, AbstractEnum> EmitModifiers(Type type)
         {
-            //set defaults 
+            //set defaults
             AccessLevelEnum _access = AccessLevelEnum.Private;
             AbstractEnum _abstract = AbstractEnum.NotAbstract;
             SealedEnum _sealed = SealedEnum.NotSealed;
 
-            // check if not default 
+            // check if not default
             if (type.IsPublic || type.IsNestedPublic)
                 _access = AccessLevelEnum.Public;
             else if (type.IsNestedPrivate)

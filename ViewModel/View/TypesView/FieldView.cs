@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using log4net;
@@ -23,7 +24,8 @@ namespace ViewModel.View.TypesView
         {
             Log.Debug("Creating Field View");
 
-            typeMetadata = new TypeMetadata(metadata.TypeMetadata.InfoType);
+            Type type = Type.GetType(metadata.TypeMetadata.FullTypeName);
+            typeMetadata = new TypeMetadata(type);
             Name = metadata.Name;
             if (metadata.TypeMetadata != null)
             {

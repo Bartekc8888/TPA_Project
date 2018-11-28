@@ -26,7 +26,8 @@ namespace ViewModel.View.TypesView
         {
             Log.Debug("Creating Event View");
 
-            typeMetadata = new TypeMetadata(metadata.TypeMetadata.InfoType);
+            Type type = Type.GetType(metadata.TypeMetadata.FullTypeName);
+            typeMetadata = new TypeMetadata(type);
             mName = metadata.Name;
             if (metadata.TypeMetadata != null)
             {
