@@ -5,27 +5,43 @@ using System.Reflection;
 using Model.MetadataClasses.Types.Members;
 using Model.MetadataDefinitions;
 using Model.MetadataExtensions;
+using System.Runtime.Serialization;
+using System.Xml.Serialization;
+using System.Runtime.InteropServices;
 
 namespace Model.MetadataClasses.Types
 {
+    [XmlRoot]
     public class TypeMetadata
     {
         #region fields
-        public TypeTypesEnum TypeEnum { get; private set; }
+        [XmlIgnore]
+        public TypeTypesEnum TypeEnum { get; set; }
 
-        public TypeBasicInfo TypeBasicInfo { get; private set; }
-        public TypeBasicInfo DeclaringType { get; private set; }
+        [XmlElement]
+        public TypeBasicInfo TypeBasicInfo { get; set; }
+        [XmlElement]
+        public TypeBasicInfo DeclaringType { get; set; }
 
-        public TypeBasicInfo BaseType { get; private set; }
-        public IEnumerable<TypeBasicInfo> ImplementedInterfaces { get; private set; }
+        [XmlElement]
+        public TypeBasicInfo BaseType { get; set; }
+        [XmlIgnore]
+        public IEnumerable<TypeBasicInfo> ImplementedInterfaces { get; set; }
 
-        public IEnumerable<FieldMetadata> Fields { get; private set; }
-        public IEnumerable<MethodMetadata> Methods { get; private set; }
-        public IEnumerable<PropertyMetadata> Properties { get; private set; }
-        public IEnumerable<IndexerMetadata> Indexers { get; private set; }
-        public IEnumerable<EventMetadata> Events { get; private set; }
-        public IEnumerable<ConstructorMetadata> Constructors { get; private set; }
-        public IEnumerable<TypeBasicInfo> NestedTypes { get; private set; }
+        [XmlIgnore]
+        public IEnumerable<FieldMetadata> Fields { get; set; }
+        [XmlIgnore]
+        public IEnumerable<MethodMetadata> Methods { get; set; }
+        [XmlIgnore]
+        public IEnumerable<PropertyMetadata> Properties { get; set; }
+        [XmlIgnore]
+        public IEnumerable<IndexerMetadata> Indexers { get; set; }
+        [XmlIgnore]
+        public IEnumerable<EventMetadata> Events { get; set; }
+        [XmlIgnore]
+        public IEnumerable<ConstructorMetadata> Constructors { get; set; }
+        [XmlIgnore]
+        public IEnumerable<TypeBasicInfo> NestedTypes { get; set; }
         #endregion
 
         #region constructors
@@ -48,6 +64,8 @@ namespace Model.MetadataClasses.Types
             Constructors = ConstructorMetadata.EmitConstructors(type.GetConstructors(flagsToGetAll));
             NestedTypes = EmitNestedTypes(type.GetNestedTypes(flagsToGetAll));
         }
+
+        public TypeMetadata() { }
         #endregion
 
         #region methods

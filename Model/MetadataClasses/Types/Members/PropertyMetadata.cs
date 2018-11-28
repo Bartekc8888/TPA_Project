@@ -3,11 +3,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Serialization;
+using System.Xml.Serialization;
 
 namespace Model.MetadataClasses.Types.Members
 {
+    [XmlRoot]
     public class PropertyMetadata : MemberAbstract
     {
+        [XmlElement]
         public MethodInfo[] propertyMethods;
         internal static IEnumerable<PropertyMetadata> EmitProperties(IEnumerable<PropertyInfo> props)
         {
@@ -20,5 +24,7 @@ namespace Model.MetadataClasses.Types.Members
         {
             propertyMethods = methods;
         }
+
+        public PropertyMetadata() : base() { }
     }
 }

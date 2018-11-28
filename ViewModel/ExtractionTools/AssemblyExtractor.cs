@@ -20,6 +20,6 @@ namespace ViewModel.ExtractionTools
             AssemblyModel = new AssemblyMetadata(assembly);
         }
 
-        public AssemblyMetadata AssemblyModel { get; }
+        public AssemblyMetadata AssemblyModel { get; set; }
     }
 }

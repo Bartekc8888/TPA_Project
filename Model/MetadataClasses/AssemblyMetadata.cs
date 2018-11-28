@@ -3,16 +3,22 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Serialization;
+using System.Xml.Serialization;
 using Model.MetadataExtensions;
 
 namespace Model.MetadataClasses
 {
+    [XmlRoot]
     public class AssemblyMetadata
     {
-        public string TypeName { get; }
-        public string Name { get; }
-        public IEnumerable<NamespaceMetadata> Namespaces { get; }
-
+        [XmlElement]
+        public string TypeName { get; set; }
+        [XmlElement]
+        public string Name { get; set; }
+        [XmlIgnore]
+        public IEnumerable<NamespaceMetadata> Namespaces { get; set; }
+       
         public AssemblyMetadata(Assembly assembly)
         {
             TypeName = assembly.GetType().Name;
@@ -23,5 +29,7 @@ namespace Model.MetadataClasses
                          orderby _group.Key
                          select new NamespaceMetadata(_group.Key, _group);
         }
+
+        public AssemblyMetadata() { }
     }
 }

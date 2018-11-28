@@ -4,18 +4,27 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using Model.MetadataDefinitions;
+using System.Runtime.Serialization;
+using System.Xml.Serialization;
 
 namespace Model.MetadataClasses.Types.Members
 {
+    [XmlRoot]
     public class MethodMetadata
     {
         #region vars
-        public string Name { get; private set; }
-        public IEnumerable<TypeBasicInfo> GenericArguments { get; private set; }
-        public Tuple<AccessLevelEnum, AbstractEnum, StaticEnum, VirtualEnum, OverrideEnum> Modifiers { get; private set; }
-        public TypeBasicInfo ReturnType { get; private set; }
-        public bool Extension { get; private set; }
-        public IEnumerable<ParameterMetadata> Parameters { get; private set; }
+        [XmlElement]
+        public string Name { get; set; }
+        [XmlIgnore]
+        public IEnumerable<TypeBasicInfo> GenericArguments { get; set; }
+        [XmlIgnore]
+        public Tuple<AccessLevelEnum, AbstractEnum, StaticEnum, VirtualEnum, OverrideEnum> Modifiers { get; set; }
+        [XmlElement]
+        public TypeBasicInfo ReturnType { get; set; }
+        [XmlElement]
+        public bool Extension { get; set; }
+        [XmlIgnore]
+        public IEnumerable<ParameterMetadata> Parameters { get; set; }
         #endregion
 
         internal static IEnumerable<MethodMetadata> EmitMethods(IEnumerable<MethodBase> methods)
@@ -33,6 +42,9 @@ namespace Model.MetadataClasses.Types.Members
             Modifiers = EmitModifiers(method);
             Extension = EmitExtension(method);
         }
+
+        public MethodMetadata() { }
+
 
         #region methods
         private static IEnumerable<ParameterMetadata> EmitParameters(IEnumerable<ParameterInfo> parms)

@@ -2,17 +2,36 @@
 using System.Collections.Generic;
 using System.Linq;
 using Model.MetadataDefinitions;
+using System.Runtime.Serialization;
+using System.Xml.Serialization;
+using Model.MetadataClasses.Types.Members;
 
 namespace Model.MetadataClasses.Types
 {
+    [DataContract(IsReference = true)]
+    //[XmlRoot]
     public class TypeBasicInfo
     {
-        public string TypeName { get; private set; }
-        public string NamespaceName { get; private set; }
-        public IEnumerable<TypeBasicInfo> GenericArguments { get; private set; }
-        public Tuple<AccessLevelEnum, SealedEnum, AbstractEnum> Modifiers { get; private set; }
-        public IEnumerable<Attribute> Attributes { get; private set; }
-        public Type InfoType { get; private set; }
+        //[XmlElement]
+        [DataMember]
+        public string TypeName { get; set; }
+        //[XmlElement]
+        [DataMember]
+        public string NamespaceName { get; set; }
+        //[XmlIgnore]
+        [DataMember]
+        public IEnumerable<TypeBasicInfo> GenericArguments { get; set; }
+        //[XmlIgnore]
+        [DataMember]
+        public Tuple<AccessLevelEnum, SealedEnum, AbstractEnum> Modifiers { get; set; }
+        //[XmlIgnore]
+        [DataMember]
+        public IEnumerable<AttributeMetadata> Attributes { get; set; }
+        //[XmlIgnore]
+        [DataMember]
+        public Type InfoType { get; set; }
+
+        public TypeBasicInfo() { }
 
         public TypeBasicInfo(Type type)
         {
@@ -20,7 +39,7 @@ namespace Model.MetadataClasses.Types
             NamespaceName = type.Namespace;
             GenericArguments = !type.IsGenericTypeDefinition && !type.IsConstructedGenericType ? null : EmitGenericArguments(type.GetGenericArguments());
             Modifiers = EmitModifiers(type);
-            Attributes = type.GetCustomAttributes(false).Cast<Attribute>();
+            Attributes = AttributeMetadata.EmitAttributes(type);
 
             InfoType = type;
         }

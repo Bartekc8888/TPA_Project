@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Serialization;
+using System.Xml.Serialization;
 
 namespace Model.MetadataClasses.Types.Members
 {
+    [XmlRoot]
     public class IndexerMetadata : MemberAbstract
     {
         internal static IEnumerable<IndexerMetadata> EmitIndexers(IEnumerable<PropertyInfo> indxs)
@@ -16,5 +19,7 @@ namespace Model.MetadataClasses.Types.Members
         private IndexerMetadata(string indexerName, Type type) : base(indexerName, TypeBasicInfo.EmitReference(type))
         {
         }
+
+        public IndexerMetadata() : base() { }
     }
 }

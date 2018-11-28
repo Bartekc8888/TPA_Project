@@ -15,10 +15,12 @@ namespace ViewModel.Logic
 
         public TypesTreeViewModel()
         {
-            Log.Info("Creating TreeVIewModel");
+            Log.Info("Creating TreeViewModel");
 
-            AssemblyExtractor assemblyExtractor = new AssemblyExtractor(@"C:\Users\barte\Desktop\tpaProject\TPA_Project\GUI\bin\Debug\log4net.dll");
+            AssemblyExtractor assemblyExtractor = new AssemblyExtractor(@"C:\Users\Michal\Desktop\TPA_Project\CLI\bin\Debug\log4net.dll");
             TypeViewAbstract view = ViewTypeFactory.CreateTypeViewClass(assemblyExtractor.AssemblyModel);
+            IConventer xml = new XmlConventer();
+            xml.saveToFile(assemblyExtractor.AssemblyModel, "xmlfile.xml");
             TypesTreeItemViewModel item = new TypesTreeItemViewModel(view);
             Items = new ObservableCollection<TypesTreeItemViewModel> { item };
         }

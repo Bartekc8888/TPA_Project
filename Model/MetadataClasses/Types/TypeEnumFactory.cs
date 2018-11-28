@@ -1,5 +1,6 @@
 ﻿using System;
 using Model.MetadataDefinitions;
+using System.Runtime.Serialization;
 
 namespace Model.MetadataClasses.Types
 {

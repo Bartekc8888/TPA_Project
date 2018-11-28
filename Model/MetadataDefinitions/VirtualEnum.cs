@@ -1,8 +1,14 @@
 ﻿
+using System.Xml.Serialization;
+
 namespace Model.MetadataDefinitions
 {
+    [XmlRoot]
     public enum VirtualEnum
     {
-        NotVirtual, Virtual
+        [XmlEnum("1")]
+        NotVirtual,
+        [XmlEnum("2")]
+        Virtual
     }
 }
