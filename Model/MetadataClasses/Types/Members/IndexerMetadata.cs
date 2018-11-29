@@ -7,7 +7,8 @@ using System.Xml.Serialization;
 
 namespace Model.MetadataClasses.Types.Members
 {
-    [XmlRoot]
+    //[XmlRoot]
+    [DataContract]
     public class IndexerMetadata : MemberAbstract
     {
         internal static IEnumerable<IndexerMetadata> EmitIndexers(IEnumerable<PropertyInfo> indxs)

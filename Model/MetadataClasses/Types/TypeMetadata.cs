@@ -11,36 +11,49 @@ using System.Runtime.InteropServices;
 
 namespace Model.MetadataClasses.Types
 {
-    [XmlRoot]
+    //[XmlRoot]
+    [DataContract]
     public class TypeMetadata
     {
         #region fields
-        [XmlIgnore]
+        //[XmlIgnore]
+        [DataMember]
         public TypeTypesEnum TypeEnum { get; set; }
 
-        [XmlElement]
+        //[XmlElement]
+        [DataMember]
         public TypeBasicInfo TypeBasicInfo { get; set; }
-        [XmlElement]
+        //[XmlElement]
+        [DataMember]
         public TypeBasicInfo DeclaringType { get; set; }
 
-        [XmlElement]
+        //[XmlElement]
+        [DataMember]
         public TypeBasicInfo BaseType { get; set; }
-        [XmlIgnore]
+        //[XmlIgnore]
+        [DataMember]
         public IEnumerable<TypeBasicInfo> ImplementedInterfaces { get; set; }
 
-        [XmlIgnore]
+        //[XmlIgnore]
+        [DataMember]
         public IEnumerable<FieldMetadata> Fields { get; set; }
-        [XmlIgnore]
+        // [XmlIgnore]
+        [DataMember]
         public IEnumerable<MethodMetadata> Methods { get; set; }
-        [XmlIgnore]
+        // [XmlIgnore]
+        [DataMember]
         public IEnumerable<PropertyMetadata> Properties { get; set; }
-        [XmlIgnore]
+        //[XmlIgnore]
+        [DataMember]
         public IEnumerable<IndexerMetadata> Indexers { get; set; }
-        [XmlIgnore]
+        //[XmlIgnore]
+        [DataMember]
         public IEnumerable<EventMetadata> Events { get; set; }
-        [XmlIgnore]
+        // [XmlIgnore]
+        [DataMember]
         public IEnumerable<ConstructorMetadata> Constructors { get; set; }
-        [XmlIgnore]
+        //[XmlIgnore]
+        [DataMember]
         public IEnumerable<TypeBasicInfo> NestedTypes { get; set; }
         #endregion
 

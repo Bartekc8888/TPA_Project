@@ -7,12 +7,15 @@ using System.Xml.Serialization;
 
 namespace Model.MetadataClasses
 {
-    [XmlRoot]
+    //[XmlRoot]
+    [DataContract]
     public class NamespaceMetadata
     {
-        [XmlElement]
+        //[XmlElement]
+        [DataMember]
         public string NamespaceName { get; set; }
-        [XmlIgnore]
+        //[XmlIgnore]
+        [DataMember]
         public IEnumerable<TypeMetadata> Types { get; set; }
 
         public NamespaceMetadata(string name, IEnumerable<Type> types)

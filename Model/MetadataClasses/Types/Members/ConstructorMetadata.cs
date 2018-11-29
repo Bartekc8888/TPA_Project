@@ -7,7 +7,8 @@ using System.Xml.Serialization;
 
 namespace Model.MetadataClasses.Types.Members
 {
-    [XmlRoot]
+    //[XmlRoot]
+    [DataContract]
     public class ConstructorMetadata : MethodMetadata
     {
         public ConstructorMetadata(MethodBase method) : base(method)

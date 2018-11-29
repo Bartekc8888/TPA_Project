@@ -4,12 +4,15 @@ using System.Xml.Serialization;
 
 namespace Model.MetadataClasses.Types.Members
 {
-    [XmlRoot]
+    //[XmlRoot]
+    [DataContract]
     public abstract class MemberAbstract
     {
-        [XmlElement]
+        //[XmlElement]
+        [DataMember]
         public string Name { get; set; }
-        [XmlElement]
+        //[XmlElement]
+        [DataMember]
         public TypeBasicInfo TypeMetadata { get; set; }
 
         public MemberAbstract(string name, TypeBasicInfo typeInfo)

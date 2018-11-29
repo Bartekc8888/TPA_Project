@@ -7,7 +7,8 @@ using System.Xml.Serialization;
 
 namespace Model.MetadataClasses.Types.Members
 {
-    [XmlRoot]
+    //[XmlRoot]
+    [DataContract]
     public class FieldMetadata : MemberAbstract
     {
         internal static IEnumerable<FieldMetadata> EmitFields(IEnumerable<FieldInfo> fieldsInfo)

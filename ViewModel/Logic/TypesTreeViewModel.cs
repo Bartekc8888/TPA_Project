@@ -17,7 +17,7 @@ namespace ViewModel.Logic
               (MethodBase.GetCurrentMethod().DeclaringType);
 
         public event PropertyChangedEventHandler PropertyChanged = (s, e) => {};
-
+        public AssemblyExtractor assemblyExtractor;
         private ObservableCollection<TypesTreeItemViewModel> _items;
         public ObservableCollection<TypesTreeItemViewModel> Items
         {
@@ -84,7 +84,7 @@ namespace ViewModel.Logic
         {
             if (!String.IsNullOrEmpty(SelectedPath))
             {
-                AssemblyExtractor assemblyExtractor = new AssemblyExtractor(SelectedPath);
+                assemblyExtractor = new AssemblyExtractor(SelectedPath);
                 TypeViewAbstract view = ViewTypeFactory.CreateTypeViewClass(assemblyExtractor.AssemblyModel);
                 TypesTreeItemViewModel item = new TypesTreeItemViewModel(view);
 
@@ -101,7 +101,8 @@ namespace ViewModel.Logic
             if (!String.IsNullOrEmpty(SerializationPath) && _items.Count > 0)
             {
                 TypeViewAbstract typeViewAbstract = _items[0].CurrentType;
-                // Serialize(typeViewAbstract, SerializationPath)
+                IConventer xml = new XmlConventer();
+                xml.saveToFile(assemblyExtractor.AssemblyModel, SerializationPath);
             }
         }
 

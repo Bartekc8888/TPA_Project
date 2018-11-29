@@ -6,7 +6,8 @@ using System.Xml.Serialization;
 
 namespace Model.MetadataClasses.Types.Members
 {
-    [XmlRoot]
+    //[XmlRoot]
+    [DataContract]
     public class EventMetadata : MemberAbstract
     {
         internal static IEnumerable<EventMetadata> EmitEvents(IEnumerable<EventInfo> eventsInfo)

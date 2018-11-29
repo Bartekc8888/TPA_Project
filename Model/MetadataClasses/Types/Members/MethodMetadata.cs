@@ -9,21 +9,28 @@ using System.Xml.Serialization;
 
 namespace Model.MetadataClasses.Types.Members
 {
-    [XmlRoot]
+    //[XmlRoot]
+    [DataContract]
     public class MethodMetadata
     {
         #region vars
-        [XmlElement]
+        //[XmlElement]
+        [DataMember]
         public string Name { get; set; }
-        [XmlIgnore]
+        //[XmlIgnore]
+        [DataMember]
         public IEnumerable<TypeBasicInfo> GenericArguments { get; set; }
-        [XmlIgnore]
+        //[XmlIgnore]
+        [DataMember]
         public Tuple<AccessLevelEnum, AbstractEnum, StaticEnum, VirtualEnum, OverrideEnum> Modifiers { get; set; }
-        [XmlElement]
+        //[XmlElement]
+        [DataMember]
         public TypeBasicInfo ReturnType { get; set; }
-        [XmlElement]
+       // [XmlElement]
+       [DataMember]
         public bool Extension { get; set; }
-        [XmlIgnore]
+        //[XmlIgnore]
+        [DataMember]
         public IEnumerable<ParameterMetadata> Parameters { get; set; }
         #endregion
 

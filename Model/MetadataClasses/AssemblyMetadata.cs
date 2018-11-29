@@ -9,14 +9,18 @@ using Model.MetadataExtensions;
 
 namespace Model.MetadataClasses
 {
-    [XmlRoot]
+    //[XmlRoot]
+    [DataContract]
     public class AssemblyMetadata
     {
-        [XmlElement]
+        //[XmlElement]
+        [DataMember]
         public string TypeName { get; set; }
-        [XmlElement]
+        //[XmlElement]
+        [DataMember]
         public string Name { get; set; }
-        [XmlIgnore]
+        //[XmlIgnore]
+        [DataMember]
         public IEnumerable<NamespaceMetadata> Namespaces { get; set; }
        
         public AssemblyMetadata(Assembly assembly)

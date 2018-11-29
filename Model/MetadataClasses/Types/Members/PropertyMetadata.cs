@@ -8,10 +8,12 @@ using System.Xml.Serialization;
 
 namespace Model.MetadataClasses.Types.Members
 {
-    [XmlRoot]
+    //[XmlRoot]
+    [DataContract]
     public class PropertyMetadata : MemberAbstract
     {
-        [XmlElement]
+       // [XmlElement]
+       [IgnoreDataMember]
         public MethodInfo[] propertyMethods;
         internal static IEnumerable<PropertyMetadata> EmitProperties(IEnumerable<PropertyInfo> props)
         {
