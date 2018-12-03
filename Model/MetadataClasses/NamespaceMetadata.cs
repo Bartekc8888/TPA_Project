@@ -1,20 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Model.MetadataClasses.Types;
 using System.Runtime.Serialization;
-using System.Xml.Serialization;
+using Model.MetadataClasses.Types;
 
 namespace Model.MetadataClasses
 {
-    //[XmlRoot]
     [DataContract]
     public class NamespaceMetadata
     {
-        //[XmlElement]
         [DataMember]
         public string NamespaceName { get; set; }
-        //[XmlIgnore]
         [DataMember]
         public IEnumerable<TypeMetadata> Types { get; set; }
 

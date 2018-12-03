@@ -1,17 +1,12 @@
-﻿using System;
-using System.Runtime.Serialization;
-using System.Xml.Serialization;
+﻿using System.Runtime.Serialization;
 
 namespace Model.MetadataClasses.Types.Members
 {
-    //[XmlRoot]
     [DataContract]
     public abstract class MemberAbstract
     {
-        //[XmlElement]
         [DataMember]
         public string Name { get; set; }
-        //[XmlElement]
         [DataMember]
         public TypeBasicInfo TypeMetadata { get; set; }
 

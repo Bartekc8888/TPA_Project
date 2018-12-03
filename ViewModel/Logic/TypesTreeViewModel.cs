@@ -3,9 +3,10 @@ using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.IO;
 using System.Reflection;
-using System.Windows.Data;
+using System.Threading;
 using System.Windows.Input;
 using log4net;
+using Model.MetadataClasses;
 using ViewModel.ExtractionTools;
 using ViewModel.View.TypesView;
 
@@ -17,7 +18,9 @@ namespace ViewModel.Logic
               (MethodBase.GetCurrentMethod().DeclaringType);
 
         public event PropertyChangedEventHandler PropertyChanged = (s, e) => {};
-        public AssemblyExtractor assemblyExtractor;
+        private AssemblyMetadata _assemblyModel;
+        private readonly SynchronizationContext _context;
+        
         private ObservableCollection<TypesTreeItemViewModel> _items;
         public ObservableCollection<TypesTreeItemViewModel> Items
         {
@@ -56,11 +59,10 @@ namespace ViewModel.Logic
         public ICommand SerializeCommand { get; set; }
         public ICommand DeserializeCommand { get; set; }
 
-        private object _itemsLock;
-
         public TypesTreeViewModel()
         {
             Log.Info("Creating TreeViewModel");
+            _context = SynchronizationContext.Current;
 
             SelectedPath = "";
             SerializationPath = "";
@@ -69,9 +71,6 @@ namespace ViewModel.Logic
 
             SerializeCommand = new RelayCommand(SerializeData);
             DeserializeCommand = new RelayCommand(DeserializeData);
-
-            _itemsLock = new object();
-            BindingOperations.EnableCollectionSynchronization(Items, _itemsLock);
         }
 
         public bool IsPathValid()
@@ -84,15 +83,12 @@ namespace ViewModel.Logic
         {
             if (!String.IsNullOrEmpty(SelectedPath))
             {
-                assemblyExtractor = new AssemblyExtractor(SelectedPath);
-                TypeViewAbstract view = ViewTypeFactory.CreateTypeViewClass(assemblyExtractor.AssemblyModel);
+                _assemblyModel = new AssemblyExtractor(SelectedPath).AssemblyModel;
+                
+                TypeViewAbstract view = ViewTypeFactory.CreateTypeViewClass(_assemblyModel);
                 TypesTreeItemViewModel item = new TypesTreeItemViewModel(view);
 
-                lock (_itemsLock)
-                {
-                    Items.Clear();
-                    Items.Add(item);
-                }
+                SetNewData(item);
             }
         }
 
@@ -100,9 +96,8 @@ namespace ViewModel.Logic
         {
             if (!String.IsNullOrEmpty(SerializationPath) && _items.Count > 0)
             {
-                TypeViewAbstract typeViewAbstract = _items[0].CurrentType;
                 IConventer xml = new XmlConventer();
-                xml.saveToFile(assemblyExtractor.AssemblyModel, SerializationPath);
+                xml.saveToFile(_assemblyModel, SerializationPath);
             }
         }
 
@@ -110,16 +105,29 @@ namespace ViewModel.Logic
         {
             if (!String.IsNullOrEmpty(SerializationPath))
             {
-                // TypeViewAbstract typeViewAbstract = Deserialize(SerializationPath)
+                IConventer xml = new XmlConventer();
+                _assemblyModel = xml.readFromFile(SerializationPath);
+                TypeViewAbstract view = ViewTypeFactory.CreateTypeViewClass(_assemblyModel);
 
-//                TypeViewAbstract view = ViewTypeFactory.CreateTypeViewClass(typeViewAbstract);
-//                TypesTreeItemViewModel item = new TypesTreeItemViewModel(view);
-//
-//                lock (_itemsLock)
-//                {
-//                    Items.Clear();
-//                    Items.Add(item);
-//                }
+                TypesTreeItemViewModel item = new TypesTreeItemViewModel(view);
+                SetNewData(item);
+            }
+        }
+
+        private void SetNewData(TypesTreeItemViewModel item)
+        {
+            if (_context != null)
+            {
+                _context.Post(delegate
+                {
+                    Items.Clear();
+                    Items.Add(item);
+                }, null);
+            }
+            else
+            {
+                Items.Clear();
+                Items.Add(item);
             }
         }
     }

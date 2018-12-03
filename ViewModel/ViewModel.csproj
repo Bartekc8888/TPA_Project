@@ -36,8 +36,6 @@
       <HintPath>..\packages\log4net.2.0.8\lib\net45-full\log4net.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="PresentationCore" />
-    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data" />
@@ -48,7 +46,6 @@
   <ItemGroup>
     <Compile Include="ExtractionTools\AssemblyExtractor.cs" />
     <Compile Include="Logic\IConventer.cs" />
-    <Compile Include="Logic\PathToIconConverter.cs" />
     <Compile Include="Logic\RelayCommand.cs" />
     <Compile Include="Logic\TypesTreeItemViewModel.cs" />
     <Compile Include="Logic\TypesTreeViewModel.cs" />

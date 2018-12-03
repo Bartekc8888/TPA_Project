@@ -3,33 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using Model.MetadataDefinitions;
 using System.Runtime.Serialization;
-using System.Xml.Serialization;
+using Model.MetadataDefinitions;
 
 namespace Model.MetadataClasses.Types.Members
 {
-    //[XmlRoot]
     [DataContract]
     public class MethodMetadata
     {
         #region vars
-        //[XmlElement]
         [DataMember]
         public string Name { get; set; }
-        //[XmlIgnore]
         [DataMember]
         public IEnumerable<TypeBasicInfo> GenericArguments { get; set; }
-        //[XmlIgnore]
         [DataMember]
         public Tuple<AccessLevelEnum, AbstractEnum, StaticEnum, VirtualEnum, OverrideEnum> Modifiers { get; set; }
-        //[XmlElement]
         [DataMember]
         public TypeBasicInfo ReturnType { get; set; }
-       // [XmlElement]
-       [DataMember]
+        [DataMember]
         public bool Extension { get; set; }
-        //[XmlIgnore]
         [DataMember]
         public IEnumerable<ParameterMetadata> Parameters { get; set; }
         #endregion

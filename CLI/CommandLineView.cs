@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Reflection;
-using System.Threading;
 using log4net;
 using ViewModel.Logic;
 
@@ -54,6 +53,7 @@ namespace CLI
                 }
                 else
                 {
+                    _previousTypes.Clear();
                     PrintHeaders(_viewModel.Items);
                 }
             }
@@ -139,7 +139,7 @@ namespace CLI
                 index++;
             }
 
-            itemString += Environment.NewLine + "Press selected number to expand or 0 to come back";
+            itemString += GetMainMenuString();
             Console.Clear();
             Console.WriteLine(itemString);
         }

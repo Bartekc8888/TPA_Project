@@ -4,22 +4,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
-using System.Xml.Serialization;
 using Model.MetadataExtensions;
 
 namespace Model.MetadataClasses
 {
-    //[XmlRoot]
     [DataContract]
     public class AssemblyMetadata
     {
-        //[XmlElement]
         [DataMember]
         public string TypeName { get; set; }
-        //[XmlElement]
         [DataMember]
         public string Name { get; set; }
-        //[XmlIgnore]
         [DataMember]
         public IEnumerable<NamespaceMetadata> Namespaces { get; set; }
        

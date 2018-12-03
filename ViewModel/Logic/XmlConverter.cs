@@ -1,5 +1,5 @@
-﻿using System.Xml;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
+using System.Xml;
 using Model.MetadataClasses;
 
 namespace ViewModel.Logic
@@ -9,8 +9,9 @@ namespace ViewModel.Logic
 
         public void saveToFile(AssemblyMetadata context, string filePath)
         {
+            XmlWriterSettings xmlWriterSettings = new XmlWriterSettings { Indent = true };
             DataContractSerializer serializer = new DataContractSerializer(context.GetType());
-            using (XmlWriter w = XmlWriter.Create(filePath))
+            using (XmlWriter w = XmlWriter.Create(filePath, xmlWriterSettings))
             {
                 serializer.WriteObject(w, context);
             }

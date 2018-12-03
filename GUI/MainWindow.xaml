@@ -4,6 +4,7 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:logic="clr-namespace:ViewModel.Logic;assembly=ViewModel_Assembly"
+        xmlns:gui="clr-namespace:GUI"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800" MinHeight="300" MinWidth="450" d:DataContext="{d:DesignInstance logic:TypesTreeViewModel}">
     
@@ -44,7 +45,7 @@
                         <StackPanel Orientation="Horizontal">
                             <Image Width="20" Margin="3" 
                                                Source="{Binding TypeIcon,
-                                                                Converter={x:Static logic:PathToIconConverter.Instance}}"/>
+                                                                Converter={x:Static gui:PathToIconConverter.Instance}}"/>
                             <TextBlock Margin="5" VerticalAlignment="Center" Text="{Binding ItemDescription}"/>
                             <TextBlock Margin="3" VerticalAlignment="Center" Text="{Binding ItemType}"/>
                             <TextBlock Margin="3" VerticalAlignment="Center" Text="{Binding ItemName}"/>

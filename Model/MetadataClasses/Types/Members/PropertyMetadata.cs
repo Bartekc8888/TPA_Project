@@ -4,17 +4,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Serialization;
-using System.Xml.Serialization;
 
 namespace Model.MetadataClasses.Types.Members
 {
-    //[XmlRoot]
     [DataContract]
     public class PropertyMetadata : MemberAbstract
     {
-       // [XmlElement]
-       [IgnoreDataMember]
-        public MethodInfo[] propertyMethods;
+        [DataMember]
+        public MethodMetadata[] propertyMethods;
+        
         internal static IEnumerable<PropertyMetadata> EmitProperties(IEnumerable<PropertyInfo> props)
         {
 
@@ -24,7 +22,7 @@ namespace Model.MetadataClasses.Types.Members
 
         private PropertyMetadata(string propertyName, Type type, MethodInfo[] methods) : base(propertyName, TypeBasicInfo.EmitReference(type))
         {
-            propertyMethods = methods;
+            propertyMethods = methods.Select(info => new MethodMetadata(info)).ToArray();
         }
 
         public PropertyMetadata() : base() { }

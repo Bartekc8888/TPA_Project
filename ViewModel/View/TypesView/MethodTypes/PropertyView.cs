@@ -39,15 +39,9 @@ namespace ViewModel.View.TypesView.MethodTypes
 
             List<TypeViewAbstract> typeViewList = new List<TypeViewAbstract>();
 
-            typeViewList.AddRange(EmitMethod(metadata.propertyMethods).Select(elem => ViewTypeFactory.CreateTypeViewClass(elem)));
+            typeViewList.AddRange(metadata.propertyMethods.Select(ViewTypeFactory.CreateTypeViewClass));
             
             return typeViewList;
-        }
-
-        private IEnumerable<MethodMetadata> EmitMethod(IEnumerable<MethodBase> methods)
-        {
-            return from MethodBase _currentMethod in methods
-                   select new MethodMetadata(_currentMethod);
         }
     }
 }

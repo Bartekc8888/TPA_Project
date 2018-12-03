@@ -2,57 +2,42 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Serialization;
 using Model.MetadataClasses.Types.Members;
 using Model.MetadataDefinitions;
 using Model.MetadataExtensions;
-using System.Runtime.Serialization;
-using System.Xml.Serialization;
-using System.Runtime.InteropServices;
 
 namespace Model.MetadataClasses.Types
 {
-    //[XmlRoot]
     [DataContract]
     public class TypeMetadata
     {
         #region fields
-        //[XmlIgnore]
         [DataMember]
         public TypeTypesEnum TypeEnum { get; set; }
 
-        //[XmlElement]
         [DataMember]
         public TypeBasicInfo TypeBasicInfo { get; set; }
-        //[XmlElement]
         [DataMember]
         public TypeBasicInfo DeclaringType { get; set; }
 
-        //[XmlElement]
         [DataMember]
         public TypeBasicInfo BaseType { get; set; }
-        //[XmlIgnore]
         [DataMember]
         public IEnumerable<TypeBasicInfo> ImplementedInterfaces { get; set; }
 
-        //[XmlIgnore]
         [DataMember]
         public IEnumerable<FieldMetadata> Fields { get; set; }
-        // [XmlIgnore]
         [DataMember]
         public IEnumerable<MethodMetadata> Methods { get; set; }
-        // [XmlIgnore]
         [DataMember]
         public IEnumerable<PropertyMetadata> Properties { get; set; }
-        //[XmlIgnore]
         [DataMember]
         public IEnumerable<IndexerMetadata> Indexers { get; set; }
-        //[XmlIgnore]
         [DataMember]
         public IEnumerable<EventMetadata> Events { get; set; }
-        // [XmlIgnore]
         [DataMember]
         public IEnumerable<ConstructorMetadata> Constructors { get; set; }
-        //[XmlIgnore]
         [DataMember]
         public IEnumerable<TypeBasicInfo> NestedTypes { get; set; }
         #endregion

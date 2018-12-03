@@ -1,9 +1,7 @@
 ﻿using System.Runtime.Serialization;
-using System.Xml.Serialization;
 
 namespace Model.MetadataClasses.Types.Members
 {
-    //[XmlRoot]
     [DataContract]
     public class ParameterMetadata : MemberAbstract
     {

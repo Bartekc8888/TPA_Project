@@ -1,33 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Model.MetadataDefinitions;
 using System.Runtime.Serialization;
-using System.Xml.Serialization;
 using Model.MetadataClasses.Types.Members;
+using Model.MetadataDefinitions;
 
 namespace Model.MetadataClasses.Types
 {
     [DataContract(IsReference = true)]
-    //[XmlRoot]
     public class TypeBasicInfo
     {
-        //[XmlElement]
         [DataMember]
         public string TypeName { get; set; }
-        //[XmlElement]
         [DataMember]
         public string NamespaceName { get; set; }
-        //[XmlIgnore]
         [DataMember]
         public IEnumerable<TypeBasicInfo> GenericArguments { get; set; }
-        //[XmlIgnore]
         [DataMember]
         public Tuple<AccessLevelEnum, SealedEnum, AbstractEnum> Modifiers { get; set; }
-        //[XmlIgnore]
         [DataMember]
         public IEnumerable<AttributeMetadata> Attributes { get; set; }
-        //[XmlIgnore]
         [DataMember]
         public string FullTypeName { get; set; }
 
