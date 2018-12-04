@@ -41,13 +41,13 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Xml" />
-    <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ExtractionTools\AssemblyExtractor.cs" />
     <Compile Include="Logic\IConventer.cs" />
+    <Compile Include="Logic\IFileChooser.cs" />
     <Compile Include="Logic\RelayCommand.cs" />
-    <Compile Include="Logic\TypesTreeItemViewModel.cs" />
+    <Compile Include="Logic\TypeViewAbstract.cs" />
     <Compile Include="Logic\TypesTreeViewModel.cs" />
     <Compile Include="Logic\XmlConverter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -65,7 +65,6 @@
     <Compile Include="View\TypesView\ReferenceTypes\DelegateView.cs" />
     <Compile Include="View\TypesView\ReferenceTypes\InterfaceView.cs" />
     <Compile Include="View\TypesView\ReferenceTypes\ReferenceView.cs" />
-    <Compile Include="View\TypesView\TypeViewAbstract.cs" />
     <Compile Include="View\TypesView\ValueTypes\EnumView.cs" />
     <Compile Include="View\TypesView\ValueTypes\PrimitiveView.cs" />
     <Compile Include="View\TypesView\ValueTypes\StructureView.cs" />

@@ -6,6 +6,7 @@ using Model.MetadataClasses;
 using Model.MetadataClasses.Types;
 using Model.MetadataClasses.Types.Members;
 using Model.MetadataDefinitions;
+using ViewModel.Logic;
 using ViewModel.View.TypesView.MethodTypes;
 using ViewModel.View.TypesView.ReferenceTypes;
 using ViewModel.View.TypesView.ValueTypes;

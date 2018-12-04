@@ -20,9 +20,11 @@ namespace ViewModel.Logic
         public event PropertyChangedEventHandler PropertyChanged = (s, e) => {};
         private AssemblyMetadata _assemblyModel;
         private readonly SynchronizationContext _context;
+
+        private IFileChooser _fileChooser;
         
-        private ObservableCollection<TypesTreeItemViewModel> _items;
-        public ObservableCollection<TypesTreeItemViewModel> Items
+        private ObservableCollection<TypeViewAbstract> _items;
+        public ObservableCollection<TypeViewAbstract> Items
         {
             get => _items;
             set
@@ -55,19 +57,22 @@ namespace ViewModel.Logic
         }
 
         public ICommand AnalyzeCommand { get; set; }
+        public ICommand ChooseAnalyzePathCommand { get; set; }
 
         public ICommand SerializeCommand { get; set; }
         public ICommand DeserializeCommand { get; set; }
 
-        public TypesTreeViewModel()
+        public TypesTreeViewModel(IFileChooser fileChooser)
         {
             Log.Info("Creating TreeViewModel");
             _context = SynchronizationContext.Current;
+            _fileChooser = fileChooser;
 
             SelectedPath = "";
             SerializationPath = "";
-            Items = new ObservableCollection<TypesTreeItemViewModel>();
+            Items = new ObservableCollection<TypeViewAbstract>();
             AnalyzeCommand = new RelayCommand(ExtractData);
+            ChooseAnalyzePathCommand = new RelayCommand(ChooseFile);
 
             SerializeCommand = new RelayCommand(SerializeData);
             DeserializeCommand = new RelayCommand(DeserializeData);
@@ -79,15 +84,18 @@ namespace ViewModel.Logic
             return File.Exists(SelectedPath) && (extension == ".dll" || extension == ".exe");
         }
 
+        public void ChooseFile()
+        {
+            SelectedPath = _fileChooser.ChooseFilePath();
+        }
+
         public void ExtractData()
         {
             if (!String.IsNullOrEmpty(SelectedPath))
             {
                 _assemblyModel = new AssemblyExtractor(SelectedPath).AssemblyModel;
                 
-                TypeViewAbstract view = ViewTypeFactory.CreateTypeViewClass(_assemblyModel);
-                TypesTreeItemViewModel item = new TypesTreeItemViewModel(view);
-
+                TypeViewAbstract item = ViewTypeFactory.CreateTypeViewClass(_assemblyModel);
                 SetNewData(item);
             }
         }
@@ -107,14 +115,13 @@ namespace ViewModel.Logic
             {
                 IConventer xml = new XmlConventer();
                 _assemblyModel = xml.readFromFile(SerializationPath);
-                TypeViewAbstract view = ViewTypeFactory.CreateTypeViewClass(_assemblyModel);
-
-                TypesTreeItemViewModel item = new TypesTreeItemViewModel(view);
+                
+                TypeViewAbstract item = ViewTypeFactory.CreateTypeViewClass(_assemblyModel);
                 SetNewData(item);
             }
         }
 
-        private void SetNewData(TypesTreeItemViewModel item)
+        private void SetNewData(TypeViewAbstract item)
         {
             if (_context != null)
             {

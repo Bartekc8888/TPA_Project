@@ -17,8 +17,8 @@ namespace CLI
         private const string DeserializationMode = "L";
 
         private TypesTreeViewModel _viewModel;
-        private TypesTreeItemViewModel _currentItem;
-        private Stack<TypesTreeItemViewModel> _previousTypes;
+        private TypeViewAbstract _currentItem;
+        private Stack<TypeViewAbstract> _previousTypes;
 
         private bool _isGoingBack;
 
@@ -26,8 +26,8 @@ namespace CLI
         {
             Log.Info("Creating CommandLineItemViewModel");
 
-            _previousTypes = new Stack<TypesTreeItemViewModel>();
-            _viewModel = new TypesTreeViewModel();
+            _previousTypes = new Stack<TypeViewAbstract>();
+            _viewModel = new TypesTreeViewModel(new CommandLineFileChooser(ExitCharacter));
         }
 
         public void Run()
@@ -37,7 +37,7 @@ namespace CLI
             PrintHeaders(_viewModel.Items);
             while (true)
             {
-                TypesTreeItemViewModel temp = _currentItem;
+                TypeViewAbstract temp = _currentItem;
                 _currentItem = NewChosen();
                 if (_isGoingBack)
                 {
@@ -63,36 +63,31 @@ namespace CLI
         {
             do
             {
-                Console.WriteLine("Give a path to assembly file or type in " + ExitCharacter + " to exit.");
-                _viewModel.SelectedPath = Console.ReadLine();
+                _viewModel.ChooseFile();
             } while (!_viewModel.IsPathValid() && !ExitCharacter.Equals(_viewModel.SelectedPath));
 
-            if (!ExitCharacter.Equals(_viewModel.SelectedPath))
-            {
-               _viewModel.ExtractData();
-            }
-            else
+            if (ExitCharacter.Equals(_viewModel.SelectedPath))
             {
                 Environment.Exit(0);
             }
         }
 
-        private void PrintTypeWithChildren(TypesTreeItemViewModel item)
+        private void PrintTypeWithChildren(TypeViewAbstract item)
         {
             Log.Debug("Printing current type with members");
 
             string itemString = "";
-            string name = item.ItemDescription;
+            string name = item.Description;
             int index = 1;
 
-            itemString += item.ItemDescription + " " + item.ItemType + " " + item.ItemName + Environment.NewLine;
+            itemString += item.Description + " " + item.TypeName + " " + item.Name + Environment.NewLine;
             item.IsExpanded = true;
-            foreach (TypesTreeItemViewModel tva in item.Children)
+            foreach (TypeViewAbstract tva in item.Children)
             {
-                if (tva.ItemDescription != name)
+                if (tva.Description != name)
                 {
                     itemString += Environment.NewLine;
-                    name = tva.ItemDescription;
+                    name = tva.Description;
                 }
 
                 if (tva.CanExpand)
@@ -108,7 +103,7 @@ namespace CLI
                     itemString += "  ";
                 }
                 
-                itemString += "   " + tva.ItemDescription + " " + tva.ItemType + " " + tva.ItemName +
+                itemString += "   " + tva.Description + " " + tva.TypeName + " " + tva.Name +
                               Environment.NewLine;
             }
 
@@ -125,16 +120,16 @@ namespace CLI
             return menuString;
         }
 
-        private void PrintHeaders(ObservableCollection<TypesTreeItemViewModel> items)
+        private void PrintHeaders(ObservableCollection<TypeViewAbstract> items)
         {
             string itemString = "Found types" + Environment.NewLine;
             int index = 1;
             
-            foreach (TypesTreeItemViewModel itemViewModel in items)
+            foreach (TypeViewAbstract itemViewModel in items)
             {
                 itemString += index.ToString();
-                itemString += "   " + itemViewModel.ItemDescription + " " + itemViewModel.ItemType + " " +
-                              itemViewModel.ItemName + Environment.NewLine;
+                itemString += "   " + itemViewModel.Description + " " + itemViewModel.TypeName + " " +
+                              itemViewModel.Name + Environment.NewLine;
 
                 index++;
             }
@@ -144,12 +139,12 @@ namespace CLI
             Console.WriteLine(itemString);
         }
 
-        private TypesTreeItemViewModel NewChosen()
+        private TypeViewAbstract NewChosen()
         {
             Log.Debug("User chooses new type");
 
             _isGoingBack = false;
-            TypesTreeItemViewModel viewModelItem = null;
+            TypeViewAbstract viewModelItem = null;
             bool didUserChoose = false;
 
             do
@@ -203,9 +198,9 @@ namespace CLI
             return viewModelItem;
         }
 
-        private TypesTreeItemViewModel GetExpandableByIndex(int index)
+        private TypeViewAbstract GetExpandableByIndex(int index)
         {
-            TypesTreeItemViewModel viewModelItem;
+            TypeViewAbstract viewModelItem;
 
             if (_previousTypes.Count > 0)
             {
@@ -213,7 +208,7 @@ namespace CLI
                 int offset = 0;
                 while ((index + offset) <= _currentItem.Children.Count && !foundExpandable)
                 {
-                    TypesTreeItemViewModel child = _currentItem.Children[offset];
+                    TypeViewAbstract child = _currentItem.Children[offset];
                     if (!child.CanExpand)
                     {
                         offset += 1;

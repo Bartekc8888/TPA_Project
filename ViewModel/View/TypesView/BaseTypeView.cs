@@ -3,6 +3,7 @@ using System.Linq;
 using System.Reflection;
 using log4net;
 using Model.MetadataClasses.Types;
+using ViewModel.Logic;
 
 namespace ViewModel.View.TypesView
 {

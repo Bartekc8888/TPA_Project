@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using Model.MetadataClasses;
+using ViewModel.Logic;
 
 namespace ViewModel.View.TypesView
 {

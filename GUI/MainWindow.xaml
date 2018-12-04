@@ -27,7 +27,7 @@
 
                 <TextBlock Grid.Column="0" Text="Ścieżka" FontWeight="Bold" VerticalAlignment="Center"/>
                 <TextBox x:Name="PathText" Text="{Binding Path=SelectedPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Margin="10 0 10 0" Grid.Column="1" VerticalAlignment="Center"/>
-                <Button x:Name="PathButton" Click="PathButton_Click" Grid.Column="2" Content="..." VerticalAlignment="Center"/>
+                <Button x:Name="PathButton" Command="{Binding Path=ChooseAnalyzePathCommand}" Grid.Column="2" Content="..." VerticalAlignment="Center"/>
             </Grid>
 
             <TextBlock Grid.Row="1" Margin="0 5" Text="Zawartość pliku" FontWeight="Bold" VerticalAlignment="Center"/>
@@ -41,14 +41,13 @@
                 </TreeView.ItemContainerStyle>
 
                 <TreeView.ItemTemplate>
-                    <HierarchicalDataTemplate ItemsSource="{Binding Children}" DataType="logic:TypesTreeItemViewModel">
+                    <HierarchicalDataTemplate ItemsSource="{Binding Children}" DataType="logic:TypeViewAbstract">
                         <StackPanel Orientation="Horizontal">
                             <Image Width="20" Margin="3" 
-                                               Source="{Binding TypeIcon,
-                                                                Converter={x:Static gui:PathToIconConverter.Instance}}"/>
-                            <TextBlock Margin="5" VerticalAlignment="Center" Text="{Binding ItemDescription}"/>
-                            <TextBlock Margin="3" VerticalAlignment="Center" Text="{Binding ItemType}"/>
-                            <TextBlock Margin="3" VerticalAlignment="Center" Text="{Binding ItemName}"/>
+                                               Source="{Binding FullIconPath}"/>
+                            <TextBlock Margin="5" VerticalAlignment="Center" Text="{Binding Description}"/>
+                            <TextBlock Margin="3" VerticalAlignment="Center" Text="{Binding TypeName}"/>
+                            <TextBlock Margin="3" VerticalAlignment="Center" Text="{Binding Name}"/>
                         </StackPanel>
                     </HierarchicalDataTemplate>
                 </TreeView.ItemTemplate>
@@ -60,7 +59,7 @@
                     <ColumnDefinition Width="*"/>
                 </Grid.ColumnDefinitions>
 
-                <Button x:Name="AnalizeButton" Command="{Binding Path=AnalyzeCommand}" Click="AnalizeButton_Click" Grid.Column="1" Margin="5 5" Content="Analizuj" VerticalAlignment="Center"/>
+                <Button x:Name="AnalizeButton" Command="{Binding Path=AnalyzeCommand}" Grid.Column="1" Margin="5 5" Content="Analizuj" VerticalAlignment="Center"/>
             </Grid>
             <Grid Grid.Row="4" Margin="5">
                 <Grid.ColumnDefinitions>

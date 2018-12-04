@@ -13,29 +13,8 @@ namespace GUI
         {
             InitializeComponent();
 
-            TypesTreeViewModel viewModel = new TypesTreeViewModel();
+            TypesTreeViewModel viewModel = new TypesTreeViewModel(new DialogFileChooser());
             DataContext = viewModel;
-        }
-
-        private void PathButton_Click(object sender, RoutedEventArgs e)
-        {
-            OpenFileDialog dialog = new OpenFileDialog
-            {
-                DefaultExt = ".exe",
-                Filter = "Executable Files (*.exe)|*.exe|DLL Files (*.dll)|*.dll"
-            };
-
-            bool? result = dialog.ShowDialog();
-            if (result == true)
-            {
-                string filename = dialog.FileName;
-                PathText.Text = filename;
-            }
-        }
-
-        private void AnalizeButton_Click(object sender, RoutedEventArgs e)
-        {
-            
         }
     }
 }

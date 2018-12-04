@@ -4,6 +4,7 @@ using System.Reflection;
 using log4net;
 using Model.MetadataClasses.Types;
 using Model.MetadataClasses.Types.Members;
+using ViewModel.Logic;
 
 namespace ViewModel.View.TypesView
 {
