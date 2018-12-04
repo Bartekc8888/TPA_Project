@@ -5,9 +5,9 @@ using log4net;
 using Model.MetadataClasses.Types.Members;
 using ViewModel.Logic;
 
-namespace ViewModel.View.TypesView.MethodTypes
+namespace ViewModel.ModelRepresentation.Types.MethodTypes
 {
-    public class ConstructorView : MethodView
+    public class ConstructorViewModel : MethodViewModel
     {
         private static readonly ILog Log = LogManager.GetLogger
                (MethodBase.GetCurrentMethod().DeclaringType);
@@ -21,7 +21,7 @@ namespace ViewModel.View.TypesView.MethodTypes
         private string mTypeName;
         private string mName;
 
-        public ConstructorView(ConstructorMetadata metadata) : base(metadata)
+        public ConstructorViewModel(ConstructorMetadata metadata) : base(metadata)
         {
             Log.Info("Creating Constructor View");
             mName = metadata.Name + GetParameters(metadata.Parameters);
@@ -31,7 +31,7 @@ namespace ViewModel.View.TypesView.MethodTypes
             }
         }
 
-        public override IList<TypeViewAbstract> CreateChildren()
+        public override IList<TypeViewModelAbstract> CreateChildren()
         {
             Log.Error("Cannot create children");
             throw new NotSupportedException();

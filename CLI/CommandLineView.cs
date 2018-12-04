@@ -17,8 +17,8 @@ namespace CLI
         private const string DeserializationMode = "L";
 
         private TypesTreeViewModel _viewModel;
-        private TypeViewAbstract _currentItem;
-        private Stack<TypeViewAbstract> _previousTypes;
+        private TypeViewModelAbstract _currentItem;
+        private Stack<TypeViewModelAbstract> _previousTypes;
 
         private bool _isGoingBack;
 
@@ -26,7 +26,7 @@ namespace CLI
         {
             Log.Info("Creating CommandLineItemViewModel");
 
-            _previousTypes = new Stack<TypeViewAbstract>();
+            _previousTypes = new Stack<TypeViewModelAbstract>();
             _viewModel = new TypesTreeViewModel(new CommandLineFileChooser(ExitCharacter));
         }
 
@@ -37,7 +37,7 @@ namespace CLI
             PrintHeaders(_viewModel.Items);
             while (true)
             {
-                TypeViewAbstract temp = _currentItem;
+                TypeViewModelAbstract temp = _currentItem;
                 _currentItem = NewChosen();
                 if (_isGoingBack)
                 {
@@ -72,7 +72,7 @@ namespace CLI
             }
         }
 
-        private void PrintTypeWithChildren(TypeViewAbstract item)
+        private void PrintTypeWithChildren(TypeViewModelAbstract item)
         {
             Log.Debug("Printing current type with members");
 
@@ -82,7 +82,7 @@ namespace CLI
 
             itemString += item.Description + " " + item.TypeName + " " + item.Name + Environment.NewLine;
             item.IsExpanded = true;
-            foreach (TypeViewAbstract tva in item.Children)
+            foreach (TypeViewModelAbstract tva in item.Children)
             {
                 if (tva.Description != name)
                 {
@@ -120,12 +120,12 @@ namespace CLI
             return menuString;
         }
 
-        private void PrintHeaders(ObservableCollection<TypeViewAbstract> items)
+        private void PrintHeaders(ObservableCollection<TypeViewModelAbstract> items)
         {
             string itemString = "Found types" + Environment.NewLine;
             int index = 1;
             
-            foreach (TypeViewAbstract itemViewModel in items)
+            foreach (TypeViewModelAbstract itemViewModel in items)
             {
                 itemString += index.ToString();
                 itemString += "   " + itemViewModel.Description + " " + itemViewModel.TypeName + " " +
@@ -139,12 +139,12 @@ namespace CLI
             Console.WriteLine(itemString);
         }
 
-        private TypeViewAbstract NewChosen()
+        private TypeViewModelAbstract NewChosen()
         {
             Log.Debug("User chooses new type");
 
             _isGoingBack = false;
-            TypeViewAbstract viewModelItem = null;
+            TypeViewModelAbstract viewModelItem = null;
             bool didUserChoose = false;
 
             do
@@ -198,9 +198,9 @@ namespace CLI
             return viewModelItem;
         }
 
-        private TypeViewAbstract GetExpandableByIndex(int index)
+        private TypeViewModelAbstract GetExpandableByIndex(int index)
         {
-            TypeViewAbstract viewModelItem;
+            TypeViewModelAbstract viewModelItem;
 
             if (_previousTypes.Count > 0)
             {
@@ -208,7 +208,7 @@ namespace CLI
                 int offset = 0;
                 while ((index + offset) <= _currentItem.Children.Count && !foundExpandable)
                 {
-                    TypeViewAbstract child = _currentItem.Children[offset];
+                    TypeViewModelAbstract child = _currentItem.Children[offset];
                     if (!child.CanExpand)
                     {
                         offset += 1;

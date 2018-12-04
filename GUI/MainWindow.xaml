@@ -41,7 +41,7 @@
                 </TreeView.ItemContainerStyle>
 
                 <TreeView.ItemTemplate>
-                    <HierarchicalDataTemplate ItemsSource="{Binding Children}" DataType="logic:TypeViewAbstract">
+                    <HierarchicalDataTemplate ItemsSource="{Binding Children}" DataType="logic:TypeViewModelAbstract">
                         <StackPanel Orientation="Horizontal">
                             <Image Width="20" Margin="3" 
                                                Source="{Binding FullIconPath}"/>

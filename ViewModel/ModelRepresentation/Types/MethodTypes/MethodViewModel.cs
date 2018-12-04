@@ -6,9 +6,9 @@ using log4net;
 using Model.MetadataClasses.Types.Members;
 using ViewModel.Logic;
 
-namespace ViewModel.View.TypesView.MethodTypes
+namespace ViewModel.ModelRepresentation.Types.MethodTypes
 {
-    public class MethodView : TypeViewAbstract
+    public class MethodViewModel : TypeViewModelAbstract
     {
         private static readonly ILog Log = LogManager.GetLogger
               (MethodBase.GetCurrentMethod().DeclaringType);
@@ -22,7 +22,7 @@ namespace ViewModel.View.TypesView.MethodTypes
         private string mTypeName;
         private string mName;
 
-        public MethodView(MethodMetadata metadata) : base()
+        public MethodViewModel(MethodMetadata metadata) : base()
         {
             Log.Info("Creating Method View");
 
@@ -33,7 +33,7 @@ namespace ViewModel.View.TypesView.MethodTypes
             }
         }
 
-        public override IList<TypeViewAbstract> CreateChildren()
+        public override IList<TypeViewModelAbstract> CreateChildren()
         {
             Log.Error("Cannot create members");
 

@@ -1,10 +1,10 @@
 ﻿using Model.MetadataClasses.Types;
 
-namespace ViewModel.View.TypesView.ValueTypes
+namespace ViewModel.ModelRepresentation.Types.ValueTypes
 {
-    public class StructureView : ValueView
+    public class StructureViewModel : ValueViewModel
     {
-        public StructureView(TypeMetadata type, string name) : base(type, name)
+        public StructureViewModel(TypeMetadata type, string name) : base(type, name)
         {
 
         }

@@ -2,14 +2,14 @@
 using log4net;
 using Model.MetadataClasses.Types;
 
-namespace ViewModel.View.TypesView.ReferenceTypes
+namespace ViewModel.ModelRepresentation.Types.ReferenceTypes
 {
-    public class DelegateView : ReferenceView
+    public class DelegateViewModel : ReferenceViewModel
     {
         private static readonly ILog Log = LogManager.GetLogger
               (MethodBase.GetCurrentMethod().DeclaringType);
 
-        public DelegateView(TypeMetadata type, string name) : base(type, name)
+        public DelegateViewModel(TypeMetadata type, string name) : base(type, name)
         {
             Log.Debug("Creating Delegate View");
         }

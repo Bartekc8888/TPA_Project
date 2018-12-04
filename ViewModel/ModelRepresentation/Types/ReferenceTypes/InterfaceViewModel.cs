@@ -2,14 +2,14 @@
 using log4net;
 using Model.MetadataClasses.Types;
 
-namespace ViewModel.View.TypesView.ReferenceTypes
+namespace ViewModel.ModelRepresentation.Types.ReferenceTypes
 {
-    public class InterfaceView : ReferenceView
+    public class InterfaceViewModel : ReferenceViewModel
     {
         private static readonly ILog Log = LogManager.GetLogger
               (MethodBase.GetCurrentMethod().DeclaringType);
 
-        public InterfaceView(TypeMetadata type, string name) : base(type, name)
+        public InterfaceViewModel(TypeMetadata type, string name) : base(type, name)
         {
             Log.Debug("Creating Interface View");
         }

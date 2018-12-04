@@ -2,14 +2,14 @@
 using log4net;
 using Model.MetadataClasses.Types;
 
-namespace ViewModel.View.TypesView.ReferenceTypes
+namespace ViewModel.ModelRepresentation.Types.ReferenceTypes
 {
-    public class ArrayView : ReferenceView
+    public class ArrayViewModel : ReferenceViewModel
     {
         private static readonly ILog Log = LogManager.GetLogger
               (MethodBase.GetCurrentMethod().DeclaringType);
 
-        public ArrayView(TypeMetadata type, string name) : base(type, name)
+        public ArrayViewModel(TypeMetadata type, string name) : base(type, name)
         {
             Log.Info("Creating Array View");
         }

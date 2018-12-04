@@ -8,7 +8,7 @@ using System.Windows.Input;
 using log4net;
 using Model.MetadataClasses;
 using ViewModel.ExtractionTools;
-using ViewModel.View.TypesView;
+using ViewModel.ModelRepresentation.Types;
 
 namespace ViewModel.Logic
 {
@@ -23,8 +23,8 @@ namespace ViewModel.Logic
 
         private IFileChooser _fileChooser;
         
-        private ObservableCollection<TypeViewAbstract> _items;
-        public ObservableCollection<TypeViewAbstract> Items
+        private ObservableCollection<TypeViewModelAbstract> _items;
+        public ObservableCollection<TypeViewModelAbstract> Items
         {
             get => _items;
             set
@@ -70,7 +70,7 @@ namespace ViewModel.Logic
 
             SelectedPath = "";
             SerializationPath = "";
-            Items = new ObservableCollection<TypeViewAbstract>();
+            Items = new ObservableCollection<TypeViewModelAbstract>();
             AnalyzeCommand = new RelayCommand(ExtractData);
             ChooseAnalyzePathCommand = new RelayCommand(ChooseFile);
 
@@ -95,7 +95,7 @@ namespace ViewModel.Logic
             {
                 _assemblyModel = new AssemblyExtractor(SelectedPath).AssemblyModel;
                 
-                TypeViewAbstract item = ViewTypeFactory.CreateTypeViewClass(_assemblyModel);
+                TypeViewModelAbstract item = ModelViewTypeFactory.CreateTypeViewClass(_assemblyModel);
                 SetNewData(item);
             }
         }
@@ -116,12 +116,12 @@ namespace ViewModel.Logic
                 IConventer xml = new XmlConventer();
                 _assemblyModel = xml.readFromFile(SerializationPath);
                 
-                TypeViewAbstract item = ViewTypeFactory.CreateTypeViewClass(_assemblyModel);
+                TypeViewModelAbstract item = ModelViewTypeFactory.CreateTypeViewClass(_assemblyModel);
                 SetNewData(item);
             }
         }
 
-        private void SetNewData(TypeViewAbstract item)
+        private void SetNewData(TypeViewModelAbstract item)
         {
             if (_context != null)
             {

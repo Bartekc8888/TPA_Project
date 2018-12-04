@@ -1,10 +1,10 @@
 ﻿using Model.MetadataClasses.Types;
 
-namespace ViewModel.View.TypesView.ValueTypes
+namespace ViewModel.ModelRepresentation.Types.ValueTypes
 {
-    public class EnumView : ValueView
+    public class EnumViewModel : ValueViewModel
     {
-        public EnumView(TypeMetadata type, string name) : base(type, name)
+        public EnumViewModel(TypeMetadata type, string name) : base(type, name)
         {
         }
 

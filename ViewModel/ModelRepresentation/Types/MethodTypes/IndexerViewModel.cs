@@ -5,9 +5,9 @@ using log4net;
 using Model.MetadataClasses.Types.Members;
 using ViewModel.Logic;
 
-namespace ViewModel.View.TypesView.MethodTypes
+namespace ViewModel.ModelRepresentation.Types.MethodTypes
 {
-    public class IndexerView : TypeViewAbstract
+    public class IndexerViewModel : TypeViewModelAbstract
     {
         private static readonly ILog Log = LogManager.GetLogger
               (MethodBase.GetCurrentMethod().DeclaringType);
@@ -21,7 +21,7 @@ namespace ViewModel.View.TypesView.MethodTypes
         private string mTypeName;
         private string mName;
 
-        public IndexerView(IndexerMetadata metadata)
+        public IndexerViewModel(IndexerMetadata metadata)
         {
             Log.Info("Creating Indexer View");
 
@@ -32,7 +32,7 @@ namespace ViewModel.View.TypesView.MethodTypes
             }
         }
 
-        public override IList<TypeViewAbstract> CreateChildren()
+        public override IList<TypeViewModelAbstract> CreateChildren()
         {
             Log.Error("Cannot create children");
             throw new NotSupportedException();

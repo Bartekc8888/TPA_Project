@@ -5,11 +5,10 @@ using System.Linq;
 using System.Reflection;
 using System.Windows.Input;
 using log4net;
-using ViewModel.View.TypesView;
 
 namespace ViewModel.Logic
 {
-    public abstract class TypeViewAbstract : INotifyPropertyChanged
+    public abstract class TypeViewModelAbstract : INotifyPropertyChanged
     {
         private static readonly ILog Log = LogManager.GetLogger
               (MethodBase.GetCurrentMethod().DeclaringType);
@@ -22,12 +21,12 @@ namespace ViewModel.Logic
         public abstract string IconPath { get; }
         public abstract bool HaveChildren { get; }
 
-        public abstract IList<TypeViewAbstract> CreateChildren();
+        public abstract IList<TypeViewModelAbstract> CreateChildren();
         
         public string FullIconPath => "pack://application:,,,/" + IconPath;
 
-        private ObservableCollection<TypeViewAbstract> mChildren;
-        public ObservableCollection<TypeViewAbstract> Children
+        private ObservableCollection<TypeViewModelAbstract> mChildren;
+        public ObservableCollection<TypeViewModelAbstract> Children
         {
             get => mChildren;
             private set
@@ -66,13 +65,13 @@ namespace ViewModel.Logic
             }
         }
 
-        public TypeViewAbstract()
+        public TypeViewModelAbstract()
         {
             Log.Info("Creating TypesTreeItemViewModel");
 
             if (CanExpand)
             {
-                Children = new ObservableCollection<TypeViewAbstract>();
+                Children = new ObservableCollection<TypeViewModelAbstract>();
                 Children.Add(null);
             }
         }
@@ -86,7 +85,7 @@ namespace ViewModel.Logic
         {
             Log.Info("Set members of current type");
 
-            Children = new ObservableCollection<TypeViewAbstract>(CreateChildren());
+            Children = new ObservableCollection<TypeViewModelAbstract>(CreateChildren());
         }
 
         private bool HasChildren()

@@ -4,9 +4,9 @@ using Model.MetadataClasses;
 using Model.MetadataClasses.Types;
 using ViewModel.Logic;
 
-namespace ViewModel.View.TypesView
+namespace ViewModel.ModelRepresentation.Types
 {
-    public class NamespaceView : TypeViewAbstract
+    public class NamespaceViewModel : TypeViewModelAbstract
     {
         public override string TypeName => "Namespace";
         public override string Name { get; }
@@ -16,17 +16,17 @@ namespace ViewModel.View.TypesView
 
         private readonly IEnumerable<TypeMetadata> children;
         
-        public NamespaceView(NamespaceMetadata metadata)
+        public NamespaceViewModel(NamespaceMetadata metadata)
         {
             Name = metadata.NamespaceName;
 
             children = metadata.Types;
         }
         
-        public override IList<TypeViewAbstract> CreateChildren()
+        public override IList<TypeViewModelAbstract> CreateChildren()
         {
-            List<TypeViewAbstract> typeViewList = new List<TypeViewAbstract>();
-            typeViewList.AddRange(children.Select(elem => ViewTypeFactory.CreateTypeViewClass(elem)));
+            List<TypeViewModelAbstract> typeViewList = new List<TypeViewModelAbstract>();
+            typeViewList.AddRange(children.Select(elem => ModelViewTypeFactory.CreateTypeViewClass(elem)));
 
             return typeViewList;
         }

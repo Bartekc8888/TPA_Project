@@ -3,9 +3,9 @@ using System.Linq;
 using Model.MetadataClasses;
 using ViewModel.Logic;
 
-namespace ViewModel.View.TypesView
+namespace ViewModel.ModelRepresentation.Types
 {
-    public class AssemblyView : TypeViewAbstract
+    public class AssemblyViewModel : TypeViewModelAbstract
     {
         public override string TypeName { get; }
         public override string Name { get; }
@@ -15,7 +15,7 @@ namespace ViewModel.View.TypesView
 
         private readonly IEnumerable<NamespaceMetadata> children;
         
-        public AssemblyView(AssemblyMetadata metadata)
+        public AssemblyViewModel(AssemblyMetadata metadata)
         {
             TypeName = metadata.TypeName;
             Name = metadata.Name;
@@ -23,10 +23,10 @@ namespace ViewModel.View.TypesView
             children = metadata.Namespaces;
         }
         
-        public override IList<TypeViewAbstract> CreateChildren()
+        public override IList<TypeViewModelAbstract> CreateChildren()
         {
-            List<TypeViewAbstract> typeViewList = new List<TypeViewAbstract>();
-            typeViewList.AddRange(children.Select(ViewTypeFactory.CreateTypeViewClass));
+            List<TypeViewModelAbstract> typeViewList = new List<TypeViewModelAbstract>();
+            typeViewList.AddRange(children.Select(ModelViewTypeFactory.CreateTypeViewClass));
 
             return typeViewList;
         }

@@ -5,9 +5,9 @@ using log4net;
 using Model.MetadataClasses.Types.Members;
 using ViewModel.Logic;
 
-namespace ViewModel.View.TypesView.MethodTypes
+namespace ViewModel.ModelRepresentation.Types.MethodTypes
 {
-    public class PropertyView : TypeViewAbstract
+    public class PropertyViewModel : TypeViewModelAbstract
     {
         private static readonly ILog Log = LogManager.GetLogger
               (MethodBase.GetCurrentMethod().DeclaringType);
@@ -22,7 +22,7 @@ namespace ViewModel.View.TypesView.MethodTypes
         private string mTypeName;
         private string mName;
 
-        public PropertyView(PropertyMetadata metadata) : base()
+        public PropertyViewModel(PropertyMetadata metadata) : base()
         {
             Log.Info("Creating Property View");
 
@@ -34,13 +34,13 @@ namespace ViewModel.View.TypesView.MethodTypes
             }
         }
 
-        public override IList<TypeViewAbstract> CreateChildren()
+        public override IList<TypeViewModelAbstract> CreateChildren()
         {
             Log.Info("Set members");
 
-            List<TypeViewAbstract> typeViewList = new List<TypeViewAbstract>();
+            List<TypeViewModelAbstract> typeViewList = new List<TypeViewModelAbstract>();
 
-            typeViewList.AddRange(metadata.propertyMethods.Select(ViewTypeFactory.CreateTypeViewClass));
+            typeViewList.AddRange(metadata.propertyMethods.Select(ModelViewTypeFactory.CreateTypeViewClass));
             
             return typeViewList;
         }

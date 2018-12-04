@@ -6,9 +6,9 @@ using Model.MetadataClasses.Types;
 using Model.MetadataClasses.Types.Members;
 using ViewModel.Logic;
 
-namespace ViewModel.View.TypesView
+namespace ViewModel.ModelRepresentation.Types
 {
-    public class EventView : TypeViewAbstract
+    public class EventViewModel : TypeViewModelAbstract
     {
         private static readonly ILog Log = LogManager.GetLogger
               (MethodBase.GetCurrentMethod().DeclaringType);
@@ -23,7 +23,7 @@ namespace ViewModel.View.TypesView
         private string mTypeName;
         private string mName;
 
-        public EventView(EventMetadata metadata) : base()
+        public EventViewModel(EventMetadata metadata) : base()
         {
             Log.Debug("Creating Event View");
 
@@ -36,7 +36,7 @@ namespace ViewModel.View.TypesView
             }
         }
 
-        public override IList<TypeViewAbstract> CreateChildren()
+        public override IList<TypeViewModelAbstract> CreateChildren()
         {
             Log.Error("Cannot create children");
 

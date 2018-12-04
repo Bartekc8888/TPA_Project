@@ -2,14 +2,14 @@
 using log4net;
 using Model.MetadataClasses.Types;
 
-namespace ViewModel.View.TypesView.ReferenceTypes
+namespace ViewModel.ModelRepresentation.Types.ReferenceTypes
 {
-    public class ClassView : ReferenceView
+    public class ClassViewModel : ReferenceViewModel
     {
         private static readonly ILog Log = LogManager.GetLogger
               (MethodBase.GetCurrentMethod().DeclaringType);
 
-        public ClassView(TypeMetadata type, string name) : base(type, name)
+        public ClassViewModel(TypeMetadata type, string name) : base(type, name)
         {
             Log.Info("Creating Class View");
         }

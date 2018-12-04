@@ -1,10 +1,10 @@
 ﻿using Model.MetadataClasses.Types;
 
-namespace ViewModel.View.TypesView.ValueTypes
+namespace ViewModel.ModelRepresentation.Types.ValueTypes
 {
-    public class PrimitiveView : ValueView
+    public class PrimitiveViewModel : ValueViewModel
     {
-        public PrimitiveView(TypeMetadata type, string name) : base(type, name)
+        public PrimitiveViewModel(TypeMetadata type, string name) : base(type, name)
         {
 
         }
