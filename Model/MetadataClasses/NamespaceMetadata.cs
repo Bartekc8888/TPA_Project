@@ -6,7 +6,7 @@ using Model.MetadataClasses.Types;
 
 namespace Model.MetadataClasses
 {
-    [DataContract]
+    [DataContract(IsReference = true)]
     public class NamespaceMetadata
     {
         [DataMember]

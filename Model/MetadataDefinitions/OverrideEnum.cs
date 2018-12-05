@@ -1,14 +1,14 @@
 ﻿
-using System.Xml.Serialization;
+using System.Runtime.Serialization;
 
 namespace Model.MetadataDefinitions
 {
-    [XmlRoot]
+    [DataContract]
     public enum OverrideEnum
     {
-        [XmlEnum("1")]
+        [EnumMember]
         NotOverride,
-        [XmlEnum("2")]
+        [EnumMember]
         Override
     }
 }

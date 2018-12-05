@@ -7,11 +7,11 @@ using System.Runtime.Serialization;
 
 namespace Model.MetadataClasses.Types.Members
 {
-    [DataContract]
+    [DataContract(IsReference = true)]
     public class PropertyMetadata : MemberAbstract
     {
         [DataMember]
-        public MethodMetadata[] propertyMethods;
+        public MethodMetadata[] propertyMethods { get; set; }
         
         internal static IEnumerable<PropertyMetadata> EmitProperties(IEnumerable<PropertyInfo> props)
         {

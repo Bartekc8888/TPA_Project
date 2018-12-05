@@ -5,7 +5,7 @@ using System.Runtime.Serialization;
 
 namespace Model.MetadataClasses.Types.Members
 {
-    [DataContract]
+    [DataContract(IsReference = true)]
     public class ConstructorMetadata : MethodMetadata
     {
         public ConstructorMetadata(MethodBase method) : base(method)

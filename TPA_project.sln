@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewModel", "ViewModel\View
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GUI", "GUI\GUI.csproj", "{E504E64A-0CE4-4BB2-A389-030EA42B79AD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Serialization", "Serialization\Serialization.csproj", "{590F25A9-DD8B-4317-82A2-18E94A1A35F6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{E504E64A-0CE4-4BB2-A389-030EA42B79AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E504E64A-0CE4-4BB2-A389-030EA42B79AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E504E64A-0CE4-4BB2-A389-030EA42B79AD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{590F25A9-DD8B-4317-82A2-18E94A1A35F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{590F25A9-DD8B-4317-82A2-18E94A1A35F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{590F25A9-DD8B-4317-82A2-18E94A1A35F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{590F25A9-DD8B-4317-82A2-18E94A1A35F6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

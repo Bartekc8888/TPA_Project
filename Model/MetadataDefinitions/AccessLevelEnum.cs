@@ -1,20 +1,20 @@
 ﻿
-using System.Xml.Serialization;
+using System.Runtime.Serialization;
 
 namespace Model.MetadataDefinitions
 {
-    [XmlRoot]
+    [DataContract]
     public enum AccessLevelEnum
     {
-        [XmlEnum("1")]
+        [EnumMember]
         Public,
-        [XmlEnum("2")]
+        [EnumMember]
         Protected,
-        [XmlEnum("3")]
+        [EnumMember]
         Internal,
-        [XmlEnum("4")]
+        [EnumMember]
         ProtectedInternal,
-        [XmlEnum("5")]
+        [EnumMember]
         Private
     }
 }

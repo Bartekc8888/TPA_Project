@@ -1,14 +1,14 @@
 ﻿
-using System.Xml.Serialization;
+using System.Runtime.Serialization;
 
 namespace Model.MetadataDefinitions
 {
-    [XmlRoot]
+    [DataContract]
     public enum SealedEnum
     {
-        [XmlEnum("1")]
+        [EnumMember]
         Sealed,
-        [XmlEnum("2")]
+        [EnumMember]
         NotSealed
     }
 }

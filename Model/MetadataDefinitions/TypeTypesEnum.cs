@@ -1,26 +1,26 @@
 ﻿
-using System.Xml.Serialization;
+using System.Runtime.Serialization;
 
 namespace Model.MetadataDefinitions
 {
-    [XmlRoot]
+    [DataContract]
     public enum TypeTypesEnum
     {
-        [XmlEnum("1")]
+        [EnumMember]
         Array,
-        [XmlEnum("2")]
+        [EnumMember]
         Class,
-        [XmlEnum("3")]
+        [EnumMember]
         Delegate,
-        [XmlEnum("4")]
+        [EnumMember]
         Interface,
-        [XmlEnum("5")]
+        [EnumMember]
         Enum,
-        [XmlEnum("6")]
+        [EnumMember]
         Primitive,
-        [XmlEnum("7")]
+        [EnumMember]
         Structure,
-        [XmlEnum("8")]
+        [EnumMember]
         Unknown
     }
 }

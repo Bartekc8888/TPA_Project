@@ -6,7 +6,7 @@ using System.Runtime.Serialization;
 
 namespace Model.MetadataClasses.Types.Members
 {
-    [DataContract]
+    [DataContract(IsReference = true)]
     public class FieldMetadata : MemberAbstract
     {
         internal static IEnumerable<FieldMetadata> EmitFields(IEnumerable<FieldInfo> fieldsInfo)

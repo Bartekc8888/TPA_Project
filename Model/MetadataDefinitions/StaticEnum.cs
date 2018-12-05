@@ -1,14 +1,14 @@
 ﻿
-using System.Xml.Serialization;
+using System.Runtime.Serialization;
 
 namespace Model.MetadataDefinitions
 {
-    [XmlRoot]
+    [DataContract]
     public enum StaticEnum
     {
-        [XmlEnum("1")]
+        [EnumMember]
         NotStatic,
-        [XmlEnum("2")]
+        [EnumMember]
         Static
     }
 }

@@ -1,14 +1,14 @@
 ﻿
-using System.Xml.Serialization;
+using System.Runtime.Serialization;
 
 namespace Model.MetadataDefinitions
 {
-    [XmlRoot]
+    [DataContract]
     public enum VirtualEnum
     {
-        [XmlEnum("1")]
+        [EnumMember]
         NotVirtual,
-        [XmlEnum("2")]
+        [EnumMember]
         Virtual
     }
 }

@@ -6,7 +6,7 @@ using System.Runtime.Serialization;
 
 namespace Model.MetadataClasses.Types.Members
 {
-    [DataContract]
+    [DataContract(IsReference = true)]
     public class IndexerMetadata : MemberAbstract
     {
         internal static IEnumerable<IndexerMetadata> EmitIndexers(IEnumerable<PropertyInfo> indxs)

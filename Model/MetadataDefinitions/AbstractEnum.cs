@@ -1,14 +1,14 @@
 ﻿
-using System.Xml.Serialization;
+using System.Runtime.Serialization;
 
 namespace Model.MetadataDefinitions
 {
-    [XmlRoot]
+    [DataContract]
     public enum AbstractEnum
     {
-        [XmlEnum("1")]
+        [EnumMember]
         NotAbstract,
-        [XmlEnum("2")]
+        [EnumMember]
         Abstract
     }
 }

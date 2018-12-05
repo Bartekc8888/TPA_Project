@@ -6,7 +6,7 @@ using System.Runtime.Serialization;
 
 namespace Model.MetadataClasses.Types.Members
 {
-    [DataContract]
+    [DataContract(IsReference = true)]
     public class AttributeMetadata : MemberAbstract
     {
         internal static IEnumerable<AttributeMetadata> EmitAttributes(Type type)

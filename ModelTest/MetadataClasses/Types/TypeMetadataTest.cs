@@ -69,8 +69,8 @@ namespace ModelTest
             IList<PropertyMetadata> propertiesList = metadata.Properties.ToList();
             IList<MethodMetadata> methodList = metadata.Methods.ToList();
 
-            Assert.AreEqual(2, methodList.Count);
-            Assert.AreEqual(1, propertiesList.Count);
+            Assert.AreEqual(0, methodList.Count());
+            Assert.AreEqual(1, propertiesList.Count());
             Assert.AreEqual("LongFieldProp", propertiesList[0].Name);
         }
 

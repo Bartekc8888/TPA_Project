@@ -9,7 +9,7 @@ using Model.MetadataExtensions;
 
 namespace Model.MetadataClasses.Types
 {
-    [DataContract]
+    [DataContract(IsReference = true)]
     public class TypeMetadata
     {
         #region fields

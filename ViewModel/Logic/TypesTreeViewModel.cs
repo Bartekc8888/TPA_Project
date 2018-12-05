@@ -7,6 +7,7 @@ using System.Threading;
 using System.Windows.Input;
 using log4net;
 using Model.MetadataClasses;
+using Serialization;
 using ViewModel.ExtractionTools;
 using ViewModel.ModelRepresentation.Types;
 
@@ -104,7 +105,7 @@ namespace ViewModel.Logic
         {
             if (!String.IsNullOrEmpty(SerializationPath) && _items.Count > 0)
             {
-                IConventer xml = new XmlConventer();
+                ISerialization xml = new XmlSerialization();
                 xml.saveToFile(_assemblyModel, SerializationPath);
             }
         }
@@ -113,7 +114,7 @@ namespace ViewModel.Logic
         {
             if (!String.IsNullOrEmpty(SerializationPath))
             {
-                IConventer xml = new XmlConventer();
+                ISerialization xml = new XmlSerialization();
                 _assemblyModel = xml.readFromFile(SerializationPath);
                 
                 TypeViewModelAbstract item = ModelViewTypeFactory.CreateTypeViewClass(_assemblyModel);

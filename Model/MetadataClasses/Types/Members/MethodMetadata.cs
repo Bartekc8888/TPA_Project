@@ -8,7 +8,7 @@ using Model.MetadataDefinitions;
 
 namespace Model.MetadataClasses.Types.Members
 {
-    [DataContract]
+    [DataContract(IsReference = true)]
     public class MethodMetadata
     {
         #region vars
