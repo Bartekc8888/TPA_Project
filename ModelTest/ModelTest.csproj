@@ -53,12 +53,17 @@
     <Compile Include="MetadataClasses\Types\TypeMetadataTest.cs" />
     <Compile Include="MetadataClasses\Types\TypeBasicInfoTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="FileLoggingTest.cs" />
     <Compile Include="XmlSerializationTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Logging\Logging.csproj">
+      <Project>{AEDFE307-4793-418A-8E44-6A4AE844810F}</Project>
+      <Name>Logging</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Model\Model.csproj">
       <Project>{35e4e22c-a782-4df2-a1a0-6812c8119a0a}</Project>
       <Name>Model</Name>
