@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using log4net;
 using Model.MetadataClasses.Types;
 using ViewModel.Logic;
 
@@ -9,15 +8,12 @@ namespace ViewModel.ModelRepresentation.Types
 {
     public abstract class BaseTypeViewModel : TypeViewModelAbstract
     {
-        private static readonly ILog Log = LogManager.GetLogger
-              (MethodBase.GetCurrentMethod().DeclaringType);
 
         protected TypeMetadata mTypeMetadata;
         protected string mName;
 
         public BaseTypeViewModel(TypeMetadata type, string name)
         {
-            Log.Debug("Creating BaseType View");
 
             mTypeMetadata = type;
             mName = name;
@@ -29,7 +25,6 @@ namespace ViewModel.ModelRepresentation.Types
 
         public override IList<TypeViewModelAbstract> CreateChildren()
         {
-            Log.Debug("Set members");
 
             List<TypeViewModelAbstract> typeViewList = new List<TypeViewModelAbstract>();
 

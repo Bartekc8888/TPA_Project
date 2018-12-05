@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Reflection;
-using log4net;
 using Model.MetadataClasses;
 using Model.MetadataClasses.Types;
 using Model.MetadataClasses.Types.Members;
@@ -14,9 +13,6 @@ namespace ViewModel.ModelRepresentation.Types
 {
     public static class ModelViewTypeFactory
     {
-        private static readonly ILog Log = LogManager.GetLogger
-              (MethodBase.GetCurrentMethod().DeclaringType);
-
         public static TypeViewModelAbstract CreateTypeViewClass(TypeMetadata type, string name = "")
         {
             switch (type.TypeEnum)
@@ -36,7 +32,6 @@ namespace ViewModel.ModelRepresentation.Types
                 case TypeTypesEnum.Structure:
                     return new StructureViewModel(type, name);
                 default:
-                    Log.Error("Unknown types type enum.");
                     throw new NotSupportedException("Unknown types type enum.");
 
             }

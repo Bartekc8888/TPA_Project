@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using log4net;
 using Model.MetadataClasses.Types.Members;
 using ViewModel.Logic;
 
@@ -10,8 +9,6 @@ namespace ViewModel.ModelRepresentation.Types.MethodTypes
 {
     public class MethodViewModel : TypeViewModelAbstract
     {
-        private static readonly ILog Log = LogManager.GetLogger
-              (MethodBase.GetCurrentMethod().DeclaringType);
 
         public override string Description => CheckIfFinalizer();
         public override string IconPath => "Icons/Method.png";
@@ -24,7 +21,6 @@ namespace ViewModel.ModelRepresentation.Types.MethodTypes
 
         public MethodViewModel(MethodMetadata metadata) : base()
         {
-            Log.Info("Creating Method View");
 
             mName = metadata.Name + GetParameters(metadata.Parameters);
             if (metadata.ReturnType != null)
@@ -35,14 +31,12 @@ namespace ViewModel.ModelRepresentation.Types.MethodTypes
 
         public override IList<TypeViewModelAbstract> CreateChildren()
         {
-            Log.Error("Cannot create members");
 
             throw new NotSupportedException();
         }
 
         private string CheckIfFinalizer()
         {
-            Log.Debug("Checking if method is finalizer");
 
             if (mName=="Finalize")
             {
@@ -56,8 +50,6 @@ namespace ViewModel.ModelRepresentation.Types.MethodTypes
 
         protected string GetParameters(IEnumerable<ParameterMetadata> methodParameters)
         {
-            Log.Debug("Set parameters");
-
             string parameters = "(";
             methodParameters.ToList().ForEach(parameter => parameters += parameter.TypeMetadata.TypeName + " " + parameter.Name + ", ");
             if (parameters.EndsWith(", "))

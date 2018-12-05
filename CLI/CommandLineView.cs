@@ -2,15 +2,12 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Reflection;
-using log4net;
 using ViewModel.Logic;
 
 namespace CLI
 {
     class CommandLineView
     {
-        private static readonly ILog Log = LogManager.GetLogger
-            (MethodBase.GetCurrentMethod().DeclaringType);
 
         private const string ExitCharacter = "0";
         private const string SerializationMode = "W";
@@ -24,7 +21,6 @@ namespace CLI
 
         public CommandLineView()
         {
-            Log.Info("Creating CommandLineItemViewModel");
 
             _previousTypes = new Stack<TypeViewModelAbstract>();
             _viewModel = new TypesTreeViewModel(new CommandLineFileChooser(ExitCharacter));
@@ -74,7 +70,6 @@ namespace CLI
 
         private void PrintTypeWithChildren(TypeViewModelAbstract item)
         {
-            Log.Debug("Printing current type with members");
 
             string itemString = "";
             string name = item.Description;
@@ -141,7 +136,6 @@ namespace CLI
 
         private TypeViewModelAbstract NewChosen()
         {
-            Log.Debug("User chooses new type");
 
             _isGoingBack = false;
             TypeViewModelAbstract viewModelItem = null;

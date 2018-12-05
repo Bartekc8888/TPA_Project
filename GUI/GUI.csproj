@@ -88,12 +88,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="log4.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-      <SubType>Designer</SubType>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Icons\Class.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Resource>

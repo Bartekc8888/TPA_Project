@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using log4net;
 using Model.MetadataClasses.Types;
 using Model.MetadataClasses.Types.Members;
 using ViewModel.Logic;
@@ -11,8 +9,6 @@ namespace ViewModel.ModelRepresentation.Types
 {
     public class FieldViewModel : TypeViewModelAbstract
     {
-        private static readonly ILog Log = LogManager.GetLogger
-              (MethodBase.GetCurrentMethod().DeclaringType);
 
         private TypeMetadata typeMetadata;
         public override string Description => "Field";
@@ -23,7 +19,6 @@ namespace ViewModel.ModelRepresentation.Types
 
         public FieldViewModel(FieldMetadata metadata) : base()
         {
-            Log.Debug("Creating Field View");
 
             Type type = Type.GetType(metadata.TypeMetadata.FullTypeName);
             typeMetadata = new TypeMetadata(type);
@@ -36,7 +31,6 @@ namespace ViewModel.ModelRepresentation.Types
 
         public override IList<TypeViewModelAbstract> CreateChildren()
         {
-            Log.Debug("Set members");
 
             List<TypeViewModelAbstract> typeViewList = new List<TypeViewModelAbstract>();
 

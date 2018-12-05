@@ -5,7 +5,7 @@ using System.IO;
 using System.Reflection;
 using System.Threading;
 using System.Windows.Input;
-using log4net;
+using Logging;
 using Model.MetadataClasses;
 using Serialization;
 using ViewModel.ExtractionTools;
@@ -15,14 +15,12 @@ namespace ViewModel.Logic
 {
     public class TypesTreeViewModel : INotifyPropertyChanged
     {
-        private static readonly ILog Log = LogManager.GetLogger
-              (MethodBase.GetCurrentMethod().DeclaringType);
-
         public event PropertyChangedEventHandler PropertyChanged = (s, e) => {};
         private AssemblyMetadata _assemblyModel;
         private readonly SynchronizationContext _context;
 
         private IFileChooser _fileChooser;
+        public ILogging logger;
         
         private ObservableCollection<TypeViewModelAbstract> _items;
         public ObservableCollection<TypeViewModelAbstract> Items
@@ -65,10 +63,9 @@ namespace ViewModel.Logic
 
         public TypesTreeViewModel(IFileChooser fileChooser)
         {
-            Log.Info("Creating TreeViewModel");
             _context = SynchronizationContext.Current;
             _fileChooser = fileChooser;
-
+            logger = new FileLogging("fileLogs.txt", "Logging");
             SelectedPath = "";
             SerializationPath = "";
             Items = new ObservableCollection<TypeViewModelAbstract>();
@@ -81,6 +78,7 @@ namespace ViewModel.Logic
 
         public bool IsPathValid()
         {
+            logger.Debug("Check if file path is correct");
             string extension = Path.GetExtension(SelectedPath);
             return File.Exists(SelectedPath) && (extension == ".dll" || extension == ".exe");
         }
@@ -88,6 +86,7 @@ namespace ViewModel.Logic
         public void ChooseFile()
         {
             SelectedPath = _fileChooser.ChooseFilePath();
+            logger.Info("File was chosen");
         }
 
         public void ExtractData()
@@ -98,6 +97,7 @@ namespace ViewModel.Logic
                 
                 TypeViewModelAbstract item = ModelViewTypeFactory.CreateTypeViewClass(_assemblyModel);
                 SetNewData(item);
+                logger.Info("New data was set");
             }
         }
 
@@ -105,8 +105,12 @@ namespace ViewModel.Logic
         {
             if (!String.IsNullOrEmpty(SerializationPath) && _items.Count > 0)
             {
+                logger.Debug("Start serialize data");
+
                 ISerialization xml = new XmlSerialization();
                 xml.saveToFile(_assemblyModel, SerializationPath);
+
+                logger.Info("End serialize data");
             }
         }
 
@@ -114,11 +118,15 @@ namespace ViewModel.Logic
         {
             if (!String.IsNullOrEmpty(SerializationPath))
             {
+                logger.Debug("Start deserialize data");
+
                 ISerialization xml = new XmlSerialization();
                 _assemblyModel = xml.readFromFile(SerializationPath);
                 
                 TypeViewModelAbstract item = ModelViewTypeFactory.CreateTypeViewClass(_assemblyModel);
                 SetNewData(item);
+
+                logger.Info("End deserialize data");
             }
         }
 
