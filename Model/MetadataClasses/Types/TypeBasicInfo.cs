@@ -10,17 +10,17 @@ namespace Model.MetadataClasses.Types
     [DataContract(IsReference = true)]
     public class TypeBasicInfo
     {
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public string TypeName { get; set; }
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public string NamespaceName { get; set; }
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public IEnumerable<TypeBasicInfo> GenericArguments { get; set; }
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public Tuple<AccessLevelEnum, SealedEnum, AbstractEnum> Modifiers { get; set; }
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public IEnumerable<AttributeMetadata> Attributes { get; set; }
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public string FullTypeName { get; set; }
 
         public TypeBasicInfo() { }

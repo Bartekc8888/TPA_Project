@@ -9,9 +9,9 @@ namespace Model.MetadataClasses
     [DataContract(IsReference = true)]
     public class NamespaceMetadata
     {
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public string NamespaceName { get; set; }
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public IEnumerable<TypeMetadata> Types { get; set; }
 
         public NamespaceMetadata(string name, IEnumerable<Type> types)

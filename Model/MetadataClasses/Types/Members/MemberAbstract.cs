@@ -5,9 +5,9 @@ namespace Model.MetadataClasses.Types.Members
     [DataContract(IsReference = true)]
     public abstract class MemberAbstract
     {
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public string Name { get; set; }
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public TypeBasicInfo TypeMetadata { get; set; }
 
         public MemberAbstract(string name, TypeBasicInfo typeInfo)

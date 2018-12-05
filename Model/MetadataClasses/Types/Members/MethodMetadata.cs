@@ -12,17 +12,17 @@ namespace Model.MetadataClasses.Types.Members
     public class MethodMetadata
     {
         #region vars
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public string Name { get; set; }
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public IEnumerable<TypeBasicInfo> GenericArguments { get; set; }
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public Tuple<AccessLevelEnum, AbstractEnum, StaticEnum, VirtualEnum, OverrideEnum> Modifiers { get; set; }
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public TypeBasicInfo ReturnType { get; set; }
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public bool Extension { get; set; }
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public IEnumerable<ParameterMetadata> Parameters { get; set; }
         #endregion
 

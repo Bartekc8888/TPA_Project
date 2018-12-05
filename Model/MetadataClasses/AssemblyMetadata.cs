@@ -11,11 +11,11 @@ namespace Model.MetadataClasses
     [DataContract]
     public class AssemblyMetadata
     {
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public string TypeName { get; set; }
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public string Name { get; set; }
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public IEnumerable<NamespaceMetadata> Namespaces { get; set; }
        
         public AssemblyMetadata(Assembly assembly)

@@ -13,32 +13,32 @@ namespace Model.MetadataClasses.Types
     public class TypeMetadata
     {
         #region fields
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public TypeTypesEnum TypeEnum { get; set; }
 
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public TypeBasicInfo TypeBasicInfo { get; set; }
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public TypeBasicInfo DeclaringType { get; set; }
 
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public TypeBasicInfo BaseType { get; set; }
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public IEnumerable<TypeBasicInfo> ImplementedInterfaces { get; set; }
 
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public IEnumerable<FieldMetadata> Fields { get; set; }
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public IEnumerable<MethodMetadata> Methods { get; set; }
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public IEnumerable<PropertyMetadata> Properties { get; set; }
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public IEnumerable<IndexerMetadata> Indexers { get; set; }
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public IEnumerable<EventMetadata> Events { get; set; }
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public IEnumerable<ConstructorMetadata> Constructors { get; set; }
-        [DataMember]
+        [DataMember(EmitDefaultValue = false)]
         public IEnumerable<TypeBasicInfo> NestedTypes { get; set; }
         #endregion
 
