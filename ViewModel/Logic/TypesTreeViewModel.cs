@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.ComponentModel.Composition;
+using System.ComponentModel.Composition.Hosting;
 using System.IO;
 using System.Reflection;
 using System.Threading;
@@ -20,6 +22,8 @@ namespace ViewModel.Logic
         private readonly SynchronizationContext _context;
 
         private IFileChooser _fileChooser;
+        
+        [Import]
         public ILogging logger;
         
         private ObservableCollection<TypeViewModelAbstract> _items;
@@ -63,9 +67,11 @@ namespace ViewModel.Logic
 
         public TypesTreeViewModel(IFileChooser fileChooser)
         {
+            Compose();
+            
             _context = SynchronizationContext.Current;
             _fileChooser = fileChooser;
-            logger = new FileLogging("fileLogs.txt", "Logging");
+            
             SelectedPath = "";
             SerializationPath = "";
             Items = new ObservableCollection<TypeViewModelAbstract>();
@@ -74,6 +80,22 @@ namespace ViewModel.Logic
 
             SerializeCommand = new RelayCommand(SerializeData);
             DeserializeCommand = new RelayCommand(DeserializeData);
+        }
+
+        private void Compose()
+        {
+            AggregateCatalog catalog = new AggregateCatalog(new DirectoryCatalog("."),
+                                                            new AssemblyCatalog(Assembly.GetExecutingAssembly()));
+            CompositionContainer container = new CompositionContainer(catalog);
+
+            FileLoggingSettings fileLoggingSettings = new FileLoggingSettings
+            {
+                FileName = "fileLogs.txt",
+                InstanceName = "Logging"
+            };
+            
+            container.ComposeExportedValue(fileLoggingSettings);
+            container.ComposeParts(this);            
         }
 
         public bool IsPathValid()

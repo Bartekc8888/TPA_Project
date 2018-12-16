@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.ComponentModel.Composition;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Logging
 {
+    [Export(typeof(ILogging))]
     public class FileLogging : ILogging
     {
         private TraceListener listener;
@@ -14,6 +11,12 @@ namespace Logging
         public FileLogging(string fileName, string instanceName)
         {
             listener = new TextWriterTraceListener(fileName, instanceName);
+        }        
+        
+        [ImportingConstructor]
+        public FileLogging(FileLoggingSettings loggingSettings)
+        {
+            listener = new TextWriterTraceListener(loggingSettings.FileName, loggingSettings.InstanceName);
         }
 
         public void Debug(string message)
