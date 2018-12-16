@@ -51,7 +51,6 @@
     <Compile Include="ExtractionTools\TypeMetadataFactoryTest.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="MetadataClasses\Types\TypeMetadataTest.cs" />
-    <Compile Include="MetadataClasses\Types\TypeBasicInfoTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FileLoggingTest.cs" />
     <Compile Include="XmlSerializationTest.cs" />

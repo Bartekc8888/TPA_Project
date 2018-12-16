@@ -19,7 +19,7 @@ namespace ViewModel.ModelRepresentation.Types
             mName = name;
         }
 
-        public override string TypeName => mTypeMetadata.TypeBasicInfo.TypeName;
+        public override string TypeName => mTypeMetadata.TypeName;
         public override string Name => mName;
         public override bool HaveChildren => true;
 

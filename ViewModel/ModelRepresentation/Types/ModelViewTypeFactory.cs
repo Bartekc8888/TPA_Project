@@ -1,9 +1,9 @@
 ﻿using System;
-using System.Reflection;
 using Model.MetadataClasses;
 using Model.MetadataClasses.Types;
 using Model.MetadataClasses.Types.Members;
 using Model.MetadataDefinitions;
+using ViewModel.ExtractionTools;
 using ViewModel.Logic;
 using ViewModel.ModelRepresentation.Types.MethodTypes;
 using ViewModel.ModelRepresentation.Types.ReferenceTypes;
@@ -13,6 +13,8 @@ namespace ViewModel.ModelRepresentation.Types
 {
     public static class ModelViewTypeFactory
     {
+        public static AssemblyExtractor CurrentAssemblyExtractor { get; set; }
+        
         public static TypeViewModelAbstract CreateTypeViewClass(TypeMetadata type, string name = "")
         {
             switch (type.TypeEnum)
@@ -66,18 +68,24 @@ namespace ViewModel.ModelRepresentation.Types
                 case PropertyMetadata propertyMetadata:
                     return new PropertyViewModel(propertyMetadata);
                 default:
-                    return CreateTypeViewClass(new TypeMetadata(Type.GetType(member.TypeMetadata.FullTypeName)), member.Name);
+                    return CreateTypeViewClass(new TypeMetadata(GetFromFullName(member.TypeMetadata.FullTypeName)), member.Name);
             }
-        }
-
-        public static TypeViewModelAbstract CreateTypeViewClass(TypeBasicInfo basicInfo)
-        {
-            return CreateTypeViewClass(new TypeMetadata(Type.GetType(basicInfo.FullTypeName)));
         }
 
         public static TypeViewModelAbstract CreateTypeViewClass(AssemblyMetadata assemblyMetadata)
         {
             return new AssemblyViewModel(assemblyMetadata);
+        }
+
+        public static Type GetFromFullName(String fullTypeName)
+        {
+            Type type = null;
+            if (CurrentAssemblyExtractor != null && CurrentAssemblyExtractor.LoadedAssembly != null)
+            {
+                type = CurrentAssemblyExtractor.LoadedAssembly.GetType(fullTypeName);
+            }
+
+            return type == null ? Type.GetType(fullTypeName) : type;
         }
     }
 }

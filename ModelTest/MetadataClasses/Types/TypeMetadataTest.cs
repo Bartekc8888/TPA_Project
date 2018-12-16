@@ -3,12 +3,49 @@ using System.Linq;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Model.MetadataClasses.Types;
 using Model.MetadataClasses.Types.Members;
+using Model.MetadataDefinitions;
 
 namespace ModelTest
 {
     [TestClass]
     public class TypeMetadataTest
     {
+        internal class TestingInternalClass
+        {
+            int testVariable;
+            private List<long> listOfLongs;
+        }
+
+        public class TestingPublicClass
+        {
+        }
+
+        int testVariable;
+
+        private class TestingPrivateClass
+        {
+        }
+
+        protected class TestingProtectedClass
+        {
+        }
+
+        protected internal class TestingProtectedInternalClass
+        {
+        }
+
+        protected abstract class TestingAbstractClass
+        {
+        }
+
+        protected sealed class TestingSealedClass
+        {
+        }
+
+        protected class TestingGenericClass<TestingProtectedClass, TestingPrivateClass>
+        {
+        }
+        
         internal class TestClass
         {
             public float floatField;
@@ -16,16 +53,38 @@ namespace ModelTest
             protected internal long longField;
             private int intField;
 
-            public TestClass() { }
-            ~TestClass() { }
+            public TestClass()
+            {
+            }
 
-            public void PublicMethod() { }
-            public virtual void PublicVirtualMethod() { }
-            protected void ProtectedMethod() { }
-            protected internal void ProtectedInternalMethod() { }
-            private int PrivateMethod() { return 0; }
+            ~TestClass()
+            {
+            }
 
-            public class NestedType { }
+            public void PublicMethod()
+            {
+            }
+
+            public virtual void PublicVirtualMethod()
+            {
+            }
+
+            protected void ProtectedMethod()
+            {
+            }
+
+            protected internal void ProtectedInternalMethod()
+            {
+            }
+
+            private int PrivateMethod()
+            {
+                return 0;
+            }
+
+            public class NestedType
+            {
+            }
         }
 
         public class PropertiesTestClass
@@ -38,6 +97,101 @@ namespace ModelTest
             public delegate string TestDelegate(string str);
 
             event TestDelegate TestEvent;
+        }
+
+        [TestMethod]
+        public void EmitDeclaringTypeTest()
+        {
+            TypeMetadata basicInfo = TypeMetadata.EmitDeclaringType(testVariable.GetType());
+            Assert.AreEqual(testVariable.GetType().Name, basicInfo.TypeName);
+        }
+
+        [TestMethod]
+        public void PublicTest()
+        {
+            TypeMetadata basicInfo = new TypeMetadata(typeof(TestingPublicClass));
+            Assert.AreEqual(typeof(TestingPublicClass).Name, basicInfo.TypeName);
+            Assert.AreEqual(AccessLevelEnum.Public, basicInfo.Modifiers.Item1);
+            Assert.AreEqual(SealedEnum.NotSealed, basicInfo.Modifiers.Item2);
+            Assert.AreEqual(AbstractEnum.NotAbstract, basicInfo.Modifiers.Item3);
+        }
+
+        [TestMethod]
+        public void InternalTest()
+        {
+            TypeMetadata basicInfo = new TypeMetadata(typeof(TestingInternalClass));
+            Assert.AreEqual(typeof(TestingInternalClass).Name, basicInfo.TypeName);
+            Assert.AreEqual(AccessLevelEnum.Internal, basicInfo.Modifiers.Item1);
+            Assert.AreEqual(SealedEnum.NotSealed, basicInfo.Modifiers.Item2);
+            Assert.AreEqual(AbstractEnum.NotAbstract, basicInfo.Modifiers.Item3);
+        }
+
+        [TestMethod]
+        public void ProtectedTest()
+        {
+            TypeMetadata basicInfo = new TypeMetadata(typeof(TestingProtectedClass));
+            Assert.AreEqual(typeof(TestingProtectedClass).Name, basicInfo.TypeName);
+            Assert.AreEqual(AccessLevelEnum.Protected, basicInfo.Modifiers.Item1);
+            Assert.AreEqual(SealedEnum.NotSealed, basicInfo.Modifiers.Item2);
+            Assert.AreEqual(AbstractEnum.NotAbstract, basicInfo.Modifiers.Item3);
+        }
+
+        [TestMethod]
+        public void ProtectedInternalTest()
+        {
+            TypeMetadata basicInfo = new TypeMetadata(typeof(TestingProtectedInternalClass));
+            Assert.AreEqual(typeof(TestingProtectedInternalClass).Name, basicInfo.TypeName);
+            Assert.AreEqual(AccessLevelEnum.ProtectedInternal, basicInfo.Modifiers.Item1);
+            Assert.AreEqual(SealedEnum.NotSealed, basicInfo.Modifiers.Item2);
+            Assert.AreEqual(AbstractEnum.NotAbstract, basicInfo.Modifiers.Item3);
+        }
+
+        [TestMethod]
+        public void PrivateTest()
+        {
+            TypeMetadata basicInfo = new TypeMetadata(typeof(TestingPrivateClass));
+            Assert.AreEqual(typeof(TestingPrivateClass).Name, basicInfo.TypeName);
+            Assert.AreEqual(AccessLevelEnum.Private, basicInfo.Modifiers.Item1);
+            Assert.AreEqual(SealedEnum.NotSealed, basicInfo.Modifiers.Item2);
+            Assert.AreEqual(AbstractEnum.NotAbstract, basicInfo.Modifiers.Item3);
+        }
+
+        [TestMethod]
+        public void AbstractTest()
+        {
+            TypeMetadata basicInfo = new TypeMetadata(typeof(TestingAbstractClass));
+            Assert.AreEqual(typeof(TestingAbstractClass).Name, basicInfo.TypeName);
+            Assert.AreEqual(AccessLevelEnum.Protected, basicInfo.Modifiers.Item1);
+            Assert.AreEqual(SealedEnum.NotSealed, basicInfo.Modifiers.Item2);
+            Assert.AreEqual(AbstractEnum.Abstract, basicInfo.Modifiers.Item3);
+        }
+
+        [TestMethod]
+        public void SealedTest()
+        {
+            TypeMetadata basicInfo = new TypeMetadata(typeof(TestingSealedClass));
+            Assert.AreEqual(typeof(TestingSealedClass).Name, basicInfo.TypeName);
+            Assert.AreEqual(AccessLevelEnum.Protected, basicInfo.Modifiers.Item1);
+            Assert.AreEqual(SealedEnum.Sealed, basicInfo.Modifiers.Item2);
+            Assert.AreEqual(AbstractEnum.NotAbstract, basicInfo.Modifiers.Item3);
+        }
+
+        [TestMethod]
+        public void GenericTest()
+        {
+            TypeMetadata basicInfo =
+                new TypeMetadata(typeof(TestingGenericClass<TestingProtectedClass, TestingPrivateClass>));
+            Assert.AreEqual(typeof(TestingGenericClass<TestingProtectedClass, TestingPrivateClass>).Name,
+                basicInfo.TypeName);
+            Assert.AreEqual(AccessLevelEnum.Protected, basicInfo.Modifiers.Item1);
+            Assert.AreEqual(SealedEnum.NotSealed, basicInfo.Modifiers.Item2);
+            Assert.AreEqual(AbstractEnum.NotAbstract, basicInfo.Modifiers.Item3);
+
+            IList<TypeMetadata> typeList = basicInfo.GenericArguments.ToList();
+
+            Assert.AreEqual(2, typeList.Count);
+            Assert.AreEqual(typeof(TestingProtectedClass).Name, typeList[0].TypeName);
+            Assert.AreEqual(typeof(TestingPrivateClass).Name, typeList[1].TypeName);
         }
 
         [TestMethod]
@@ -99,7 +253,7 @@ namespace ModelTest
         public void NestedTypeTest()
         {
             TypeMetadata metadata = new TypeMetadata(typeof(TestClass));
-            IList<TypeBasicInfo> nestedTypesList = metadata.NestedTypes.ToList();
+            IList<TypeMetadata> nestedTypesList = metadata.NestedTypes.ToList();
 
             Assert.AreEqual(1, nestedTypesList.Count);
             Assert.AreEqual("NestedType", nestedTypesList[0].TypeName);

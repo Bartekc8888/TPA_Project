@@ -15,7 +15,7 @@ namespace Model.MetadataClasses.Types.Members
                    select new FieldMetadata(info.Name, info.FieldType);
         }
 
-        private FieldMetadata(string propertyName, Type type) : base(propertyName, TypeBasicInfo.EmitReference(type))
+        private FieldMetadata(string propertyName, Type type) : base(propertyName, TypeMetadata.EmitReference(type))
         {
         }
 

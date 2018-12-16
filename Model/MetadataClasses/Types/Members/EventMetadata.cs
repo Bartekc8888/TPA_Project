@@ -14,7 +14,7 @@ namespace Model.MetadataClasses.Types.Members
                    select new EventMetadata(info.Name, info);
         }
 
-        private EventMetadata(string propertyName, EventInfo info) : base(propertyName, TypeBasicInfo.EmitReference(info.EventHandlerType))
+        private EventMetadata(string propertyName, EventInfo info) : base(propertyName, TypeMetadata.EmitReference(info.EventHandlerType))
         {
         }
 

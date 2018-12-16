@@ -15,7 +15,7 @@ namespace Model.MetadataClasses.Types.Members
                    select new IndexerMetadata(indx.Name, indx.PropertyType);
         }
 
-        private IndexerMetadata(string indexerName, Type type) : base(indexerName, TypeBasicInfo.EmitReference(type))
+        private IndexerMetadata(string indexerName, Type type) : base(indexerName, TypeMetadata.EmitReference(type))
         {
         }
 

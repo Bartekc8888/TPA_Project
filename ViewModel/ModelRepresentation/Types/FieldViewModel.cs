@@ -19,8 +19,7 @@ namespace ViewModel.ModelRepresentation.Types
 
         public FieldViewModel(FieldMetadata metadata) : base()
         {
-
-            Type type = Type.GetType(metadata.TypeMetadata.FullTypeName);
+            Type type = ModelViewTypeFactory.GetFromFullName(metadata.TypeMetadata.FullTypeName);
             typeMetadata = new TypeMetadata(type);
             Name = metadata.Name;
             if (metadata.TypeMetadata != null)

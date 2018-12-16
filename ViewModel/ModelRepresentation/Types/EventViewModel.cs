@@ -23,7 +23,7 @@ namespace ViewModel.ModelRepresentation.Types
         public EventViewModel(EventMetadata metadata) : base()
         {
 
-            Type type = Type.GetType(metadata.TypeMetadata.FullTypeName);
+            Type type = ModelViewTypeFactory.GetFromFullName(metadata.TypeMetadata.FullTypeName);
             typeMetadata = new TypeMetadata(type);
             mName = metadata.Name;
             if (metadata.TypeMetadata != null)
