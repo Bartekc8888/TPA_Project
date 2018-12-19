@@ -5,7 +5,7 @@ using Model.MetadataClasses;
 using Serialization;
 using ViewModel.ExtractionTools;
 
-namespace ModelTest
+namespace SerializationTest
 {
     [TestClass]
     public class XmlSerializationTest
