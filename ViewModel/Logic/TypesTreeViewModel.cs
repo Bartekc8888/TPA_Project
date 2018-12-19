@@ -2,9 +2,7 @@
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.Composition;
-using System.ComponentModel.Composition.Hosting;
 using System.IO;
-using System.Reflection;
 using System.Threading;
 using System.Windows.Input;
 using Logging;
@@ -15,12 +13,13 @@ using ViewModel.ModelRepresentation.Types;
 
 namespace ViewModel.Logic
 {
-    [Export()]
+    [Export]
     public class TypesTreeViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged = (s, e) => {};
         private AssemblyMetadata _assemblyModel;
         private readonly SynchronizationContext _context;
+
         [Import]
         private IFileChooser _fileChooser;
         
@@ -68,10 +67,7 @@ namespace ViewModel.Logic
 
         public TypesTreeViewModel()
         {
-            //Compose();
-            
             _context = SynchronizationContext.Current;
-            
             
             SelectedPath = "";
             SerializationPath = "";
@@ -82,22 +78,6 @@ namespace ViewModel.Logic
             SerializeCommand = new RelayCommand(SerializeData);
             DeserializeCommand = new RelayCommand(DeserializeData);
         }
-
-        /*private void Compose()
-        {
-            AggregateCatalog catalog = new AggregateCatalog(new DirectoryCatalog("."),
-                                                            new AssemblyCatalog(Assembly.GetExecutingAssembly()));
-            CompositionContainer container = new CompositionContainer(catalog);
-
-            FileLoggingSettings fileLoggingSettings = new FileLoggingSettings
-            {
-                FileName = "fileLogs.txt",
-                InstanceName = "Logging"
-            };
-            
-            container.ComposeExportedValue(fileLoggingSettings);
-            container.ComposeParts(this);            
-        }*/
 
         public bool IsPathValid()
         {

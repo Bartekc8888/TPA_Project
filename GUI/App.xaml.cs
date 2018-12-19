@@ -1,5 +1,4 @@
-﻿using MEF;
-using System.Windows;
+﻿using System.Windows;
 
 namespace GUI
 {

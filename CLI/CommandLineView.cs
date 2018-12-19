@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel.Composition;
-using System.Reflection;
 using ViewModel.Logic;
 
 namespace CLI
@@ -25,7 +24,7 @@ namespace CLI
         {
 
             _previousTypes = new Stack<TypeViewModelAbstract>();
-            _viewModel = new TypesTreeViewModel(/*new CommandLineFileChooser(ExitCharacter)*/);
+            _viewModel = new TypesTreeViewModel();
         }
 
         public void Run()

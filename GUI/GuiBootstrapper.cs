@@ -1,24 +1,19 @@
 ﻿using MEF;
 using System.Windows;
-using System.ComponentModel.Composition.Hosting;
 
 namespace GUI
 {
     public class GuiBootstrapper : MefBootstrapper
     {
-        public override void Run()
-        {
-            base.Run();
-        }
         protected override DependencyObject CreateShell()
         {
-            return this.Container.GetExportedValue<MainWindow>();
+            return Container.GetExportedValue<MainWindow>();
         }
 
         protected override void InitializeShell()
         {
             base.InitializeShell();
-            Application.Current.MainWindow = (MainWindow)this.Shell;
+            Application.Current.MainWindow = (MainWindow)Shell;
             Application.Current.MainWindow.Show();
         }
 

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.ComponentModel.Composition.Primitives;
+using System.IO;
 using System.Reflection;
 using System.Windows;
 
@@ -12,31 +13,33 @@ namespace MEF
 {
     public abstract class MefBootstrapper
     {
-        protected ILogging Logger { get; set; } = null;
-        protected DependencyObject Shell { get; set; } = null;
+        protected ILogging Logger { get; set; }
+        protected DependencyObject Shell { get; set; }
         protected AggregateCatalog AggregateCatalog { get; set; }
         protected CompositionContainer Container { get; set; }
 
 
         public virtual void Run()
         {
-            this.Logger = this.CreateLogger();
-            if (this.Logger == null)
+            Logger = CreateLogger();
+            if (Logger == null)
                 throw new InvalidOperationException("Null Logger Exception");
          
-            this.AggregateCatalog = this.CreateAggregateCatalog();
-            this.ConfigureAggregateCatalog();
-            this.RegisterDefaultTypesIfMissing();
-            this.Container = this.CreateContainer();
+            AggregateCatalog = CreateAggregateCatalog();
+            ConfigureAggregateCatalog();
+            RegisterDefaultTypesIfMissing();
+            Container = CreateContainer();
 
-            if (this.Container == null)
+            if (Container == null)
                 throw new InvalidOperationException("Null Container Exception");
 
-            this.ConfigureContainer();
-            this.RegisterFrameworkExceptionTypes();
-            this.Shell = this.CreateShell();
-            this.InitializeShell();
-            this.OnInitialized();
+            ConfigureContainer();
+            RegisterFrameworkExceptionTypes();
+            Container.ComposeParts(this);
+            
+            Shell = CreateShell();
+            InitializeShell();
+            OnInitialized();
         }
 
 
@@ -47,7 +50,8 @@ namespace MEF
 
         protected virtual AggregateCatalog CreateAggregateCatalog()
         {
-            return new AggregateCatalog(new DirectoryCatalog("."), new AssemblyCatalog(Assembly.GetExecutingAssembly()));
+            return new AggregateCatalog(new DirectoryCatalog("."), new DirectoryCatalog(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "*.exe"),
+                new AssemblyCatalog(Assembly.GetExecutingAssembly()));
         }
 
         protected virtual void ConfigureAggregateCatalog()
@@ -58,11 +62,11 @@ namespace MEF
         protected virtual void RegisterDefaultTypesIfMissing()
         {
             List<ComposablePartCatalog> catalog = GetDefaultComposablePartCatalog();
-            if (this.AggregateCatalog != null)
+            if (AggregateCatalog != null)
             {
-                catalog.Add(this.AggregateCatalog);
+                catalog.Add(AggregateCatalog);
             }
-            this.AggregateCatalog = new AggregateCatalog(catalog);
+            AggregateCatalog = new AggregateCatalog(catalog);
         }
 
         private List<ComposablePartCatalog> GetDefaultComposablePartCatalog()
@@ -72,7 +76,7 @@ namespace MEF
 
         protected virtual CompositionContainer CreateContainer()
         {
-            CompositionContainer container = new CompositionContainer(this.AggregateCatalog);
+            CompositionContainer container = new CompositionContainer(AggregateCatalog);
             return container;
         }
 
@@ -83,8 +87,8 @@ namespace MEF
 
         protected virtual void RegisterBootstrapperProvidedTypes()
         {
-            this.Container.ComposeExportedValue<ILogging>(this.Logger);
-            this.Container.ComposeExportedValue<AggregateCatalog>(this.AggregateCatalog);
+            Container.ComposeExportedValue(Logger);
+            Container.ComposeExportedValue(AggregateCatalog);
         }
 
 
