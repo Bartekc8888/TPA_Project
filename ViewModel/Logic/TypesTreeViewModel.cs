@@ -21,7 +21,7 @@ namespace ViewModel.Logic
         public event PropertyChangedEventHandler PropertyChanged = (s, e) => {};
         private AssemblyMetadata _assemblyModel;
         private readonly SynchronizationContext _context;
-
+        [Import]
         private IFileChooser _fileChooser;
         
         [Import]
@@ -66,12 +66,12 @@ namespace ViewModel.Logic
         public ICommand SerializeCommand { get; set; }
         public ICommand DeserializeCommand { get; set; }
 
-        public TypesTreeViewModel(IFileChooser fileChooser)
+        public TypesTreeViewModel()
         {
-            Compose();
+            //Compose();
             
             _context = SynchronizationContext.Current;
-            _fileChooser = fileChooser;
+            
             
             SelectedPath = "";
             SerializationPath = "";
@@ -83,7 +83,7 @@ namespace ViewModel.Logic
             DeserializeCommand = new RelayCommand(DeserializeData);
         }
 
-        private void Compose()
+        /*private void Compose()
         {
             AggregateCatalog catalog = new AggregateCatalog(new DirectoryCatalog("."),
                                                             new AssemblyCatalog(Assembly.GetExecutingAssembly()));
@@ -97,7 +97,7 @@ namespace ViewModel.Logic
             
             container.ComposeExportedValue(fileLoggingSettings);
             container.ComposeParts(this);            
-        }
+        }*/
 
         public bool IsPathValid()
         {

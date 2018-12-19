@@ -79,8 +79,6 @@ namespace MEF
         protected virtual void ConfigureContainer()
         {
             RegisterBootstrapperProvidedTypes();
-            IServiceLocator _serviceLocator = this.Container.GetExportedValue<IServiceLocator>();
-            ServiceLocator.SetLocatorProvider(() => _serviceLocator);
         }
 
         protected virtual void RegisterBootstrapperProvidedTypes()

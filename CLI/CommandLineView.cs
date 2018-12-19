@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel.Composition;
 using System.Reflection;
 using ViewModel.Logic;
 
 namespace CLI
 {
+    [Export()]
     class CommandLineView
     {
 
@@ -23,7 +25,7 @@ namespace CLI
         {
 
             _previousTypes = new Stack<TypeViewModelAbstract>();
-            _viewModel = new TypesTreeViewModel(new CommandLineFileChooser(ExitCharacter));
+            _viewModel = new TypesTreeViewModel(/*new CommandLineFileChooser(ExitCharacter)*/);
         }
 
         public void Run()

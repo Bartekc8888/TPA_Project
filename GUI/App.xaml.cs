@@ -8,9 +8,9 @@ namespace GUI
     /// </summary>
     public partial class App : Application
     {
-        AppBootstrapper mefBootstrapper = new AppBootstrapper();
+        GuiBootstrapper mefBootstrapper = new GuiBootstrapper();
 
-        private void App_Startup(object sender, StartupEventArgs e)
+        protected override void OnStartup(StartupEventArgs e)
         {
             mefBootstrapper.Run();
         }
