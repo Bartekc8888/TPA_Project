@@ -43,7 +43,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="FileLogging.cs" />
-    <Compile Include="FileLoggingSettings.cs" />
     <Compile Include="ILogging.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
