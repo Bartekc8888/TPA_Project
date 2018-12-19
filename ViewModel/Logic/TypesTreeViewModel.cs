@@ -24,7 +24,10 @@ namespace ViewModel.Logic
         private IFileChooser _fileChooser;
         
         [Import]
-        public ILogging logger;
+        private ILogging logger;
+
+        [Import]
+        private ISerialization _serializer;
         
         private ObservableCollection<TypeViewModelAbstract> _items;
         public ObservableCollection<TypeViewModelAbstract> Items
@@ -110,8 +113,7 @@ namespace ViewModel.Logic
             {
                 logger.Debug("Start serialize data");
 
-                ISerialization xml = new XmlSerialization();
-                xml.Save(_assemblyModel, SerializationPath);
+                _serializer.Save(_assemblyModel, SerializationPath);
 
                 logger.Info("End serialize data");
             }
@@ -123,8 +125,7 @@ namespace ViewModel.Logic
             {
                 logger.Debug("Start deserialize data");
 
-                ISerialization xml = new XmlSerialization();
-                _assemblyModel = xml.Read(SerializationPath);
+                _assemblyModel = _serializer.Read(SerializationPath);
                 
                 TypeViewModelAbstract item = ModelViewTypeFactory.CreateTypeViewClass(_assemblyModel);
                 SetNewData(item);

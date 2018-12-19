@@ -12,12 +12,6 @@ namespace Logging
         {
             listener = new TextWriterTraceListener(fileName, instanceName);
         }        
-        
-        [ImportingConstructor]
-        public FileLogging(FileLoggingSettings loggingSettings)
-        {
-            listener = new TextWriterTraceListener(loggingSettings.FileName, loggingSettings.InstanceName);
-        }
 
         public void Debug(string message)
         {
