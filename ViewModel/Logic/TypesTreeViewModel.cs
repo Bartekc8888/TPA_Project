@@ -15,6 +15,7 @@ using ViewModel.ModelRepresentation.Types;
 
 namespace ViewModel.Logic
 {
+    [Export()]
     public class TypesTreeViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged = (s, e) => {};
@@ -130,7 +131,7 @@ namespace ViewModel.Logic
                 logger.Debug("Start serialize data");
 
                 ISerialization xml = new XmlSerialization();
-                xml.saveToFile(_assemblyModel, SerializationPath);
+                xml.Save(_assemblyModel, SerializationPath);
 
                 logger.Info("End serialize data");
             }
@@ -143,7 +144,7 @@ namespace ViewModel.Logic
                 logger.Debug("Start deserialize data");
 
                 ISerialization xml = new XmlSerialization();
-                _assemblyModel = xml.readFromFile(SerializationPath);
+                _assemblyModel = xml.Read(SerializationPath);
                 
                 TypeViewModelAbstract item = ModelViewTypeFactory.CreateTypeViewClass(_assemblyModel);
                 SetNewData(item);

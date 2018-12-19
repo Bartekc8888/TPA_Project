@@ -17,6 +17,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Serialization", "Serializat
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logging", "Logging\Logging.csproj", "{AEDFE307-4793-418A-8E44-6A4AE844810F}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MEF", "MEF\MEF.csproj", "{AC85CC35-E191-404F-9027-36AC753A47B6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{AEDFE307-4793-418A-8E44-6A4AE844810F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{AEDFE307-4793-418A-8E44-6A4AE844810F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{AEDFE307-4793-418A-8E44-6A4AE844810F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AC85CC35-E191-404F-9027-36AC753A47B6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AC85CC35-E191-404F-9027-36AC753A47B6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AC85CC35-E191-404F-9027-36AC753A47B6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AC85CC35-E191-404F-9027-36AC753A47B6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

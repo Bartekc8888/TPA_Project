@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using MEF;
+using System.Windows;
 
 namespace GUI
 {
@@ -7,6 +8,11 @@ namespace GUI
     /// </summary>
     public partial class App : Application
     {
-        
+        AppBootstrapper mefBootstrapper = new AppBootstrapper();
+
+        private void App_Startup(object sender, StartupEventArgs e)
+        {
+            mefBootstrapper.Run();
+        }
     }
 }

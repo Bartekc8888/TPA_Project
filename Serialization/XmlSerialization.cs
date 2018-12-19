@@ -1,13 +1,15 @@
 ﻿using System;
+using System.ComponentModel.Composition;
 using System.Runtime.Serialization;
 using System.Xml;
 using Model.MetadataClasses;
 
 namespace Serialization
 {
+    [Export(typeof(ISerialization))]
     public class XmlSerialization : ISerialization
     {
-        public void saveToFile(AssemblyMetadata context, string filePath)
+        public void Save(AssemblyMetadata context, string filePath)
         {
             XmlWriterSettings xmlWriterSettings = new XmlWriterSettings { Indent = true };
             DataContractSerializer serializer = new DataContractSerializer(context.GetType(), null, Int32.MaxValue, false, true, null);
@@ -17,7 +19,7 @@ namespace Serialization
             }
         }
 
-        AssemblyMetadata ISerialization.readFromFile(string filePath)
+        AssemblyMetadata ISerialization.Read(string filePath)
         {
             DataContractSerializer serializer = new DataContractSerializer(typeof(AssemblyMetadata));
             using (XmlReader xr = XmlReader.Create(filePath))

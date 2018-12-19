@@ -1,8 +1,10 @@
 using Microsoft.Win32;
+using System.ComponentModel.Composition;
 using ViewModel.Logic;
 
 namespace GUI
 {
+    [Export(typeof(IFileChooser))]
     public class DialogFileChooser : IFileChooser
     {
         public string ChooseFilePath()
