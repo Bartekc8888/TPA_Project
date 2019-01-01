@@ -5,6 +5,7 @@ using System.Runtime.Serialization;
 using Model.MetadataClasses.Types.Members;
 using Model.MetadataDefinitions;
 using SerializationModel.MetadataDefinitions;
+using SerializationModel.MetadataExtensions;
 
 namespace SerializationModel.MetadataClasses.Types.Members
 {
@@ -30,8 +31,8 @@ namespace SerializationModel.MetadataClasses.Types.Members
         public MethodSerializationModel(MethodMetadata metadata)
         {
             Name = metadata.Name;
-            GenericArguments =
-                metadata.GenericArguments.Select(typeMetadata => new TypeSerializationModel(typeMetadata));
+            GenericArguments = metadata.GenericArguments == null ? null :
+                metadata.GenericArguments.Select(TypeSerializationModel.EmitTypeSerializationModel);
             
             Modifiers = new Tuple<AccessLevelSerializationModelEnum, AbstractSerializationModelEnum, StaticSerializationModelEnum,
                 VirtualSerializationModelEnum, OverrideSerializationModelEnum> (
@@ -42,10 +43,10 @@ namespace SerializationModel.MetadataClasses.Types.Members
                 EnumMapper.ConvertEnum<OverrideSerializationModelEnum, OverrideEnum>(metadata.Modifiers.Item5)
                 );
 
-            ReturnType = new TypeSerializationModel(metadata.ReturnType);
+            ReturnType = metadata.ReturnType == null ? null : TypeSerializationModel.EmitTypeSerializationModel(metadata.ReturnType);
             Extension = metadata.Extension;
             Parameters =
-                metadata.Parameters.Select(parameterMetadata => new ParameterSerializationModel(parameterMetadata));
+                metadata.Parameters.Select(ParameterSerializationModel.EmitUniqueType);
         }
 
         public MethodMetadata ToModel()
@@ -54,7 +55,7 @@ namespace SerializationModel.MetadataClasses.Types.Members
             methodMetadata.Name = Name;
             
             methodMetadata.GenericArguments =
-                GenericArguments.Select(typeMetadata => typeMetadata.ToModel());
+                GenericArguments?.Select(typeMetadata => typeMetadata.ToModel());
             
             methodMetadata.Modifiers = new Tuple<AccessLevelEnum, AbstractEnum, StaticEnum,
                 VirtualEnum, OverrideEnum> (
@@ -65,19 +66,24 @@ namespace SerializationModel.MetadataClasses.Types.Members
                 EnumMapper.ConvertEnum<OverrideEnum, OverrideSerializationModelEnum>(Modifiers.Item5)
             );
 
-            methodMetadata.ReturnType = ReturnType.ToModel();
+            methodMetadata.ReturnType = ReturnType?.ToModel();
             methodMetadata.Extension = Extension;
             methodMetadata.Parameters =
-                Parameters.Select(parameterMetadata => parameterMetadata.ToModel());
+                Parameters?.Select(parameterMetadata => parameterMetadata.ToModel());
 
             return methodMetadata;
         }
-        
+
         protected bool Equals(MethodSerializationModel other)
         {
             return string.Equals(Name, other.Name) && Equals(GenericArguments, other.GenericArguments) &&
                    Equals(Modifiers, other.Modifiers) && Equals(ReturnType, other.ReturnType) &&
-                   Equals(Parameters, other.Parameters);
+                   Extension == other.Extension && Equals(Parameters, other.Parameters);
+        }
+
+        public static MethodSerializationModel EmitUniqueType(MethodMetadata metadata)
+        {
+            return UniqueEmitter.EmitType(metadata, propertyMetadata => new MethodSerializationModel(propertyMetadata));
         }
 
         public override bool Equals(object obj)
@@ -96,6 +102,7 @@ namespace SerializationModel.MetadataClasses.Types.Members
                 hashCode = (hashCode * 397) ^ (GenericArguments != null ? GenericArguments.GetHashCode() : 0);
                 hashCode = (hashCode * 397) ^ (Modifiers != null ? Modifiers.GetHashCode() : 0);
                 hashCode = (hashCode * 397) ^ (ReturnType != null ? ReturnType.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ Extension.GetHashCode();
                 hashCode = (hashCode * 397) ^ (Parameters != null ? Parameters.GetHashCode() : 0);
                 return hashCode;
             }

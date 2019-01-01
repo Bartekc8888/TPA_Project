@@ -19,13 +19,18 @@ namespace ViewModel.ModelRepresentation.Types
 
         public FieldViewModel(FieldMetadata metadata) : base()
         {
-            Type type = ModelViewTypeFactory.GetFromFullName(metadata.TypeMetadata.FullTypeName);
-            typeMetadata = new TypeMetadata(type);
-            Name = metadata.Name;
-            if (metadata.TypeMetadata != null)
+            if (metadata.TypeMetadata == null)
             {
-                TypeName = metadata.TypeMetadata.TypeName;
+                Type type = ModelViewTypeFactory.GetFromFullName(metadata.TypeMetadata.FullTypeName);
+                typeMetadata = new TypeMetadata(type);
             }
+            else
+            {
+                typeMetadata = metadata.TypeMetadata;
+            }
+            
+            Name = metadata.Name;
+            TypeName = metadata.TypeMetadata.TypeName;
         }
 
         public override IList<TypeViewModelAbstract> CreateChildren()

@@ -147,7 +147,13 @@ namespace Model.MetadataClasses.Types
         protected bool Equals(TypeMetadata other)
         {
             return TypeEnum == other.TypeEnum && string.Equals(TypeName, other.TypeName) &&
-                   string.Equals(NamespaceName, other.NamespaceName) && string.Equals(FullTypeName, other.FullTypeName);
+                   string.Equals(NamespaceName, other.NamespaceName) &&
+                   Equals(GenericArguments, other.GenericArguments) && Equals(Modifiers, other.Modifiers) &&
+                   Equals(Attributes, other.Attributes) && string.Equals(FullTypeName, other.FullTypeName) &&
+                   Equals(ImplementedInterfaces, other.ImplementedInterfaces) && Equals(Fields, other.Fields) &&
+                   Equals(Methods, other.Methods) && Equals(Properties, other.Properties) &&
+                   Equals(Indexers, other.Indexers) && Equals(Events, other.Events) &&
+                   Equals(Constructors, other.Constructors) && Equals(NestedTypes, other.NestedTypes);
         }
 
         public override bool Equals(object obj)
@@ -165,7 +171,18 @@ namespace Model.MetadataClasses.Types
                 var hashCode = (int) TypeEnum;
                 hashCode = (hashCode * 397) ^ (TypeName != null ? TypeName.GetHashCode() : 0);
                 hashCode = (hashCode * 397) ^ (NamespaceName != null ? NamespaceName.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (GenericArguments != null ? GenericArguments.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (Modifiers != null ? Modifiers.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (Attributes != null ? Attributes.GetHashCode() : 0);
                 hashCode = (hashCode * 397) ^ (FullTypeName != null ? FullTypeName.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (ImplementedInterfaces != null ? ImplementedInterfaces.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (Fields != null ? Fields.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (Methods != null ? Methods.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (Properties != null ? Properties.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (Indexers != null ? Indexers.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (Events != null ? Events.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (Constructors != null ? Constructors.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (NestedTypes != null ? NestedTypes.GetHashCode() : 0);
                 return hashCode;
             }
         }

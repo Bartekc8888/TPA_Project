@@ -1,5 +1,7 @@
 ﻿using System.Runtime.Serialization;
+using Model.MetadataClasses.Types;
 using Model.MetadataClasses.Types.Members;
+using SerializationModel.MetadataExtensions;
 
 namespace SerializationModel.MetadataClasses.Types.Members
 {
@@ -14,13 +16,13 @@ namespace SerializationModel.MetadataClasses.Types.Members
         public MemberAbstractSerializationModel(MemberAbstract member)
         {
             Name = member.Name;
-            TypeMetadata = new TypeSerializationModel(member.TypeMetadata);
+            TypeMetadata = member.TypeMetadata == null ? null : TypeSerializationModel.EmitTypeSerializationModel(member.TypeMetadata);
         }
 
         public void FillModel(MemberAbstract constructedObject)
         {
             constructedObject.Name = Name;
-            constructedObject.TypeMetadata = TypeMetadata.ToModel();
+            constructedObject.TypeMetadata = TypeMetadata == null ? null : TypeMetadata.ToModel();
         }
 
         protected bool Equals(MemberAbstractSerializationModel other)

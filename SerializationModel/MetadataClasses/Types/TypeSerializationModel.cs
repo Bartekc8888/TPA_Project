@@ -61,7 +61,7 @@ namespace SerializationModel.MetadataClasses.Types
             TypeName = metadata.TypeName;
             NamespaceName = metadata.NamespaceName;
 
-            GenericArguments =
+            GenericArguments = metadata.GenericArguments == null ? null :
                 metadata.GenericArguments.Select(EmitTypeSerializationModel);
 
             Modifiers = new Tuple<AccessLevelSerializationModelEnum, SealedSerializationModelEnum, AbstractSerializationModelEnum> (
@@ -69,91 +69,65 @@ namespace SerializationModel.MetadataClasses.Types
                 EnumMapper.ConvertEnum<SealedSerializationModelEnum, SealedEnum>(metadata.Modifiers.Item2),
                 EnumMapper.ConvertEnum<AbstractSerializationModelEnum, AbstractEnum>(metadata.Modifiers.Item3));
 
-            Attributes = metadata.Attributes.Select(attributeMetadata => new AttributeSerializationModel(attributeMetadata));
+            Attributes = metadata.Attributes.Select(AttributeSerializationModel.EmitUniqueType);
             FullTypeName = metadata.FullTypeName;
             
-            DeclaringType = EmitTypeSerializationModel(metadata.DeclaringType);
-            BaseType = EmitTypeSerializationModel(metadata.BaseType);
+            DeclaringType = metadata.DeclaringType == null ? null : EmitTypeSerializationModel(metadata.DeclaringType);
+            BaseType = metadata.BaseType == null ? null : EmitTypeSerializationModel(metadata.BaseType);
 
             ImplementedInterfaces =
                 metadata.ImplementedInterfaces.Select(EmitTypeSerializationModel);
             Fields =
-                metadata.Fields.Select(typeMetadata => new FieldSerializationModel(typeMetadata));
+                metadata.Fields.Select(FieldSerializationModel.EmitUniqueType);
             Methods =
-                metadata.Methods.Select(typeMetadata => new MethodSerializationModel(typeMetadata));
+                metadata.Methods.Select(MethodSerializationModel.EmitUniqueType);
             Properties =
-                metadata.Properties.Select(typeMetadata => new PropertySerializationModel(typeMetadata));
+                metadata.Properties.Select(PropertySerializationModel.EmitUniqueType);
             Indexers =
-                metadata.Indexers.Select(typeMetadata => new IndexerSerializationModel(typeMetadata));
+                metadata.Indexers.Select(IndexerSerializationModel.EmitUniqueType);
             Events =
-                metadata.Events.Select(typeMetadata => new EventSerializationModel(typeMetadata));
+                metadata.Events.Select(EventSerializationModel.EmitUniqueType);
             Constructors =
-                metadata.Constructors.Select(typeMetadata => new ConstructorSerializationModel(typeMetadata));
+                metadata.Constructors.Select(ConstructorSerializationModel.EmitUniqueType);
             NestedTypes =
                 metadata.NestedTypes.Select(EmitTypeSerializationModel);
         }
 
         public static TypeSerializationModel EmitTypeSerializationModel(TypeMetadata metadata)
         {
-            long id = ReferenceSerializationModelMap.IdGenerator.GetId(metadata, out bool firstTime);
-            if (firstTime)
-            {
-                TypeSerializationModel newTypeMetadata = new TypeSerializationModel(metadata);
-                ReferenceSerializationModelMap.SerializedTypes.Add(id, newTypeMetadata);
-                return newTypeMetadata;
-            }
-            else
-            {
-                ReferenceSerializationModelMap.SerializedTypes.TryGetValue(id, out TypeSerializationModel newTypeMetadata);
-                return newTypeMetadata;
-            }
+            return UniqueEmitter.EmitType(metadata, propertyMetadata => new TypeSerializationModel(propertyMetadata));
         }
         
         public static TypeMetadata EmitTypeMetadata(TypeSerializationModel type)
         {
-            long id = ReferenceMap.IdGenerator.GetId(type, out bool firstTime);
-            if (firstTime)
-            {
-                TypeMetadata newTypeMetadata = type.ToModel();
-                ReferenceMap.LoadedTypes.Add(id, newTypeMetadata);
-                return newTypeMetadata;
-            }
-            else
-            {
-                ReferenceMap.LoadedTypes.TryGetValue(id, out TypeMetadata newTypeMetadata);
-                return newTypeMetadata;
-            }
+            return UniqueEmitter.EmitType(type, propertyMetadata => propertyMetadata.ToModel());
         }
         
         public TypeMetadata ToModel()
         {
-            TypeMetadata metadata = new TypeMetadata
-            {
-                TypeEnum = EnumMapper.ConvertEnum<TypeTypesEnum, TypeTypesSerializationModelEnum>(TypeEnum),
-                TypeName = TypeName,
-                NamespaceName = NamespaceName,
-                GenericArguments = GenericArguments.Select(EmitTypeMetadata),
-                
-                Modifiers =
-                    new Tuple<AccessLevelEnum, SealedEnum, AbstractEnum>(
-                        EnumMapper.ConvertEnum<AccessLevelEnum, AccessLevelSerializationModelEnum>(Modifiers.Item1),
-                        EnumMapper.ConvertEnum<SealedEnum, SealedSerializationModelEnum>(Modifiers.Item2),
-                        EnumMapper.ConvertEnum<AbstractEnum, AbstractSerializationModelEnum>(Modifiers.Item3)),
-                
-                Attributes = Attributes.Select(attributeMetadata => attributeMetadata.ToModel()),
-                FullTypeName = FullTypeName,
-                DeclaringType = EmitTypeMetadata(DeclaringType),
-                BaseType = EmitTypeMetadata(BaseType),
-                
-                ImplementedInterfaces = ImplementedInterfaces.Select(EmitTypeMetadata),
-                Fields = Fields.Select(typeMetadata => typeMetadata.ToModel()),
-                Methods = Methods.Select(typeMetadata => typeMetadata.ToModel()),
-                Properties = Properties.Select(typeMetadata => typeMetadata.ToModel()),
-                Indexers = Indexers.Select(typeMetadata => typeMetadata.ToModel()),
-                Events = Events.Select(typeMetadata => typeMetadata.ToModel()),
-                Constructors = Constructors.Select(typeMetadata => typeMetadata.ToModel()),
-                NestedTypes = NestedTypes.Select(EmitTypeMetadata)
-            };
+            TypeMetadata metadata = new TypeMetadata();
+            metadata.TypeEnum = EnumMapper.ConvertEnum<TypeTypesEnum, TypeTypesSerializationModelEnum>(TypeEnum);
+            metadata.TypeName = TypeName;
+            metadata.NamespaceName = NamespaceName;
+            metadata.GenericArguments = GenericArguments?.Select(EmitTypeMetadata);
+            
+            metadata.Modifiers = new Tuple<AccessLevelEnum, SealedEnum, AbstractEnum>(
+                EnumMapper.ConvertEnum<AccessLevelEnum, AccessLevelSerializationModelEnum>(Modifiers.Item1),
+                EnumMapper.ConvertEnum<SealedEnum, SealedSerializationModelEnum>(Modifiers.Item2),
+                EnumMapper.ConvertEnum<AbstractEnum, AbstractSerializationModelEnum>(Modifiers.Item3));
+            
+            metadata.Attributes = Attributes?.Select(attributeMetadata => attributeMetadata.ToModel());
+            metadata.FullTypeName = FullTypeName;
+            metadata.DeclaringType = DeclaringType == null ? null : EmitTypeMetadata(DeclaringType);
+            metadata.BaseType = DeclaringType == null ? null : EmitTypeMetadata(BaseType);
+            metadata.ImplementedInterfaces = ImplementedInterfaces?.Select(EmitTypeMetadata);
+            metadata.Fields = Fields?.Select(typeMetadata => typeMetadata.ToModel());
+            metadata.Methods = Methods?.Select(typeMetadata => typeMetadata.ToModel());
+            metadata.Properties = Properties?.Select(typeMetadata => typeMetadata.ToModel());
+            metadata.Indexers = Indexers?.Select(typeMetadata => typeMetadata.ToModel());
+            metadata.Events = Events?.Select(typeMetadata => typeMetadata.ToModel());
+            metadata.Constructors = Constructors?.Select(typeMetadata => typeMetadata.ToModel());
+            metadata.NestedTypes = NestedTypes?.Select(EmitTypeMetadata);
 
             return metadata;
         }
@@ -161,7 +135,13 @@ namespace SerializationModel.MetadataClasses.Types
         protected bool Equals(TypeSerializationModel other)
         {
             return TypeEnum == other.TypeEnum && string.Equals(TypeName, other.TypeName) &&
-                   string.Equals(NamespaceName, other.NamespaceName) && string.Equals(FullTypeName, other.FullTypeName);
+                   string.Equals(NamespaceName, other.NamespaceName) &&
+                   Equals(GenericArguments, other.GenericArguments) && Equals(Modifiers, other.Modifiers) &&
+                   Equals(Attributes, other.Attributes) && string.Equals(FullTypeName, other.FullTypeName) &&
+                   Equals(ImplementedInterfaces, other.ImplementedInterfaces) && Equals(Fields, other.Fields) &&
+                   Equals(Methods, other.Methods) && Equals(Properties, other.Properties) &&
+                   Equals(Indexers, other.Indexers) && Equals(Events, other.Events) &&
+                   Equals(Constructors, other.Constructors) && Equals(NestedTypes, other.NestedTypes);
         }
 
         public override bool Equals(object obj)
@@ -179,7 +159,18 @@ namespace SerializationModel.MetadataClasses.Types
                 var hashCode = (int) TypeEnum;
                 hashCode = (hashCode * 397) ^ (TypeName != null ? TypeName.GetHashCode() : 0);
                 hashCode = (hashCode * 397) ^ (NamespaceName != null ? NamespaceName.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (GenericArguments != null ? GenericArguments.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (Modifiers != null ? Modifiers.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (Attributes != null ? Attributes.GetHashCode() : 0);
                 hashCode = (hashCode * 397) ^ (FullTypeName != null ? FullTypeName.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (ImplementedInterfaces != null ? ImplementedInterfaces.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (Fields != null ? Fields.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (Methods != null ? Methods.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (Properties != null ? Properties.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (Indexers != null ? Indexers.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (Events != null ? Events.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (Constructors != null ? Constructors.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (NestedTypes != null ? NestedTypes.GetHashCode() : 0);
                 return hashCode;
             }
         }

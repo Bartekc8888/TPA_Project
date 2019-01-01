@@ -60,6 +60,7 @@
     <Compile Include="MetadataDefinitions\TypeTypesSerializationModelEnum.cs" />
     <Compile Include="MetadataDefinitions\VirtualSerializationModelEnum.cs" />
     <Compile Include="MetadataExtensions\ReferenceSerializationModelMap.cs" />
+    <Compile Include="MetadataExtensions\UniqueEmitter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

@@ -116,7 +116,7 @@ namespace Model.MetadataClasses.Types.Members
         {
             return string.Equals(Name, other.Name) && Equals(GenericArguments, other.GenericArguments) &&
                    Equals(Modifiers, other.Modifiers) && Equals(ReturnType, other.ReturnType) &&
-                   Equals(Parameters, other.Parameters);
+                   Extension == other.Extension && Equals(Parameters, other.Parameters);
         }
 
         public override bool Equals(object obj)
@@ -135,6 +135,7 @@ namespace Model.MetadataClasses.Types.Members
                 hashCode = (hashCode * 397) ^ (GenericArguments != null ? GenericArguments.GetHashCode() : 0);
                 hashCode = (hashCode * 397) ^ (Modifiers != null ? Modifiers.GetHashCode() : 0);
                 hashCode = (hashCode * 397) ^ (ReturnType != null ? ReturnType.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ Extension.GetHashCode();
                 hashCode = (hashCode * 397) ^ (Parameters != null ? Parameters.GetHashCode() : 0);
                 return hashCode;
             }

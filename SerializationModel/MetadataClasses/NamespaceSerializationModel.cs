@@ -17,7 +17,7 @@ namespace SerializationModel.MetadataClasses
         public NamespaceSerializationModel(NamespaceMetadata metadata)
         {
             NamespaceName = metadata.NamespaceName;
-            Types = metadata.Types.Select(typeMetadata => new TypeSerializationModel(typeMetadata));
+            Types = metadata.Types.Select(TypeSerializationModel.EmitTypeSerializationModel);
         }
         
         public NamespaceMetadata ToModel()
@@ -25,7 +25,28 @@ namespace SerializationModel.MetadataClasses
             NamespaceMetadata namespaceMetadata = new NamespaceMetadata();
             namespaceMetadata.NamespaceName = NamespaceName;
             namespaceMetadata.Types = Types.Select(model => model.ToModel());
-            return null;
+            return namespaceMetadata;
+        }
+
+        protected bool Equals(NamespaceSerializationModel other)
+        {
+            return string.Equals(NamespaceName, other.NamespaceName) && Equals(Types, other.Types);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((NamespaceSerializationModel) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                return ((NamespaceName != null ? NamespaceName.GetHashCode() : 0) * 397) ^ (Types != null ? Types.GetHashCode() : 0);
+            }
         }
     }
 }

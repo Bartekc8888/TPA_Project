@@ -1,5 +1,6 @@
 ﻿using System.Runtime.Serialization;
 using Model.MetadataClasses.Types.Members;
+using SerializationModel.MetadataExtensions;
 
 namespace SerializationModel.MetadataClasses.Types.Members
 {
@@ -15,6 +16,11 @@ namespace SerializationModel.MetadataClasses.Types.Members
             FieldMetadata parameterMetadata = new FieldMetadata();
             FillModel(parameterMetadata);
             return parameterMetadata;
+        }
+
+        public static FieldSerializationModel EmitUniqueType(FieldMetadata metadata)
+        {
+            return UniqueEmitter.EmitType(metadata, propertyMetadata => new FieldSerializationModel(propertyMetadata));
         }
     }
 }

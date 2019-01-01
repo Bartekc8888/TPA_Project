@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Runtime.Serialization;
 using Model.MetadataClasses.Types.Members;
+using SerializationModel.MetadataExtensions;
 
 namespace SerializationModel.MetadataClasses.Types.Members
 {
@@ -23,10 +24,15 @@ namespace SerializationModel.MetadataClasses.Types.Members
 
             return propertyMetadata;
         }
-
+        
         protected bool Equals(PropertySerializationModel other)
         {
             return base.Equals(other) && Equals(propertyMethods, other.propertyMethods);
+        }
+
+        public static PropertySerializationModel EmitUniqueType(PropertyMetadata metadata)
+        {
+            return UniqueEmitter.EmitType(metadata, propertyMetadata => new PropertySerializationModel(propertyMetadata));
         }
 
         public override bool Equals(object obj)

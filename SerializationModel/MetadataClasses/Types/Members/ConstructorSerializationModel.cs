@@ -1,5 +1,6 @@
 ﻿using System.Runtime.Serialization;
 using Model.MetadataClasses.Types.Members;
+using SerializationModel.MetadataExtensions;
 
 namespace SerializationModel.MetadataClasses.Types.Members
 {
@@ -15,6 +16,11 @@ namespace SerializationModel.MetadataClasses.Types.Members
             MethodMetadata methodMetadata = base.ToModel();
             ConstructorMetadata constructorMetadata = new ConstructorMetadata(methodMetadata);
             return constructorMetadata;
+        }
+
+        public static ConstructorSerializationModel EmitUniqueType(ConstructorMetadata metadata)
+        {
+            return UniqueEmitter.EmitType(metadata, propertyMetadata => new ConstructorSerializationModel(propertyMetadata));
         }
     }
 }
