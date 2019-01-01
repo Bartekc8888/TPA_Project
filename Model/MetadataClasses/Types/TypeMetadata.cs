@@ -2,54 +2,35 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.Serialization;
 using Model.MetadataClasses.Types.Members;
 using Model.MetadataDefinitions;
 using Model.MetadataExtensions;
 
 namespace Model.MetadataClasses.Types
 {
-    [DataContract(IsReference = true)]
     public class TypeMetadata
     {
         #region fields
-        [DataMember(EmitDefaultValue = false)]
         public TypeTypesEnum TypeEnum { get; set; }
 
-        [DataMember(EmitDefaultValue = false)]
         public string TypeName { get; set; }
-        [DataMember(EmitDefaultValue = false)]
         public string NamespaceName { get; set; }
-        [DataMember(EmitDefaultValue = false)]
         public IEnumerable<TypeMetadata> GenericArguments { get; set; }
-        [DataMember(EmitDefaultValue = false)]
         public Tuple<AccessLevelEnum, SealedEnum, AbstractEnum> Modifiers { get; set; }
-        [DataMember(EmitDefaultValue = false)]
         public IEnumerable<AttributeMetadata> Attributes { get; set; }
-        [DataMember(EmitDefaultValue = false)]
         public string FullTypeName { get; set; }
         
-        [DataMember(EmitDefaultValue = false)]
         public TypeMetadata DeclaringType { get; set; }
 
-        [DataMember(EmitDefaultValue = false)]
         public TypeMetadata BaseType { get; set; }
-        [DataMember(EmitDefaultValue = false)]
         public IEnumerable<TypeMetadata> ImplementedInterfaces { get; set; }
 
-        [DataMember(EmitDefaultValue = false)]
         public IEnumerable<FieldMetadata> Fields { get; set; }
-        [DataMember(EmitDefaultValue = false)]
         public IEnumerable<MethodMetadata> Methods { get; set; }
-        [DataMember(EmitDefaultValue = false)]
         public IEnumerable<PropertyMetadata> Properties { get; set; }
-        [DataMember(EmitDefaultValue = false)]
         public IEnumerable<IndexerMetadata> Indexers { get; set; }
-        [DataMember(EmitDefaultValue = false)]
         public IEnumerable<EventMetadata> Events { get; set; }
-        [DataMember(EmitDefaultValue = false)]
         public IEnumerable<ConstructorMetadata> Constructors { get; set; }
-        [DataMember(EmitDefaultValue = false)]
         public IEnumerable<TypeMetadata> NestedTypes { get; set; }
         #endregion
 

@@ -3,19 +3,14 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.Serialization;
 using Model.MetadataExtensions;
 
 namespace Model.MetadataClasses
 {
-    [DataContract]
     public class AssemblyMetadata
     {
-        [DataMember(EmitDefaultValue = false)]
         public string TypeName { get; set; }
-        [DataMember(EmitDefaultValue = false)]
         public string Name { get; set; }
-        [DataMember(EmitDefaultValue = false)]
         public IEnumerable<NamespaceMetadata> Namespaces { get; set; }
        
         public AssemblyMetadata(Assembly assembly)

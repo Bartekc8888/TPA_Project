@@ -2,22 +2,20 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.Serialization;
 
 namespace Model.MetadataClasses.Types.Members
-{
-    [DataContract(IsReference = true)]
-    public class AttributeMetadata : MemberAbstract
+{    public class AttributeMetadata : MemberAbstract
     {
         internal static IEnumerable<AttributeMetadata> EmitAttributes(Type type)
         {
-            return from attrib in type.GetCustomAttributes().Cast<Attribute>()
-
+            return from attrib in type.GetCustomAttributes()
                    select new AttributeMetadata(attrib.ToString());
         }
+        
         public AttributeMetadata(string name) : base(name)
         {
         }
+        
         public AttributeMetadata() : base() { }
     }
 }

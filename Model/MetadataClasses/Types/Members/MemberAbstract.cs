@@ -1,25 +1,20 @@
-﻿using System.Runtime.Serialization;
-
-namespace Model.MetadataClasses.Types.Members
+﻿namespace Model.MetadataClasses.Types.Members
 {
-    [DataContract(IsReference = true)]
     public abstract class MemberAbstract
     {
-        [DataMember(EmitDefaultValue = false)]
         public string Name { get; set; }
-        [DataMember(EmitDefaultValue = false)]
         public TypeMetadata TypeMetadata { get; set; }
 
         public MemberAbstract(string name, TypeMetadata typeInfo)
         {
-            this.Name = name;
-            this.TypeMetadata = typeInfo;
+            Name = name;
+            TypeMetadata = typeInfo;
         }
 
         public MemberAbstract(string name)
         {
-            this.Name = name;
-            this.TypeMetadata = null;
+            Name = name;
+            TypeMetadata = null;
         }
 
         public MemberAbstract() { }
@@ -33,7 +28,7 @@ namespace Model.MetadataClasses.Types.Members
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != this.GetType()) return false;
+            if (obj.GetType() != GetType()) return false;
             return Equals((MemberAbstract) obj);
         }
 

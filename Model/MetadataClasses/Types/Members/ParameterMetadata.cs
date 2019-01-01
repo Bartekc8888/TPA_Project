@@ -1,8 +1,5 @@
-﻿using System.Runtime.Serialization;
-
-namespace Model.MetadataClasses.Types.Members
+﻿namespace Model.MetadataClasses.Types.Members
 {
-    [DataContract(IsReference = true)]
     public class ParameterMetadata : MemberAbstract
     {
 

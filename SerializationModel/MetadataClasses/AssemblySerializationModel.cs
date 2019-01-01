@@ -5,7 +5,7 @@ using Model.MetadataClasses;
 
 namespace SerializationModel.MetadataClasses
 {
-    [DataContract]
+    [DataContract(IsReference = true)]
     public class AssemblySerializationModel
     {
         [DataMember(EmitDefaultValue = false)]

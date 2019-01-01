@@ -3,33 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
-using System.Runtime.Serialization;
 using Model.MetadataDefinitions;
 
 namespace Model.MetadataClasses.Types.Members
 {
-    [DataContract(IsReference = true)]
     public class MethodMetadata
     {
         #region vars
-        [DataMember(EmitDefaultValue = false)]
         public string Name { get; set; }
-        [DataMember(EmitDefaultValue = false)]
         public IEnumerable<TypeMetadata> GenericArguments { get; set; }
-        [DataMember(EmitDefaultValue = false)]
         public Tuple<AccessLevelEnum, AbstractEnum, StaticEnum, VirtualEnum, OverrideEnum> Modifiers { get; set; }
-        [DataMember(EmitDefaultValue = false)]
         public TypeMetadata ReturnType { get; set; }
-        [DataMember(EmitDefaultValue = false)]
         public bool Extension { get; set; }
-        [DataMember(EmitDefaultValue = false)]
         public IEnumerable<ParameterMetadata> Parameters { get; set; }
         #endregion
 
         internal static IEnumerable<MethodMetadata> EmitMethods(IEnumerable<MethodBase> methods)
         {
-            return from MethodBase _currentMethod in methods where !(_currentMethod.IsSpecialName)
-                   select new MethodMetadata(_currentMethod);
+            return from MethodBase currentMethod in methods where !(currentMethod.IsSpecialName)
+                   select new MethodMetadata(currentMethod);
         }
 
         public MethodMetadata(MethodBase method)

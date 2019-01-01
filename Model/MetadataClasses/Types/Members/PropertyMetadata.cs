@@ -3,14 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using System.Runtime.Serialization;
 
 namespace Model.MetadataClasses.Types.Members
 {
-    [DataContract(IsReference = true)]
     public class PropertyMetadata : MemberAbstract
     {
-        [DataMember(EmitDefaultValue = false)]
         public MethodMetadata[] propertyMethods { get; set; }
         
         internal static IEnumerable<PropertyMetadata> EmitProperties(IEnumerable<PropertyInfo> props)
