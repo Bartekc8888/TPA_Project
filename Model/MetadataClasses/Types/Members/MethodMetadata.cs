@@ -42,6 +42,26 @@ namespace Model.MetadataClasses.Types.Members
             Extension = EmitExtension(method);
         }
 
+        public MethodMetadata(string name, IEnumerable<TypeMetadata> genericArguments, Tuple<AccessLevelEnum, AbstractEnum, StaticEnum, VirtualEnum, OverrideEnum> modifiers, TypeMetadata returnType, bool extension, IEnumerable<ParameterMetadata> parameters)
+        {
+            Name = name;
+            GenericArguments = genericArguments;
+            Modifiers = modifiers;
+            ReturnType = returnType;
+            Extension = extension;
+            Parameters = parameters;
+        }
+        
+        public MethodMetadata(MethodMetadata model) : this(
+            model.Name,
+            model.GenericArguments,
+            model.Modifiers,
+            model.ReturnType,
+            model.Extension,
+            model.Parameters)
+        {
+        }
+
         public MethodMetadata() { }
 
 

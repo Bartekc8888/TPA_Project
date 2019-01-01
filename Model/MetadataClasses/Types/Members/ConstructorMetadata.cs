@@ -11,6 +11,10 @@ namespace Model.MetadataClasses.Types.Members
         public ConstructorMetadata(MethodBase method) : base(method)
         {
         }
+        
+        public ConstructorMetadata(MethodMetadata method) : base(method)
+        {
+        }
 
         public ConstructorMetadata() : base() { }
 
