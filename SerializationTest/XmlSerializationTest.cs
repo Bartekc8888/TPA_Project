@@ -14,7 +14,7 @@ namespace SerializationTest
         public void CheckiIfSerializationWorks()
         {
             ISerialization serializer = new XmlSerialization();
-            AssemblyExtractor ae = new AssemblyExtractor("log4net.dll");
+            AssemblyExtractor ae = new AssemblyExtractor("../../TPA.ApplicationArchitecture.dll");
             serializer.Save(ae.AssemblyModel, "serialized.xml");
             AssemblyMetadata deserialized = serializer.Read("serialized.xml");
 
