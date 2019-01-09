@@ -52,6 +52,7 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="MetadataClasses\Types\TypeMetadataTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ExampleDllReflection.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
