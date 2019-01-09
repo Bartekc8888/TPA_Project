@@ -1,12 +1,14 @@
-﻿namespace CLI
+﻿using System.ComponentModel.Composition;
+
+namespace CLI
 {
     class Program
     {
+        static CliBootstrapper mefBootstrapper = new CliBootstrapper();
 
         static void Main(string[] args)
         {
-            CommandLineView commandLine = new CommandLineView();
-            commandLine.Run();
+            mefBootstrapper.Run();
         }
     }
 }

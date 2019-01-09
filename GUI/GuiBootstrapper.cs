@@ -1,11 +1,12 @@
 ﻿using MEF;
+using System;
 using System.Windows;
 
 namespace GUI
 {
     public class GuiBootstrapper : MefBootstrapper
     {
-        protected override DependencyObject CreateShell()
+        protected override Object CreateShell()
         {
             return Container.GetExportedValue<MainWindow>();
         }
@@ -15,11 +16,6 @@ namespace GUI
             base.InitializeShell();
             Application.Current.MainWindow = (MainWindow)Shell;
             Application.Current.MainWindow.Show();
-        }
-
-        protected override void OnInitialized()
-        {
-            //to do
         }
     }
 }

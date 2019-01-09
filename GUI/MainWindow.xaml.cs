@@ -1,6 +1,5 @@
 ﻿using System.ComponentModel.Composition;
 using System.Windows;
-using Microsoft.Win32;
 using ViewModel.Logic;
 
 namespace GUI
@@ -14,9 +13,6 @@ namespace GUI
         public MainWindow()
         {
             InitializeComponent();
-
-            //TypesTreeViewModel viewModel = new TypesTreeViewModel(new DialogFileChooser());
-            //DataContext = viewModel;
         }
 
         [Import]

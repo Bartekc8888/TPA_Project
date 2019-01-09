@@ -1,17 +1,18 @@
 using System;
+using System.ComponentModel.Composition;
 using ViewModel.Logic;
 
 namespace CLI
 {
+    [Export(typeof(IFileChooser))]
     public class CommandLineFileChooser : IFileChooser
     {
-        private string ExitCharacter;
+        private string ExitCharacter = "0";
 
-        public CommandLineFileChooser(string exitCharacter)
+        public CommandLineFileChooser()
         {
-            ExitCharacter = exitCharacter;
         }
-        
+
         public string ChooseFilePath()
         {
             string chosenPath = "";

@@ -14,21 +14,16 @@ namespace CLI
         {
             base.Run();
         }
-        protected override DependencyObject CreateShell()
+        protected override Object CreateShell()
         {
-            return /*this.Container.GetExportedValue<CommandLineView>();*/ null;
+            return Container.GetExportedValue<CommandLineView>();
         }
 
         protected override void InitializeShell()
         {
-            /*base.InitializeShell();
-            Application.Current.MainWindow = (MainWindow)this.Shell;
-            Application.Current.MainWindow.Show();*/
-        }
-
-        protected override void OnInitialized()
-        {
-            //to do
+            base.InitializeShell();
+            CommandLineView commandLine = (CommandLineView)this.Shell;
+            commandLine.Run();
         }
     }
 }

@@ -6,7 +6,7 @@ using ViewModel.Logic;
 
 namespace CLI
 {
-    [Export()]
+    [Export]
     class CommandLineView
     {
 
@@ -14,7 +14,13 @@ namespace CLI
         private const string SerializationMode = "W";
         private const string DeserializationMode = "L";
 
-        private TypesTreeViewModel _viewModel;
+        [Import]
+        public TypesTreeViewModel TypesTreeViewModel
+        {
+            set;
+            get;
+        }
+
         private TypeViewModelAbstract _currentItem;
         private Stack<TypeViewModelAbstract> _previousTypes;
 
@@ -24,14 +30,13 @@ namespace CLI
         {
 
             _previousTypes = new Stack<TypeViewModelAbstract>();
-            _viewModel = new TypesTreeViewModel();
         }
 
         public void Run()
         {
             GetFileFromUser();
             
-            PrintHeaders(_viewModel.Items);
+            PrintHeaders(TypesTreeViewModel.Items);
             while (true)
             {
                 TypeViewModelAbstract temp = _currentItem;
@@ -51,7 +56,7 @@ namespace CLI
                 else
                 {
                     _previousTypes.Clear();
-                    PrintHeaders(_viewModel.Items);
+                    PrintHeaders(TypesTreeViewModel.Items);
                 }
             }
         }
@@ -60,10 +65,10 @@ namespace CLI
         {
             do
             {
-                _viewModel.ChooseFile();
-            } while (!_viewModel.IsPathValid() && !ExitCharacter.Equals(_viewModel.SelectedPath));
+                TypesTreeViewModel.ChooseFile();
+            } while (!TypesTreeViewModel.IsPathValid() && !ExitCharacter.Equals(TypesTreeViewModel.SelectedPath));
 
-            if (ExitCharacter.Equals(_viewModel.SelectedPath))
+            if (ExitCharacter.Equals(TypesTreeViewModel.SelectedPath))
             {
                 Environment.Exit(0);
             }
@@ -218,7 +223,7 @@ namespace CLI
             }
             else
             {
-                viewModelItem = _viewModel.Items[index - 1];
+                viewModelItem = TypesTreeViewModel.Items[index - 1];
             }
 
             return viewModelItem;
@@ -230,8 +235,8 @@ namespace CLI
             Console.WriteLine("Give a path for serialization file: " + Environment.NewLine);
             string givenPath = Console.ReadLine();
 
-            _viewModel.SerializationPath = givenPath;
-            _viewModel.SerializeData();
+            TypesTreeViewModel.SerializationPath = givenPath;
+            TypesTreeViewModel.SerializeData();
         }
 
         private void HandleDeserializationMode()
@@ -240,8 +245,8 @@ namespace CLI
             Console.WriteLine("Give a path for deserialization file: " + Environment.NewLine);
             string givenPath = Console.ReadLine();
 
-            _viewModel.SerializationPath = givenPath;
-            _viewModel.DeserializeData();
+            TypesTreeViewModel.SerializationPath = givenPath;
+            TypesTreeViewModel.DeserializeData();
         }
     }
 }

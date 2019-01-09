@@ -14,7 +14,7 @@ namespace MEF
     public abstract class MefBootstrapper
     {
         protected ILogging Logger { get; set; }
-        protected DependencyObject Shell { get; set; }
+        protected Object Shell { get; set; }
         protected AggregateCatalog AggregateCatalog { get; set; }
         protected CompositionContainer Container { get; set; }
 
@@ -26,7 +26,6 @@ namespace MEF
                 throw new InvalidOperationException("Null Logger Exception");
          
             AggregateCatalog = CreateAggregateCatalog();
-            ConfigureAggregateCatalog();
             RegisterDefaultTypesIfMissing();
             Container = CreateContainer();
 
@@ -34,7 +33,6 @@ namespace MEF
                 throw new InvalidOperationException("Null Container Exception");
 
             ConfigureContainer();
-            RegisterFrameworkExceptionTypes();
             Container.ComposeParts(this);
             
             Shell = CreateShell();
@@ -52,11 +50,6 @@ namespace MEF
         {
             return new AggregateCatalog(new DirectoryCatalog("."), new DirectoryCatalog(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "*.exe"),
                 new AssemblyCatalog(Assembly.GetExecutingAssembly()));
-        }
-
-        protected virtual void ConfigureAggregateCatalog()
-        {
-
         }
 
         protected virtual void RegisterDefaultTypesIfMissing()
@@ -91,13 +84,7 @@ namespace MEF
             Container.ComposeExportedValue(AggregateCatalog);
         }
 
-
-        protected virtual void RegisterFrameworkExceptionTypes()
-        {
-            //to do
-        }
-
-        protected virtual DependencyObject CreateShell()
+        protected virtual Object CreateShell()
         {
             return null;
         }
