@@ -35,6 +35,7 @@ namespace CLI
         public void Run()
         {
             GetFileFromUser();
+            TypesTreeViewModel.ExtractData();
             
             PrintHeaders(TypesTreeViewModel.Items);
             while (true)

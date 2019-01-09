@@ -19,10 +19,7 @@ namespace ViewModel.ModelRepresentation.Types.MethodTypes
         public ConstructorViewModel(ConstructorMetadata metadata) : base(metadata)
         {
             mName = metadata.Name + GetParameters(metadata.Parameters);
-            if (metadata.ReturnType != null)
-            {
-                mTypeName = metadata.ReturnType.TypeName;
-            }
+            mTypeName = metadata.ReturnType;
         }
 
         public override IList<TypeViewModelAbstract> CreateChildren()

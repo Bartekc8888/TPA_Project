@@ -13,7 +13,7 @@ namespace Model.MetadataClasses.Types.Members
         public string Name { get; set; }
         public IEnumerable<TypeMetadata> GenericArguments { get; set; }
         public Tuple<AccessLevelEnum, AbstractEnum, StaticEnum, VirtualEnum, OverrideEnum> Modifiers { get; set; }
-        public TypeMetadata ReturnType { get; set; }
+        public string ReturnType { get; set; }
         public bool Extension { get; set; }
         public IEnumerable<ParameterMetadata> Parameters { get; set; }
         #endregion
@@ -34,7 +34,7 @@ namespace Model.MetadataClasses.Types.Members
             Extension = EmitExtension(method);
         }
 
-        public MethodMetadata(string name, IEnumerable<TypeMetadata> genericArguments, Tuple<AccessLevelEnum, AbstractEnum, StaticEnum, VirtualEnum, OverrideEnum> modifiers, TypeMetadata returnType, bool extension, IEnumerable<ParameterMetadata> parameters)
+        public MethodMetadata(string name, IEnumerable<TypeMetadata> genericArguments, Tuple<AccessLevelEnum, AbstractEnum, StaticEnum, VirtualEnum, OverrideEnum> modifiers, string returnType, bool extension, IEnumerable<ParameterMetadata> parameters)
         {
             Name = name;
             GenericArguments = genericArguments;
@@ -64,13 +64,13 @@ namespace Model.MetadataClasses.Types.Members
                    select new ParameterMetadata(parm.Name, TypeMetadata.EmitReference(parm.ParameterType));
         }
 
-        private static TypeMetadata EmitReturnType(MethodBase method)
+        private static string EmitReturnType(MethodBase method)
         {
             MethodInfo methodInfo = method as MethodInfo;
             if (methodInfo == null)
                 return null;
 
-            return TypeMetadata.EmitReference(methodInfo.ReturnType);
+            return methodInfo.ReturnType.Name;
         }
 
         private static bool EmitExtension(MethodBase method)

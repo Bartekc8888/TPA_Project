@@ -213,7 +213,7 @@ namespace ModelTest
 
             Assert.AreEqual(6, methodList.Count);
             Assert.AreEqual("PublicVirtualMethod", methodList[2].Name);
-            Assert.AreEqual(typeof(int).Name, methodList[5].ReturnType.TypeName);
+            Assert.AreEqual(typeof(int).Name, methodList[5].ReturnType);
         }
 
         [TestMethod]

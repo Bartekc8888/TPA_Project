@@ -25,7 +25,7 @@ namespace ViewModel.ModelRepresentation.Types.MethodTypes
             mName = metadata.Name + GetParameters(metadata.Parameters);
             if (metadata.ReturnType != null)
             {
-                mTypeName = metadata.ReturnType.TypeName;
+                mTypeName = metadata.ReturnType;
             }
         }
 
@@ -51,7 +51,7 @@ namespace ViewModel.ModelRepresentation.Types.MethodTypes
         protected string GetParameters(IEnumerable<ParameterMetadata> methodParameters)
         {
             string parameters = "(";
-            methodParameters.ToList().ForEach(parameter => parameters += parameter.TypeMetadata.TypeName + " " + parameter.Name + ", ");
+            methodParameters.ToList().ForEach(parameter => parameters += parameter.TypeName + " " + parameter.Name + ", ");
             if (parameters.EndsWith(", "))
             {
                 parameters = parameters.Remove(parameters.Length - 2);

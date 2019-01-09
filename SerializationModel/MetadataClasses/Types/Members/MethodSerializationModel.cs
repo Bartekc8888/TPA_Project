@@ -21,7 +21,7 @@ namespace SerializationModel.MetadataClasses.Types.Members
         public Tuple<AccessLevelSerializationModelEnum, AbstractSerializationModelEnum, StaticSerializationModelEnum,
             VirtualSerializationModelEnum, OverrideSerializationModelEnum> Modifiers { get; set; }
         [DataMember(EmitDefaultValue = false)]
-        public TypeSerializationModel ReturnType { get; set; }
+        public string ReturnType { get; set; }
         [DataMember(EmitDefaultValue = false)]
         public bool Extension { get; set; }
         [DataMember(EmitDefaultValue = false)]
@@ -43,7 +43,7 @@ namespace SerializationModel.MetadataClasses.Types.Members
                 EnumMapper.ConvertEnum<OverrideSerializationModelEnum, OverrideEnum>(metadata.Modifiers.Item5)
                 );
 
-            ReturnType = metadata.ReturnType == null ? null : TypeSerializationModel.EmitTypeSerializationModel(metadata.ReturnType);
+            ReturnType = metadata.ReturnType;
             Extension = metadata.Extension;
             Parameters =
                 metadata.Parameters.Select(ParameterSerializationModel.EmitUniqueType);
@@ -66,7 +66,7 @@ namespace SerializationModel.MetadataClasses.Types.Members
                 EnumMapper.ConvertEnum<OverrideEnum, OverrideSerializationModelEnum>(Modifiers.Item5)
             );
 
-            methodMetadata.ReturnType = ReturnType?.ToModel();
+            methodMetadata.ReturnType = ReturnType;
             methodMetadata.Extension = Extension;
             methodMetadata.Parameters =
                 Parameters?.Select(parameterMetadata => parameterMetadata.ToModel());

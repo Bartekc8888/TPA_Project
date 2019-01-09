@@ -68,7 +68,7 @@ namespace ViewModel.ModelRepresentation.Types
                 case PropertyMetadata propertyMetadata:
                     return new PropertyViewModel(propertyMetadata);
                 default:
-                    return CreateTypeViewClass(new TypeMetadata(GetFromFullName(member.TypeMetadata.FullTypeName)), member.Name);
+                    return CreateTypeViewClass(new TypeMetadata(GetFromFullName(member.TypeName)), member.Name);
             }
         }
 

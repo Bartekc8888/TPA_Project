@@ -17,7 +17,7 @@ namespace Model.MetadataClasses.Types.Members
                    select new PropertyMetadata(prop.Name, prop.PropertyType, prop.GetAccessors(true));
         }
 
-        private PropertyMetadata(string propertyName, Type type, MethodInfo[] methods) : base(propertyName, TypeMetadata.EmitReference(type))
+        private PropertyMetadata(string propertyName, Type type, MethodInfo[] methods) : base(propertyName, type.Name)
         {
             propertyMethods = methods.Select(info => new MethodMetadata(info)).ToArray();
         }

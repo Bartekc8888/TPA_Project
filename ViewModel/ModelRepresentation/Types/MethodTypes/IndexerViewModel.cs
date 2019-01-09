@@ -20,10 +20,7 @@ namespace ViewModel.ModelRepresentation.Types.MethodTypes
         {
 
             mName = metadata.Name;
-            if (metadata.TypeMetadata != null)
-            {
-                mTypeName = metadata.TypeMetadata.TypeName;
-            }
+            mTypeName = metadata.TypeName;
         }
 
         public override IList<TypeViewModelAbstract> CreateChildren()

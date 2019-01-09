@@ -11,23 +11,23 @@ namespace SerializationModel.MetadataClasses.Types.Members
         [DataMember(EmitDefaultValue = false)]
         public string Name { get; set; }
         [DataMember(EmitDefaultValue = false)]
-        public TypeSerializationModel TypeMetadata { get; set; }
+        public string TypeName { get; set; }
 
         public MemberAbstractSerializationModel(MemberAbstract member)
         {
             Name = member.Name;
-            TypeMetadata = member.TypeMetadata == null ? null : TypeSerializationModel.EmitTypeSerializationModel(member.TypeMetadata);
+            TypeName = member.TypeName;
         }
 
         public void FillModel(MemberAbstract constructedObject)
         {
             constructedObject.Name = Name;
-            constructedObject.TypeMetadata = TypeMetadata == null ? null : TypeMetadata.ToModel();
+            constructedObject.TypeName = TypeName;
         }
 
         protected bool Equals(MemberAbstractSerializationModel other)
         {
-            return string.Equals(Name, other.Name) && Equals(TypeMetadata, other.TypeMetadata);
+            return string.Equals(Name, other.Name) && Equals(TypeName, other.TypeName);
         }
 
         public override bool Equals(object obj)
@@ -42,7 +42,7 @@ namespace SerializationModel.MetadataClasses.Types.Members
         {
             unchecked
             {
-                return ((Name != null ? Name.GetHashCode() : 0) * 397) ^ (TypeMetadata != null ? TypeMetadata.GetHashCode() : 0);
+                return ((Name != null ? Name.GetHashCode() : 0) * 397) ^ (TypeName != null ? TypeName.GetHashCode() : 0);
             }
         }
     }

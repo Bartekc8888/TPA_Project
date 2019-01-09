@@ -3,32 +3,32 @@
     public abstract class MemberAbstract
     {
         public string Name { get; set; }
-        public TypeMetadata TypeMetadata { get; set; }
+        public string TypeName { get; set; }
 
-        public MemberAbstract(string name, TypeMetadata typeInfo)
+        public MemberAbstract(string name, string typeName)
         {
             Name = name;
-            TypeMetadata = typeInfo;
+            TypeName = typeName;
         }
 
         public MemberAbstract(string name)
         {
             Name = name;
-            TypeMetadata = null;
+            TypeName = null;
         }
 
         public MemberAbstract() { }
 
         protected bool Equals(MemberAbstract other)
         {
-            return string.Equals(Name, other.Name) && Equals(TypeMetadata, other.TypeMetadata);
+            return string.Equals(Name, other.Name) && string.Equals(TypeName, other.TypeName);
         }
 
         public override bool Equals(object obj)
         {
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
-            if (obj.GetType() != GetType()) return false;
+            if (obj.GetType() != this.GetType()) return false;
             return Equals((MemberAbstract) obj);
         }
 
@@ -36,7 +36,7 @@
         {
             unchecked
             {
-                return ((Name != null ? Name.GetHashCode() : 0) * 397) ^ (TypeMetadata != null ? TypeMetadata.GetHashCode() : 0);
+                return ((Name != null ? Name.GetHashCode() : 0) * 397) ^ (TypeName != null ? TypeName.GetHashCode() : 0);
             }
         }
     }

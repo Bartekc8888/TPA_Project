@@ -3,7 +3,7 @@
     public class ParameterMetadata : MemberAbstract
     {
 
-        public ParameterMetadata(string name, TypeMetadata typeMetadata) : base(name, typeMetadata)
+        public ParameterMetadata(string name, TypeMetadata typeMetadata) : base(name, typeMetadata.TypeName)
         {
         }
 
