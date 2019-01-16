@@ -76,9 +76,9 @@
       <Project>{AEDFE307-4793-418A-8E44-6A4AE844810F}</Project>
       <Name>Logging</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Model\Model.csproj">
+    <ProjectReference Include="..\ReflectionModel\ReflectionModel.csproj">
       <Project>{35e4e22c-a782-4df2-a1a0-6812c8119a0a}</Project>
-      <Name>Model</Name>
+      <Name>ReflectionModel</Name>
     </ProjectReference>
     <ProjectReference Include="..\Serialization\Serialization.csproj">
       <Project>{590F25A9-DD8B-4317-82A2-18E94A1A35F6}</Project>
