@@ -15,12 +15,12 @@ namespace SerializationTest
         {
             ISerialization serializer = new XmlSerialization();
             AssemblyExtractor ae = new AssemblyExtractor("../../TPA.ApplicationArchitecture.dll");
-            serializer.Save(ae.AssemblyModel.ToModel(), "serialized.xml");
+            AssemblyModel am = ae.AssemblyModel.ToModel();
+            serializer.Save(am, "serialized.xml");
             AssemblyModel deserialized = serializer.Read("serialized.xml");
-
-            Assert.AreEqual(ae.AssemblyModel.ToModel().Name, deserialized.Name);
-            Assert.AreEqual(ae.AssemblyModel.ToModel().Namespaces.Count(), deserialized.Namespaces.Count());
-           // Assert.AreEqual(!ae.AssemblyModel.ToModel().Namespaces.Except(deserialized.Namespaces).Any(), !deserialized.Namespaces.Except(ae.AssemblyModel.Namespaces).Any());
+            Assert.AreEqual(am.Name, deserialized.Name);
+            Assert.AreEqual(am.Namespaces.Count(), deserialized.Namespaces.Count());
+            //Assert.AreEqual(am.Namespaces.Except(deserialized.Namespaces).Any(), !deserialized.Namespaces.Except(ae.AssemblyModel.Namespaces).Any());
         }
     }
 }
