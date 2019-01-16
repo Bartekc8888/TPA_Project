@@ -1,4 +1,5 @@
 ﻿using CommonServiceLocator;
+using Logging;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.Composition;
@@ -12,6 +13,7 @@ namespace MEF
 {
     public abstract class MefBootstrapper
     {
+        protected ILogging Logger { get; set; }
         protected Object Shell { get; set; }
         protected AggregateCatalog AggregateCatalog { get; set; }
         protected CompositionContainer Container { get; set; }
@@ -19,6 +21,10 @@ namespace MEF
 
         public virtual void Run()
         {
+            Logger = CreateLogger();
+            if (Logger == null)
+                throw new InvalidOperationException("Null Logger Exception");
+         
             AggregateCatalog = CreateAggregateCatalog();
             RegisterDefaultTypesIfMissing();
             Container = CreateContainer();
@@ -32,6 +38,12 @@ namespace MEF
             Shell = CreateShell();
             InitializeShell();
             OnInitialized();
+        }
+
+
+        protected virtual ILogging CreateLogger()
+        {
+            return new FileLogging("fileLogs.txt", "Logging");
         }
 
         protected virtual AggregateCatalog CreateAggregateCatalog()
@@ -68,6 +80,7 @@ namespace MEF
 
         protected virtual void RegisterBootstrapperProvidedTypes()
         {
+            Container.ComposeExportedValue(Logger);
             Container.ComposeExportedValue(AggregateCatalog);
         }
 
