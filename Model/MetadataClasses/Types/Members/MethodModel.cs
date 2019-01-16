@@ -12,5 +12,34 @@ namespace Model.MetadataClasses.Types.Members
         public string ReturnType { get; set; }
         public bool Extension { get; set; }
         public IEnumerable<ParameterModel> Parameters { get; set; }
+
+        protected bool Equals(MethodModel other)
+        {
+            return string.Equals(Name, other.Name) && Equals(GenericArguments, other.GenericArguments) &&
+                   Equals(Modifiers, other.Modifiers) && string.Equals(ReturnType, other.ReturnType) &&
+                   Extension == other.Extension && Equals(Parameters, other.Parameters);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((MethodModel) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                int hashCode = (Name != null ? Name.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (GenericArguments != null ? GenericArguments.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (Modifiers != null ? Modifiers.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (ReturnType != null ? ReturnType.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ Extension.GetHashCode();
+                hashCode = (hashCode * 397) ^ (Parameters != null ? Parameters.GetHashCode() : 0);
+                return hashCode;
+            }
+        }
     }
 }

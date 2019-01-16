@@ -24,5 +24,30 @@ namespace Model.MetadataClasses.Types
         public IEnumerable<EventModel> Events { get; set; }
         public IEnumerable<ConstructorModel> Constructors { get; set; }
         public IEnumerable<TypeModel> NestedTypes { get; set; }
+
+        protected bool Equals(TypeModel other)
+        {
+            return string.Equals(TypeName, other.TypeName) && string.Equals(NamespaceName, other.NamespaceName) &&
+                   string.Equals(FullTypeName, other.FullTypeName);
+        }
+
+        public override bool Equals(object obj)
+        {
+            if (ReferenceEquals(null, obj)) return false;
+            if (ReferenceEquals(this, obj)) return true;
+            if (obj.GetType() != this.GetType()) return false;
+            return Equals((TypeModel) obj);
+        }
+
+        public override int GetHashCode()
+        {
+            unchecked
+            {
+                int hashCode = (TypeName != null ? TypeName.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (NamespaceName != null ? NamespaceName.GetHashCode() : 0);
+                hashCode = (hashCode * 397) ^ (FullTypeName != null ? FullTypeName.GetHashCode() : 0);
+                return hashCode;
+            }
+        }
     }
 }
