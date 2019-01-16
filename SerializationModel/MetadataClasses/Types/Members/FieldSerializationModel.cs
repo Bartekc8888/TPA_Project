@@ -8,24 +8,24 @@ namespace SerializationModel.MetadataClasses.Types.Members
     public class FieldSerializationModel : MemberAbstractSerializationModel
     {
         [DataMember(EmitDefaultValue = false)]
-        public TypeSerializationModel TypeMetadata { get; set; }
+        public TypeSerializationModel TypeModel { get; set; }
         
-        public FieldSerializationModel(FieldMetadata metadata) : base(metadata)
+        public FieldSerializationModel(FieldModel model) : base(model)
         {
-            TypeMetadata = TypeSerializationModel.EmitTypeSerializationModel(metadata.TypeMetadata);
+            TypeModel = TypeSerializationModel.EmitTypeSerializationModel(model.TypeModel);
         }
         
-        public FieldMetadata ToModel()
+        public FieldModel ToModel()
         {
-            FieldMetadata parameterMetadata = new FieldMetadata();
-            parameterMetadata.TypeMetadata = TypeMetadata.ToModel();
-            FillModel(parameterMetadata);
-            return parameterMetadata;
+            FieldModel parameterModel = new FieldModel();
+            parameterModel.TypeModel = TypeModel.ToModel();
+            FillModel(parameterModel);
+            return parameterModel;
         }
 
-        public static FieldSerializationModel EmitUniqueType(FieldMetadata metadata)
+        public static FieldSerializationModel EmitUniqueType(FieldModel model)
         {
-            return UniqueEmitter.EmitType(metadata, propertyMetadata => new FieldSerializationModel(propertyMetadata));
+            return UniqueEmitter.EmitType(model, propertyModel => new FieldSerializationModel(propertyModel));
         }
     }
 }

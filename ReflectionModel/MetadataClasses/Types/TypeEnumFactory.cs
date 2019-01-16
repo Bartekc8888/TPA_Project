@@ -5,16 +5,16 @@ namespace Model.MetadataClasses.Types
 {
     public static class TypeEnumFactory
     {
-        public static TypeTypesEnum CreateTypeMetadataClass(Type type)
+        public static TypeTypesEnumMetadata CreateTypeMetadataClass(Type type)
         {
-            return type == null ? TypeTypesEnum.Unknown :
-                    type.IsEnum ? TypeTypesEnum.Enum :
-                    type.IsPrimitive ? TypeTypesEnum.Primitive :
-                    type.IsValueType ? TypeTypesEnum.Structure :
-                    type.IsArray ? TypeTypesEnum.Array :
-                    type.IsInterface ? TypeTypesEnum.Interface :
-                    (type.IsSubclassOf(typeof(Delegate)) || type == typeof(Delegate)) ? TypeTypesEnum.Delegate :
-                    type.IsClass ? TypeTypesEnum.Class : TypeTypesEnum.Unknown;
+            return type == null ? TypeTypesEnumMetadata.Unknown :
+                    type.IsEnum ? TypeTypesEnumMetadata.Enum :
+                    type.IsPrimitive ? TypeTypesEnumMetadata.Primitive :
+                    type.IsValueType ? TypeTypesEnumMetadata.Structure :
+                    type.IsArray ? TypeTypesEnumMetadata.Array :
+                    type.IsInterface ? TypeTypesEnumMetadata.Interface :
+                    (type.IsSubclassOf(typeof(Delegate)) || type == typeof(Delegate)) ? TypeTypesEnumMetadata.Delegate :
+                    type.IsClass ? TypeTypesEnumMetadata.Class : TypeTypesEnumMetadata.Unknown;
         }
     }
 }

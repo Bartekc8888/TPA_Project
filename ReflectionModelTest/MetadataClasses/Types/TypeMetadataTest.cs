@@ -111,9 +111,9 @@ namespace ModelTest
         {
             TypeMetadata basicInfo = new TypeMetadata(typeof(TestingPublicClass));
             Assert.AreEqual(typeof(TestingPublicClass).Name, basicInfo.TypeName);
-            Assert.AreEqual(AccessLevelEnum.Public, basicInfo.Modifiers.Item1);
-            Assert.AreEqual(SealedEnum.NotSealed, basicInfo.Modifiers.Item2);
-            Assert.AreEqual(AbstractEnum.NotAbstract, basicInfo.Modifiers.Item3);
+            Assert.AreEqual(AccessLevelEnumMetadata.Public, basicInfo.Modifiers.Item1);
+            Assert.AreEqual(SealedEnumMetadata.NotSealed, basicInfo.Modifiers.Item2);
+            Assert.AreEqual(AbstractEnumMetadata.NotAbstract, basicInfo.Modifiers.Item3);
         }
 
         [TestMethod]
@@ -121,9 +121,9 @@ namespace ModelTest
         {
             TypeMetadata basicInfo = new TypeMetadata(typeof(TestingInternalClass));
             Assert.AreEqual(typeof(TestingInternalClass).Name, basicInfo.TypeName);
-            Assert.AreEqual(AccessLevelEnum.Internal, basicInfo.Modifiers.Item1);
-            Assert.AreEqual(SealedEnum.NotSealed, basicInfo.Modifiers.Item2);
-            Assert.AreEqual(AbstractEnum.NotAbstract, basicInfo.Modifiers.Item3);
+            Assert.AreEqual(AccessLevelEnumMetadata.Internal, basicInfo.Modifiers.Item1);
+            Assert.AreEqual(SealedEnumMetadata.NotSealed, basicInfo.Modifiers.Item2);
+            Assert.AreEqual(AbstractEnumMetadata.NotAbstract, basicInfo.Modifiers.Item3);
         }
 
         [TestMethod]
@@ -131,9 +131,9 @@ namespace ModelTest
         {
             TypeMetadata basicInfo = new TypeMetadata(typeof(TestingProtectedClass));
             Assert.AreEqual(typeof(TestingProtectedClass).Name, basicInfo.TypeName);
-            Assert.AreEqual(AccessLevelEnum.Protected, basicInfo.Modifiers.Item1);
-            Assert.AreEqual(SealedEnum.NotSealed, basicInfo.Modifiers.Item2);
-            Assert.AreEqual(AbstractEnum.NotAbstract, basicInfo.Modifiers.Item3);
+            Assert.AreEqual(AccessLevelEnumMetadata.Protected, basicInfo.Modifiers.Item1);
+            Assert.AreEqual(SealedEnumMetadata.NotSealed, basicInfo.Modifiers.Item2);
+            Assert.AreEqual(AbstractEnumMetadata.NotAbstract, basicInfo.Modifiers.Item3);
         }
 
         [TestMethod]
@@ -141,9 +141,9 @@ namespace ModelTest
         {
             TypeMetadata basicInfo = new TypeMetadata(typeof(TestingProtectedInternalClass));
             Assert.AreEqual(typeof(TestingProtectedInternalClass).Name, basicInfo.TypeName);
-            Assert.AreEqual(AccessLevelEnum.ProtectedInternal, basicInfo.Modifiers.Item1);
-            Assert.AreEqual(SealedEnum.NotSealed, basicInfo.Modifiers.Item2);
-            Assert.AreEqual(AbstractEnum.NotAbstract, basicInfo.Modifiers.Item3);
+            Assert.AreEqual(AccessLevelEnumMetadata.ProtectedInternal, basicInfo.Modifiers.Item1);
+            Assert.AreEqual(SealedEnumMetadata.NotSealed, basicInfo.Modifiers.Item2);
+            Assert.AreEqual(AbstractEnumMetadata.NotAbstract, basicInfo.Modifiers.Item3);
         }
 
         [TestMethod]
@@ -151,9 +151,9 @@ namespace ModelTest
         {
             TypeMetadata basicInfo = new TypeMetadata(typeof(TestingPrivateClass));
             Assert.AreEqual(typeof(TestingPrivateClass).Name, basicInfo.TypeName);
-            Assert.AreEqual(AccessLevelEnum.Private, basicInfo.Modifiers.Item1);
-            Assert.AreEqual(SealedEnum.NotSealed, basicInfo.Modifiers.Item2);
-            Assert.AreEqual(AbstractEnum.NotAbstract, basicInfo.Modifiers.Item3);
+            Assert.AreEqual(AccessLevelEnumMetadata.Private, basicInfo.Modifiers.Item1);
+            Assert.AreEqual(SealedEnumMetadata.NotSealed, basicInfo.Modifiers.Item2);
+            Assert.AreEqual(AbstractEnumMetadata.NotAbstract, basicInfo.Modifiers.Item3);
         }
 
         [TestMethod]
@@ -161,9 +161,9 @@ namespace ModelTest
         {
             TypeMetadata basicInfo = new TypeMetadata(typeof(TestingAbstractClass));
             Assert.AreEqual(typeof(TestingAbstractClass).Name, basicInfo.TypeName);
-            Assert.AreEqual(AccessLevelEnum.Protected, basicInfo.Modifiers.Item1);
-            Assert.AreEqual(SealedEnum.NotSealed, basicInfo.Modifiers.Item2);
-            Assert.AreEqual(AbstractEnum.Abstract, basicInfo.Modifiers.Item3);
+            Assert.AreEqual(AccessLevelEnumMetadata.Protected, basicInfo.Modifiers.Item1);
+            Assert.AreEqual(SealedEnumMetadata.NotSealed, basicInfo.Modifiers.Item2);
+            Assert.AreEqual(AbstractEnumMetadata.Abstract, basicInfo.Modifiers.Item3);
         }
 
         [TestMethod]
@@ -171,9 +171,9 @@ namespace ModelTest
         {
             TypeMetadata basicInfo = new TypeMetadata(typeof(TestingSealedClass));
             Assert.AreEqual(typeof(TestingSealedClass).Name, basicInfo.TypeName);
-            Assert.AreEqual(AccessLevelEnum.Protected, basicInfo.Modifiers.Item1);
-            Assert.AreEqual(SealedEnum.Sealed, basicInfo.Modifiers.Item2);
-            Assert.AreEqual(AbstractEnum.NotAbstract, basicInfo.Modifiers.Item3);
+            Assert.AreEqual(AccessLevelEnumMetadata.Protected, basicInfo.Modifiers.Item1);
+            Assert.AreEqual(SealedEnumMetadata.Sealed, basicInfo.Modifiers.Item2);
+            Assert.AreEqual(AbstractEnumMetadata.NotAbstract, basicInfo.Modifiers.Item3);
         }
 
         [TestMethod]
@@ -183,9 +183,9 @@ namespace ModelTest
                 new TypeMetadata(typeof(TestingGenericClass<TestingProtectedClass, TestingPrivateClass>));
             Assert.AreEqual(typeof(TestingGenericClass<TestingProtectedClass, TestingPrivateClass>).Name,
                 basicInfo.TypeName);
-            Assert.AreEqual(AccessLevelEnum.Protected, basicInfo.Modifiers.Item1);
-            Assert.AreEqual(SealedEnum.NotSealed, basicInfo.Modifiers.Item2);
-            Assert.AreEqual(AbstractEnum.NotAbstract, basicInfo.Modifiers.Item3);
+            Assert.AreEqual(AccessLevelEnumMetadata.Protected, basicInfo.Modifiers.Item1);
+            Assert.AreEqual(SealedEnumMetadata.NotSealed, basicInfo.Modifiers.Item2);
+            Assert.AreEqual(AbstractEnumMetadata.NotAbstract, basicInfo.Modifiers.Item3);
 
             IList<TypeMetadata> typeList = basicInfo.GenericArguments.ToList();
 

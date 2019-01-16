@@ -1,7 +1,5 @@
 ﻿using System.Runtime.Serialization;
-using Model.MetadataClasses.Types;
 using Model.MetadataClasses.Types.Members;
-using SerializationModel.MetadataExtensions;
 
 namespace SerializationModel.MetadataClasses.Types.Members
 {

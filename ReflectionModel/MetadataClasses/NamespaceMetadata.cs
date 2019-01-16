@@ -38,5 +38,19 @@ namespace Model.MetadataClasses
                 return ((NamespaceName != null ? NamespaceName.GetHashCode() : 0) * 397) ^ (Types != null ? Types.GetHashCode() : 0);
             }
         }
+
+        public NamespaceMetadata(NamespaceModel model)
+        {
+            NamespaceName = model.NamespaceName;
+            Types = model.Types.Select(TypeMetadata.EmitTypeMetadata);
+        }
+
+        public NamespaceModel ToModel()
+        {
+            NamespaceModel namespaceModel = new NamespaceModel();
+            namespaceModel.NamespaceName = NamespaceName;
+            namespaceModel.Types = Types.Select(model => model.ToModel());
+            return namespaceModel;
+        }
     }
 }

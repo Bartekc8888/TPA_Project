@@ -1,7 +1,7 @@
 ﻿
 namespace Model.MetadataDefinitions
 {
-    public enum SealedEnum
+    public enum SealedEnumMetadata
     {
         Sealed,
         NotSealed

@@ -35,8 +35,8 @@ namespace ModelTest
         public void AbstractClassTest()
         {
             TypeMetadata abstractClass = ReflectorTestClass.Reflector.MyNamespace.Types.Single<TypeMetadata>(x => x.TypeName == "AbstractClass");
-            Assert.AreEqual(AbstractEnum.Abstract, abstractClass.Modifiers.Item3);
-            Assert.AreEqual(AbstractEnum.Abstract, abstractClass.Methods.Single(x => x.Name == "AbstractMethod").Modifiers.Item2);
+            Assert.AreEqual(AbstractEnumMetadata.Abstract, abstractClass.Modifiers.Item3);
+            Assert.AreEqual(AbstractEnumMetadata.Abstract, abstractClass.Methods.Single(x => x.Name == "AbstractMethod").Modifiers.Item2);
         }
 
         [TestMethod]
@@ -50,8 +50,8 @@ namespace ModelTest
         public void InterfaceTest()
         {
             TypeMetadata interfaceClass = ReflectorTestClass.Reflector.MyNamespace.Types.Single<TypeMetadata>(x => x.TypeName == "IExample");
-            Assert.AreEqual<AbstractEnum>(AbstractEnum.Abstract, interfaceClass.Modifiers.Item3);
-            Assert.AreEqual<AbstractEnum>(AbstractEnum.Abstract, interfaceClass.Methods.Single(x => x.Name == "MethodA").Modifiers.Item2);
+            Assert.AreEqual<AbstractEnumMetadata>(AbstractEnumMetadata.Abstract, interfaceClass.Modifiers.Item3);
+            Assert.AreEqual<AbstractEnumMetadata>(AbstractEnumMetadata.Abstract, interfaceClass.Methods.Single(x => x.Name == "MethodA").Modifiers.Item2);
         }
 
         [TestMethod]

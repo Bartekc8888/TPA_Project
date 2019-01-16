@@ -64,9 +64,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ReflectionModel\ReflectionModel.csproj">
-      <Project>{35e4e22c-a782-4df2-a1a0-6812c8119a0a}</Project>
-      <Name>ReflectionModel</Name>
+    <ProjectReference Include="..\Model\Model.csproj">
+      <Project>{d985872e-2ffb-4093-a22b-47fe7eca3828}</Project>
+      <Name>Model</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

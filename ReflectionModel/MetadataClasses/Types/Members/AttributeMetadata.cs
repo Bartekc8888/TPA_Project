@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using ReflectionModel.MetadataExtensions;
 
 namespace Model.MetadataClasses.Types.Members
-{    public class AttributeMetadata : MemberAbstract
+{    public class AttributeMetadata : MemberAbstractMetadata
     {
         internal static IEnumerable<AttributeMetadata> EmitAttributes(Type type)
         {
@@ -17,5 +18,22 @@ namespace Model.MetadataClasses.Types.Members
         }
         
         public AttributeMetadata() : base() { }
+
+        public AttributeMetadata(AttributeModel model) : base(model)
+        {
+        }
+
+        public AttributeModel ToModel()
+        {
+            AttributeModel parameterModel = new AttributeModel();
+            FillModel(parameterModel);
+            return parameterModel;
+        }
+
+        public static AttributeMetadata EmitUniqueType(AttributeModel model)
+        {
+            return UniqueEmitter.EmitType(model, propertyModel => new AttributeMetadata(propertyModel));
+        }
     }
+
 }

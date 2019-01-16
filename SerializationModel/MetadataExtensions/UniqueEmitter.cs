@@ -5,21 +5,21 @@ namespace SerializationModel.MetadataExtensions
     
     public static class UniqueEmitter
     {
-        public static T1 EmitType<T1, T2>(T2 metadata, Func<T2, T1> createType)
+        public static T1 EmitType<T1, T2>(T2 model, Func<T2, T1> createType)
         {
-            if (metadata != null)
+            if (model != null)
             {
-                bool contains = ReferenceSerializationModelMap.AllSerializedTypes.ContainsKey(metadata);
+                bool contains = ReferenceSerializationModelMap.AllSerializedTypes.ContainsKey(model);
                 if (!contains)
                 {
-                    T1 newTypeMetadata = createType(metadata);
-                    ReferenceSerializationModelMap.AllSerializedTypes.Add(metadata, newTypeMetadata);
-                    return newTypeMetadata;
+                    T1 newTypeModel = createType(model);
+                    ReferenceSerializationModelMap.AllSerializedTypes.Add(model, newTypeModel);
+                    return newTypeModel;
                 }
                 else
                 {
-                    ReferenceSerializationModelMap.AllSerializedTypes.TryGetValue(metadata, out object newTypeMetadata);
-                    return (T1) newTypeMetadata;
+                    ReferenceSerializationModelMap.AllSerializedTypes.TryGetValue(model, out object newTypeModel);
+                    return (T1) newTypeModel;
                 }
             }
             else

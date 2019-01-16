@@ -2,7 +2,7 @@
 {
     public abstract class MemberAbstract
     {
-        public string name;
-        public string typeName;
+        public string Name { get; set; }
+        public string TypeName { get; set; }
     }
 }

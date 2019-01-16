@@ -9,7 +9,7 @@ namespace Serialization
 {
     public interface ISerialization
     {
-        AssemblyMetadata Read(String path);
-        void Save(AssemblyMetadata context, String path);
+        AssemblyModel Read(String path);
+        void Save(AssemblyModel context, String path);
     }
 }

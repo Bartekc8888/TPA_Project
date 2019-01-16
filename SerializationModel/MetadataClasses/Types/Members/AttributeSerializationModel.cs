@@ -7,20 +7,20 @@ namespace SerializationModel.MetadataClasses.Types.Members
     [DataContract(IsReference = true)]
     public class AttributeSerializationModel : MemberAbstractSerializationModel
     {
-        public AttributeSerializationModel(AttributeMetadata metadata) : base(metadata)
+        public AttributeSerializationModel(AttributeModel model) : base(model)
         {
         }
         
-        public AttributeMetadata ToModel()
+        public AttributeModel ToModel()
         {
-            AttributeMetadata parameterMetadata = new AttributeMetadata();
-            FillModel(parameterMetadata);
-            return parameterMetadata;
+            AttributeModel parameterModel = new AttributeModel();
+            FillModel(parameterModel);
+            return parameterModel;
         }
 
-        public static AttributeSerializationModel EmitUniqueType(AttributeMetadata metadata)
+        public static AttributeSerializationModel EmitUniqueType(AttributeModel model)
         {
-            return UniqueEmitter.EmitType(metadata, propertyMetadata => new AttributeSerializationModel(propertyMetadata));
+            return UniqueEmitter.EmitType(model, propertyModel => new AttributeSerializationModel(propertyModel));
         }
     }
 }

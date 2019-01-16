@@ -49,5 +49,22 @@ namespace Model.MetadataClasses
                 return hashCode;
             }
         }
+
+        public AssemblyMetadata(AssemblyModel model)
+        {
+            TypeName = model.TypeName;
+            Name = model.Name;
+            Namespaces = model.Namespaces.Select(namespaceModel => new NamespaceMetadata(namespaceModel));
+        }
+
+        public AssemblyModel ToModel()
+        {
+            AssemblyModel assemblyModel = new AssemblyModel();
+            assemblyModel.TypeName = TypeName;
+            assemblyModel.Name = Name;
+            assemblyModel.Namespaces = Namespaces.Select(model => model.ToModel());
+
+            return assemblyModel;
+        }
     }
 }

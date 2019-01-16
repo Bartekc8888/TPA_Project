@@ -1,7 +1,7 @@
 ﻿
 namespace Model.MetadataDefinitions
 {
-    public enum TypeTypesEnum
+    public enum TypeTypesEnumMetadata
     {
         Array,
         Class,

@@ -7,20 +7,20 @@ namespace SerializationModel.MetadataClasses.Types.Members
     [DataContract(IsReference = true)]
     public class EventSerializationModel : MemberAbstractSerializationModel
     {
-        public EventSerializationModel(EventMetadata metadata) : base(metadata)
+        public EventSerializationModel(EventModel model) : base(model)
         {
         }
         
-        public EventMetadata ToModel()
+        public EventModel ToModel()
         {
-            EventMetadata parameterMetadata = new EventMetadata();
-            FillModel(parameterMetadata);
-            return parameterMetadata;
+            EventModel parameterModel = new EventModel();
+            FillModel(parameterModel);
+            return parameterModel;
         }
 
-        public static EventSerializationModel EmitUniqueType(EventMetadata metadata)
+        public static EventSerializationModel EmitUniqueType(EventModel model)
         {
-            return UniqueEmitter.EmitType(metadata, propertyMetadata => new EventSerializationModel(propertyMetadata));
+            return UniqueEmitter.EmitType(model, propertyModel => new EventSerializationModel(propertyModel));
         }
     }
 }

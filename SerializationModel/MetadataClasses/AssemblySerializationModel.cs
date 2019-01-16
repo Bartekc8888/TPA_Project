@@ -15,21 +15,21 @@ namespace SerializationModel.MetadataClasses
         [DataMember(EmitDefaultValue = false)]
         public IEnumerable<NamespaceSerializationModel> Namespaces { get; set; }
 
-        public AssemblySerializationModel(AssemblyMetadata metadata)
+        public AssemblySerializationModel(AssemblyModel model)
         {
-            TypeName = metadata.TypeName;
-            Name = metadata.Name;
-            Namespaces = metadata.Namespaces.Select(namespaceMetadata => new NamespaceSerializationModel(namespaceMetadata));
+            TypeName = model.TypeName;
+            Name = model.Name;
+            Namespaces = model.Namespaces.Select(namespaceModel => new NamespaceSerializationModel(namespaceModel));
         }
 
-        public AssemblyMetadata ToModel()
+        public AssemblyModel ToModel()
         {
-            AssemblyMetadata assemblyMetadata = new AssemblyMetadata();
-            assemblyMetadata.TypeName = TypeName;
-            assemblyMetadata.Name = Name;
-            assemblyMetadata.Namespaces = Namespaces.Select(model => model.ToModel());
+            AssemblyModel assemblyModel = new AssemblyModel();
+            assemblyModel.TypeName = TypeName;
+            assemblyModel.Name = Name;
+            assemblyModel.Namespaces = Namespaces.Select(model => model.ToModel());
 
-            return assemblyMetadata;
+            return assemblyModel;
         }
 
         protected bool Equals(AssemblySerializationModel other)

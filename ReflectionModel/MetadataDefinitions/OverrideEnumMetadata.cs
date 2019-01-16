@@ -1,7 +1,7 @@
 ﻿
 namespace Model.MetadataDefinitions
 {
-    public enum OverrideEnum
+    public enum OverrideEnumMetadata
     {
         NotOverride,
         Override

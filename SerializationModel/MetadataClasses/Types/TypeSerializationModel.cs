@@ -4,7 +4,6 @@ using System.Linq;
 using System.Runtime.Serialization;
 using Model.MetadataClasses.Types;
 using Model.MetadataDefinitions;
-using Model.MetadataExtensions;
 using SerializationModel.MetadataClasses.Types.Members;
 using SerializationModel.MetadataDefinitions;
 using SerializationModel.MetadataExtensions;
@@ -55,81 +54,81 @@ namespace SerializationModel.MetadataClasses.Types
         public IEnumerable<TypeSerializationModel> NestedTypes { get; set; }
         #endregion
 
-        public TypeSerializationModel(TypeMetadata metadata)
+        public TypeSerializationModel(TypeModel model)
         {
-            TypeEnum = EnumMapper.ConvertEnum<TypeTypesSerializationModelEnum, TypeTypesEnum>(metadata.TypeEnum);
-            TypeName = metadata.TypeName;
-            NamespaceName = metadata.NamespaceName;
+            TypeEnum = EnumMapper.ConvertEnum<TypeTypesSerializationModelEnum, TypeTypesEnum>(model.TypeEnum);
+            TypeName = model.TypeName;
+            NamespaceName = model.NamespaceName;
 
-            GenericArguments = metadata.GenericArguments == null ? null :
-                metadata.GenericArguments.Select(EmitTypeSerializationModel);
+            GenericArguments = model.GenericArguments == null ? null :
+                model.GenericArguments.Select(EmitTypeSerializationModel);
 
             Modifiers = new Tuple<AccessLevelSerializationModelEnum, SealedSerializationModelEnum, AbstractSerializationModelEnum> (
-                EnumMapper.ConvertEnum<AccessLevelSerializationModelEnum, AccessLevelEnum>(metadata.Modifiers.Item1),
-                EnumMapper.ConvertEnum<SealedSerializationModelEnum, SealedEnum>(metadata.Modifiers.Item2),
-                EnumMapper.ConvertEnum<AbstractSerializationModelEnum, AbstractEnum>(metadata.Modifiers.Item3));
+                EnumMapper.ConvertEnum<AccessLevelSerializationModelEnum, AccessLevelEnum>(model.Modifiers.Item1),
+                EnumMapper.ConvertEnum<SealedSerializationModelEnum, SealedEnum>(model.Modifiers.Item2),
+                EnumMapper.ConvertEnum<AbstractSerializationModelEnum, AbstractEnum>(model.Modifiers.Item3));
 
-            Attributes = metadata.Attributes.Select(AttributeSerializationModel.EmitUniqueType);
-            FullTypeName = metadata.FullTypeName;
+            Attributes = model.Attributes.Select(AttributeSerializationModel.EmitUniqueType);
+            FullTypeName = model.FullTypeName;
             
-            DeclaringType = metadata.DeclaringType == null ? null : EmitTypeSerializationModel(metadata.DeclaringType);
-            BaseType = metadata.BaseType == null ? null : EmitTypeSerializationModel(metadata.BaseType);
+            DeclaringType = model.DeclaringType == null ? null : EmitTypeSerializationModel(model.DeclaringType);
+            BaseType = model.BaseType == null ? null : EmitTypeSerializationModel(model.BaseType);
 
             ImplementedInterfaces =
-                metadata.ImplementedInterfaces.Select(EmitTypeSerializationModel);
+                model.ImplementedInterfaces.Select(EmitTypeSerializationModel);
             Fields =
-                metadata.Fields.Select(FieldSerializationModel.EmitUniqueType);
+                model.Fields.Select(FieldSerializationModel.EmitUniqueType);
             Methods =
-                metadata.Methods.Select(MethodSerializationModel.EmitUniqueType);
+                model.Methods.Select(MethodSerializationModel.EmitUniqueType);
             Properties =
-                metadata.Properties.Select(PropertySerializationModel.EmitUniqueType);
+                model.Properties.Select(PropertySerializationModel.EmitUniqueType);
             Indexers =
-                metadata.Indexers.Select(IndexerSerializationModel.EmitUniqueType);
+                model.Indexers.Select(IndexerSerializationModel.EmitUniqueType);
             Events =
-                metadata.Events.Select(EventSerializationModel.EmitUniqueType);
+                model.Events.Select(EventSerializationModel.EmitUniqueType);
             Constructors =
-                metadata.Constructors.Select(ConstructorSerializationModel.EmitUniqueType);
+                model.Constructors.Select(ConstructorSerializationModel.EmitUniqueType);
             NestedTypes =
-                metadata.NestedTypes.Select(EmitTypeSerializationModel);
+                model.NestedTypes.Select(EmitTypeSerializationModel);
         }
 
-        public static TypeSerializationModel EmitTypeSerializationModel(TypeMetadata metadata)
+        public static TypeSerializationModel EmitTypeSerializationModel(TypeModel model)
         {
-            return UniqueEmitter.EmitType(metadata, propertyMetadata => new TypeSerializationModel(propertyMetadata));
+            return UniqueEmitter.EmitType(model, propertyModel => new TypeSerializationModel(propertyModel));
         }
         
-        public static TypeMetadata EmitTypeMetadata(TypeSerializationModel type)
+        public static TypeModel EmitTypeModel(TypeSerializationModel type)
         {
-            return UniqueEmitter.EmitType(type, propertyMetadata => propertyMetadata.ToModel());
+            return UniqueEmitter.EmitType(type, propertyModel => propertyModel.ToModel());
         }
         
-        public TypeMetadata ToModel()
+        public TypeModel ToModel()
         {
-            TypeMetadata metadata = new TypeMetadata();
-            metadata.TypeEnum = EnumMapper.ConvertEnum<TypeTypesEnum, TypeTypesSerializationModelEnum>(TypeEnum);
-            metadata.TypeName = TypeName;
-            metadata.NamespaceName = NamespaceName;
-            metadata.GenericArguments = GenericArguments?.Select(EmitTypeMetadata);
-            
-            metadata.Modifiers = new Tuple<AccessLevelEnum, SealedEnum, AbstractEnum>(
+            TypeModel model = new TypeModel();
+            model.TypeEnum = EnumMapper.ConvertEnum<TypeTypesEnum, TypeTypesSerializationModelEnum>(TypeEnum);
+            model.TypeName = TypeName;
+            model.NamespaceName = NamespaceName;
+            model.GenericArguments = GenericArguments?.Select(EmitTypeModel);
+
+            model.Modifiers = new Tuple<AccessLevelEnum, SealedEnum, AbstractEnum>(
                 EnumMapper.ConvertEnum<AccessLevelEnum, AccessLevelSerializationModelEnum>(Modifiers.Item1),
                 EnumMapper.ConvertEnum<SealedEnum, SealedSerializationModelEnum>(Modifiers.Item2),
                 EnumMapper.ConvertEnum<AbstractEnum, AbstractSerializationModelEnum>(Modifiers.Item3));
-            
-            metadata.Attributes = Attributes?.Select(attributeMetadata => attributeMetadata.ToModel());
-            metadata.FullTypeName = FullTypeName;
-            metadata.DeclaringType = DeclaringType == null ? null : EmitTypeMetadata(DeclaringType);
-            metadata.BaseType = DeclaringType == null ? null : EmitTypeMetadata(BaseType);
-            metadata.ImplementedInterfaces = ImplementedInterfaces?.Select(EmitTypeMetadata);
-            metadata.Fields = Fields?.Select(typeMetadata => typeMetadata.ToModel());
-            metadata.Methods = Methods?.Select(typeMetadata => typeMetadata.ToModel());
-            metadata.Properties = Properties?.Select(typeMetadata => typeMetadata.ToModel());
-            metadata.Indexers = Indexers?.Select(typeMetadata => typeMetadata.ToModel());
-            metadata.Events = Events?.Select(typeMetadata => typeMetadata.ToModel());
-            metadata.Constructors = Constructors?.Select(typeMetadata => typeMetadata.ToModel());
-            metadata.NestedTypes = NestedTypes?.Select(EmitTypeMetadata);
 
-            return metadata;
+            model.Attributes = Attributes?.Select(attributeMetadata => attributeMetadata.ToModel());
+            model.FullTypeName = FullTypeName;
+            model.DeclaringType = DeclaringType == null ? null : EmitTypeModel(DeclaringType);
+            model.BaseType = DeclaringType == null ? null : EmitTypeModel(BaseType);
+            model.ImplementedInterfaces = ImplementedInterfaces?.Select(EmitTypeModel);
+            model.Fields = Fields?.Select(typeModel => typeModel.ToModel());
+            model.Methods = Methods?.Select(typeModel => typeModel.ToModel());
+            model.Properties = Properties?.Select(typeModel => typeModel.ToModel());
+            model.Indexers = Indexers?.Select(typeModel => typeModel.ToModel());
+            model.Events = Events?.Select(typeModel => typeModel.ToModel());
+            model.Constructors = Constructors?.Select(typeModel => typeModel.ToModel());
+            model.NestedTypes = NestedTypes?.Select(EmitTypeModel);
+
+            return model;
         }
 
         protected bool Equals(TypeSerializationModel other)

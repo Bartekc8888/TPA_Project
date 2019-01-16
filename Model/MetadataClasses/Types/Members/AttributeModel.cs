@@ -1,5 +1,5 @@
 ﻿namespace Model.MetadataClasses.Types.Members
-{    public class AttributeMetadata : MemberAbstract
+{    public class AttributeModel : MemberAbstract
     {
     }
 }

@@ -10,7 +10,7 @@ namespace Serialization
     [Export(typeof(ISerialization))]
     public class XmlSerialization : ISerialization
     {
-        public void Save(AssemblyMetadata context, string filePath)
+        public void Save(AssemblyModel context, string filePath)
         {
             AssemblySerializationModel assemblySerializationModel = new AssemblySerializationModel(context);
 
@@ -22,7 +22,7 @@ namespace Serialization
             }
         }
 
-        AssemblyMetadata ISerialization.Read(string filePath)
+        AssemblyModel ISerialization.Read(string filePath)
         {
             DataContractSerializer serializer = new DataContractSerializer(typeof(AssemblySerializationModel));
             using (XmlReader xr = XmlReader.Create(filePath))

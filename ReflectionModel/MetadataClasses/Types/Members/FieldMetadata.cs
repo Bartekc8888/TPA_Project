@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using ReflectionModel.MetadataExtensions;
 
 namespace Model.MetadataClasses.Types.Members
 {
-    public class FieldMetadata : MemberAbstract
+    public class FieldMetadata : MemberAbstractMetadata
     {
         public TypeMetadata TypeMetadata { get; set; }
 
@@ -21,5 +22,23 @@ namespace Model.MetadataClasses.Types.Members
         }
 
         public FieldMetadata() :base(){ }
+
+        public FieldMetadata(FieldModel model) : base(model)
+        {
+            TypeMetadata = TypeMetadata.EmitTypeMetadata(model.TypeModel);
+        }
+
+        public FieldModel ToModel()
+        {
+            FieldModel parameterModel = new FieldModel();
+            parameterModel.TypeModel = TypeMetadata.ToModel();
+            FillModel(parameterModel);
+            return parameterModel;
+        }
+
+        public static FieldMetadata EmitUniqueType(FieldModel model)
+        {
+            return UniqueEmitter.EmitType(model, propertyModel => new FieldMetadata(propertyModel));
+        }
     }
 }

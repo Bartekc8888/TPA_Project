@@ -1,25 +1,37 @@
 ﻿namespace Model.MetadataClasses.Types.Members
 {
-    public abstract class MemberAbstract
+    public abstract class MemberAbstractMetadata
     {
         public string Name { get; set; }
         public string TypeName { get; set; }
 
-        public MemberAbstract(string name, string typeName)
+        public MemberAbstractMetadata(string name, string typeName)
         {
             Name = name;
             TypeName = typeName;
         }
 
-        public MemberAbstract(string name)
+        public MemberAbstractMetadata(string name)
         {
             Name = name;
             TypeName = null;
         }
 
-        public MemberAbstract() { }
+        public MemberAbstractMetadata() { }
 
-        protected bool Equals(MemberAbstract other)
+        public MemberAbstractMetadata(MemberAbstract member)
+        {
+            Name = member.Name;
+            TypeName = member.TypeName;
+        }
+
+        public void FillModel(MemberAbstract constructedObject)
+        {
+            constructedObject.Name = Name;
+            constructedObject.TypeName = TypeName;
+        }
+
+        protected bool Equals(MemberAbstractMetadata other)
         {
             return string.Equals(Name, other.Name) && string.Equals(TypeName, other.TypeName);
         }
@@ -29,7 +41,7 @@
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != this.GetType()) return false;
-            return Equals((MemberAbstract) obj);
+            return Equals((MemberAbstractMetadata) obj);
         }
 
         public override int GetHashCode()

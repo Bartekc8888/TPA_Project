@@ -11,18 +11,18 @@ namespace SerializationModel.MetadataClasses.Types.Members
         [DataMember(EmitDefaultValue = false)]
         public MethodSerializationModel[] propertyMethods { get; set; }
        
-        public PropertySerializationModel(PropertyMetadata metadata) : base(metadata)
+        public PropertySerializationModel(PropertyModel model) : base(model)
         {
-            propertyMethods = metadata.propertyMethods.Select(methodMetadata => new MethodSerializationModel(methodMetadata)).ToArray();
+            propertyMethods = model.propertyMethods.Select(methodModel => new MethodSerializationModel(methodModel)).ToArray();
         }
 
-        public PropertyMetadata ToModel()
+        public PropertyModel ToModel()
         {
-            PropertyMetadata propertyMetadata = new PropertyMetadata();
-            FillModel(propertyMetadata);
-            propertyMetadata.propertyMethods = propertyMethods.Select(model => model.ToModel()).ToArray();
+            PropertyModel propertyModel = new PropertyModel();
+            FillModel(propertyModel);
+            propertyModel.propertyMethods = propertyMethods.Select(model => model.ToModel()).ToArray();
 
-            return propertyMetadata;
+            return propertyModel;
         }
         
         protected bool Equals(PropertySerializationModel other)
@@ -30,9 +30,9 @@ namespace SerializationModel.MetadataClasses.Types.Members
             return base.Equals(other) && Equals(propertyMethods, other.propertyMethods);
         }
 
-        public static PropertySerializationModel EmitUniqueType(PropertyMetadata metadata)
+        public static PropertySerializationModel EmitUniqueType(PropertyModel model)
         {
-            return UniqueEmitter.EmitType(metadata, propertyMetadata => new PropertySerializationModel(propertyMetadata));
+            return UniqueEmitter.EmitType(model, propertyModel => new PropertySerializationModel(propertyModel));
         }
 
         public override bool Equals(object obj)

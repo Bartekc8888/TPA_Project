@@ -14,18 +14,18 @@ namespace SerializationModel.MetadataClasses
         [DataMember(EmitDefaultValue = false)]
         public IEnumerable<TypeSerializationModel> Types { get; set; }
 
-        public NamespaceSerializationModel(NamespaceMetadata metadata)
+        public NamespaceSerializationModel(NamespaceModel model)
         {
-            NamespaceName = metadata.NamespaceName;
-            Types = metadata.Types.Select(TypeSerializationModel.EmitTypeSerializationModel);
+            NamespaceName = model.NamespaceName;
+            Types = model.Types.Select(TypeSerializationModel.EmitTypeSerializationModel);
         }
         
-        public NamespaceMetadata ToModel()
+        public NamespaceModel ToModel()
         {
-            NamespaceMetadata namespaceMetadata = new NamespaceMetadata();
-            namespaceMetadata.NamespaceName = NamespaceName;
-            namespaceMetadata.Types = Types.Select(model => model.ToModel());
-            return namespaceMetadata;
+            NamespaceModel namespaceModel = new NamespaceModel();
+            namespaceModel.NamespaceName = NamespaceName;
+            namespaceModel.Types = Types.Select(model => model.ToModel());
+            return namespaceModel;
         }
 
         protected bool Equals(NamespaceSerializationModel other)

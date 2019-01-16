@@ -113,7 +113,7 @@ namespace ViewModel.Logic
             {
                 logger.Debug("Start serialize data");
 
-                _serializer.Save(_assemblyModel, SerializationPath);
+                _serializer.Save(_assemblyModel.ToModel(), SerializationPath);
 
                 logger.Info("End serialize data");
             }
@@ -125,7 +125,7 @@ namespace ViewModel.Logic
             {
                 logger.Debug("Start deserialize data");
 
-                _assemblyModel = _serializer.Read(SerializationPath);
+                _assemblyModel = new AssemblyMetadata(_serializer.Read(SerializationPath));
                 
                 TypeViewModelAbstract item = ModelViewTypeFactory.CreateTypeViewClass(_assemblyModel);
                 SetNewData(item);

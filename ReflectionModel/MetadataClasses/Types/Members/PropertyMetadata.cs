@@ -1,12 +1,12 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using ReflectionModel.MetadataExtensions;
 
 namespace Model.MetadataClasses.Types.Members
 {
-    public class PropertyMetadata : MemberAbstract
+    public class PropertyMetadata : MemberAbstractMetadata
     {
         public MethodMetadata[] propertyMethods { get; set; }
         
@@ -23,6 +23,25 @@ namespace Model.MetadataClasses.Types.Members
         }
 
         public PropertyMetadata() : base() { }
+
+        public PropertyMetadata(PropertyModel model) : base(model)
+        {
+            propertyMethods = model.propertyMethods.Select(methodModel => new MethodMetadata(methodModel)).ToArray();
+        }
+
+        public PropertyModel ToModel()
+        {
+            PropertyModel propertyModel = new PropertyModel();
+            FillModel(propertyModel);
+            propertyModel.propertyMethods = propertyMethods.Select(model => model.ToModel()).ToArray();
+
+            return propertyModel;
+        }
+
+        public static PropertyMetadata EmitUniqueType(PropertyModel model)
+        {
+            return UniqueEmitter.EmitType(model, propertyModel => new PropertyMetadata(propertyModel));
+        }
 
         protected bool Equals(PropertyMetadata other)
         {

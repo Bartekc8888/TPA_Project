@@ -28,36 +28,36 @@ namespace SerializationModel.MetadataClasses.Types.Members
         public IEnumerable<ParameterSerializationModel> Parameters { get; set; }
         #endregion
 
-        public MethodSerializationModel(MethodMetadata metadata)
+        public MethodSerializationModel(MethodModel model)
         {
-            Name = metadata.Name;
-            GenericArguments = metadata.GenericArguments == null ? null :
-                metadata.GenericArguments.Select(TypeSerializationModel.EmitTypeSerializationModel);
+            Name = model.Name;
+            GenericArguments = model.GenericArguments == null ? null :
+                model.GenericArguments.Select(TypeSerializationModel.EmitTypeSerializationModel);
             
             Modifiers = new Tuple<AccessLevelSerializationModelEnum, AbstractSerializationModelEnum, StaticSerializationModelEnum,
                 VirtualSerializationModelEnum, OverrideSerializationModelEnum> (
-                EnumMapper.ConvertEnum<AccessLevelSerializationModelEnum, AccessLevelEnum>(metadata.Modifiers.Item1),
-                EnumMapper.ConvertEnum<AbstractSerializationModelEnum, AbstractEnum>(metadata.Modifiers.Item2),
-                EnumMapper.ConvertEnum<StaticSerializationModelEnum, StaticEnum>(metadata.Modifiers.Item3),
-                EnumMapper.ConvertEnum<VirtualSerializationModelEnum, VirtualEnum>(metadata.Modifiers.Item4),
-                EnumMapper.ConvertEnum<OverrideSerializationModelEnum, OverrideEnum>(metadata.Modifiers.Item5)
+                EnumMapper.ConvertEnum<AccessLevelSerializationModelEnum, AccessLevelEnum>(model.Modifiers.Item1),
+                EnumMapper.ConvertEnum<AbstractSerializationModelEnum, AbstractEnum>(model.Modifiers.Item2),
+                EnumMapper.ConvertEnum<StaticSerializationModelEnum, StaticEnum>(model.Modifiers.Item3),
+                EnumMapper.ConvertEnum<VirtualSerializationModelEnum, VirtualEnum>(model.Modifiers.Item4),
+                EnumMapper.ConvertEnum<OverrideSerializationModelEnum, OverrideEnum>(model.Modifiers.Item5)
                 );
 
-            ReturnType = metadata.ReturnType;
-            Extension = metadata.Extension;
+            ReturnType = model.ReturnType;
+            Extension = model.Extension;
             Parameters =
-                metadata.Parameters.Select(ParameterSerializationModel.EmitUniqueType);
+                model.Parameters.Select(ParameterSerializationModel.EmitUniqueType);
         }
 
-        public MethodMetadata ToModel()
+        public MethodModel ToModel()
         {
-            MethodMetadata methodMetadata = new MethodMetadata();
-            methodMetadata.Name = Name;
-            
-            methodMetadata.GenericArguments =
-                GenericArguments?.Select(typeMetadata => typeMetadata.ToModel());
-            
-            methodMetadata.Modifiers = new Tuple<AccessLevelEnum, AbstractEnum, StaticEnum,
+            MethodModel methodModel = new MethodModel();
+            methodModel.Name = Name;
+
+            methodModel.GenericArguments =
+                GenericArguments?.Select(typeModel => typeModel.ToModel());
+
+            methodModel.Modifiers = new Tuple<AccessLevelEnum, AbstractEnum, StaticEnum,
                 VirtualEnum, OverrideEnum> (
                 EnumMapper.ConvertEnum<AccessLevelEnum, AccessLevelSerializationModelEnum>(Modifiers.Item1),
                 EnumMapper.ConvertEnum<AbstractEnum, AbstractSerializationModelEnum>(Modifiers.Item2),
@@ -66,12 +66,12 @@ namespace SerializationModel.MetadataClasses.Types.Members
                 EnumMapper.ConvertEnum<OverrideEnum, OverrideSerializationModelEnum>(Modifiers.Item5)
             );
 
-            methodMetadata.ReturnType = ReturnType;
-            methodMetadata.Extension = Extension;
-            methodMetadata.Parameters =
-                Parameters?.Select(parameterMetadata => parameterMetadata.ToModel());
+            methodModel.ReturnType = ReturnType;
+            methodModel.Extension = Extension;
+            methodModel.Parameters =
+                Parameters?.Select(parameterModel => parameterModel.ToModel());
 
-            return methodMetadata;
+            return methodModel;
         }
 
         protected bool Equals(MethodSerializationModel other)
@@ -81,9 +81,9 @@ namespace SerializationModel.MetadataClasses.Types.Members
                    Extension == other.Extension && Equals(Parameters, other.Parameters);
         }
 
-        public static MethodSerializationModel EmitUniqueType(MethodMetadata metadata)
+        public static MethodSerializationModel EmitUniqueType(MethodModel model)
         {
-            return UniqueEmitter.EmitType(metadata, propertyMetadata => new MethodSerializationModel(propertyMetadata));
+            return UniqueEmitter.EmitType(model, propertyModel => new MethodSerializationModel(propertyModel));
         }
 
         public override bool Equals(object obj)

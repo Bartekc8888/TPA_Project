@@ -4,6 +4,8 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.CompilerServices;
 using Model.MetadataDefinitions;
+using ReflectionModel.MetadataDefinitions;
+using ReflectionModel.MetadataExtensions;
 
 namespace Model.MetadataClasses.Types.Members
 {
@@ -12,7 +14,7 @@ namespace Model.MetadataClasses.Types.Members
         #region vars
         public string Name { get; set; }
         public IEnumerable<TypeMetadata> GenericArguments { get; set; }
-        public Tuple<AccessLevelEnum, AbstractEnum, StaticEnum, VirtualEnum, OverrideEnum> Modifiers { get; set; }
+        public Tuple<AccessLevelEnumMetadata, AbstractEnumMetadata, StaticEnumMetadata, VirtualEnumMetadata, OverrideEnumMetadata> Modifiers { get; set; }
         public string ReturnType { get; set; }
         public bool Extension { get; set; }
         public IEnumerable<ParameterMetadata> Parameters { get; set; }
@@ -34,7 +36,7 @@ namespace Model.MetadataClasses.Types.Members
             Extension = EmitExtension(method);
         }
 
-        public MethodMetadata(string name, IEnumerable<TypeMetadata> genericArguments, Tuple<AccessLevelEnum, AbstractEnum, StaticEnum, VirtualEnum, OverrideEnum> modifiers, string returnType, bool extension, IEnumerable<ParameterMetadata> parameters)
+        public MethodMetadata(string name, IEnumerable<TypeMetadata> genericArguments, Tuple<AccessLevelEnumMetadata, AbstractEnumMetadata, StaticEnumMetadata, VirtualEnumMetadata, OverrideEnumMetadata> modifiers, string returnType, bool extension, IEnumerable<ParameterMetadata> parameters)
         {
             Name = name;
             GenericArguments = genericArguments;
@@ -78,39 +80,90 @@ namespace Model.MetadataClasses.Types.Members
             return method.IsDefined(typeof(ExtensionAttribute), true);
         }
 
-        private static Tuple<AccessLevelEnum, AbstractEnum, StaticEnum, VirtualEnum, OverrideEnum> EmitModifiers(MethodBase method)
+        private static Tuple<AccessLevelEnumMetadata, AbstractEnumMetadata, StaticEnumMetadata, VirtualEnumMetadata, OverrideEnumMetadata> EmitModifiers(MethodBase method)
         {
-            AccessLevelEnum _access = AccessLevelEnum.Private;
+            AccessLevelEnumMetadata _access = AccessLevelEnumMetadata.Private;
             if (method.IsPublic)
-                _access = AccessLevelEnum.Public;
+                _access = AccessLevelEnumMetadata.Public;
             else if (method.IsFamily)
-                _access = AccessLevelEnum.Protected;
+                _access = AccessLevelEnumMetadata.Protected;
             else if (method.IsFamilyAndAssembly)
-                _access = AccessLevelEnum.ProtectedInternal;
+                _access = AccessLevelEnumMetadata.ProtectedInternal;
 
-            AbstractEnum _abstract = AbstractEnum.NotAbstract;
+            AbstractEnumMetadata _abstract = AbstractEnumMetadata.NotAbstract;
             if (method.IsAbstract)
-                _abstract = AbstractEnum.Abstract;
+                _abstract = AbstractEnumMetadata.Abstract;
 
-            StaticEnum _static = StaticEnum.NotStatic;
+            StaticEnumMetadata _static = StaticEnumMetadata.NotStatic;
             if (method.IsStatic)
-                _static = StaticEnum.Static;
+                _static = StaticEnumMetadata.Static;
 
-            VirtualEnum _virtual = VirtualEnum.NotVirtual;
+            VirtualEnumMetadata _virtual = VirtualEnumMetadata.NotVirtual;
             if (method.IsVirtual)
-                _virtual = VirtualEnum.Virtual;
+                _virtual = VirtualEnumMetadata.Virtual;
 
-            OverrideEnum _override = OverrideEnum.NotOverride;
+            OverrideEnumMetadata _override = OverrideEnumMetadata.NotOverride;
 
             MethodInfo methodInfo = method as MethodInfo;
             if (methodInfo != null && methodInfo.GetBaseDefinition().DeclaringType != methodInfo.DeclaringType)
             {
-                _override = OverrideEnum.Override;
+                _override = OverrideEnumMetadata.Override;
             }
 
-            return new Tuple<AccessLevelEnum, AbstractEnum, StaticEnum, VirtualEnum, OverrideEnum>(_access, _abstract, _static, _virtual, _override);
+            return new Tuple<AccessLevelEnumMetadata, AbstractEnumMetadata, StaticEnumMetadata, VirtualEnumMetadata, OverrideEnumMetadata>(_access, _abstract, _static, _virtual, _override);
         }
         #endregion
+
+        public MethodMetadata(MethodModel model)
+        {
+            Name = model.Name;
+            GenericArguments = model.GenericArguments == null ? null :
+                model.GenericArguments.Select(TypeMetadata.EmitTypeMetadata);
+
+            Modifiers = new Tuple<AccessLevelEnumMetadata, AbstractEnumMetadata, StaticEnumMetadata,
+                VirtualEnumMetadata, OverrideEnumMetadata>(
+                EnumMapper.ConvertEnum<AccessLevelEnumMetadata, AccessLevelEnum>(model.Modifiers.Item1),
+                EnumMapper.ConvertEnum<AbstractEnumMetadata, AbstractEnum>(model.Modifiers.Item2),
+                EnumMapper.ConvertEnum<StaticEnumMetadata, StaticEnum>(model.Modifiers.Item3),
+                EnumMapper.ConvertEnum<VirtualEnumMetadata, VirtualEnum>(model.Modifiers.Item4),
+                EnumMapper.ConvertEnum<OverrideEnumMetadata, OverrideEnum>(model.Modifiers.Item5)
+                );
+
+            ReturnType = model.ReturnType;
+            Extension = model.Extension;
+            Parameters =
+                model.Parameters.Select(ParameterMetadata.EmitUniqueType);
+        }
+
+        public MethodModel ToModel()
+        {
+            MethodModel methodModel = new MethodModel();
+            methodModel.Name = Name;
+
+            methodModel.GenericArguments =
+                GenericArguments?.Select(typeModel => typeModel.ToModel());
+
+            methodModel.Modifiers = new Tuple<AccessLevelEnum, AbstractEnum, StaticEnum,
+                VirtualEnum, OverrideEnum>(
+                EnumMapper.ConvertEnum<AccessLevelEnum, AccessLevelEnumMetadata>(Modifiers.Item1),
+                EnumMapper.ConvertEnum<AbstractEnum, AbstractEnumMetadata>(Modifiers.Item2),
+                EnumMapper.ConvertEnum<StaticEnum, StaticEnumMetadata>(Modifiers.Item3),
+                EnumMapper.ConvertEnum<VirtualEnum, VirtualEnumMetadata>(Modifiers.Item4),
+                EnumMapper.ConvertEnum<OverrideEnum, OverrideEnumMetadata>(Modifiers.Item5)
+            );
+
+            methodModel.ReturnType = ReturnType;
+            methodModel.Extension = Extension;
+            methodModel.Parameters =
+                Parameters?.Select(parameterModel => parameterModel.ToModel());
+
+            return methodModel;
+        }
+
+        public static MethodMetadata EmitUniqueType(MethodModel model)
+        {
+            return UniqueEmitter.EmitType(model, propertyModel => new MethodMetadata(propertyModel));
+        }
 
         protected bool Equals(MethodMetadata other)
         {

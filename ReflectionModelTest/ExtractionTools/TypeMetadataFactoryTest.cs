@@ -45,7 +45,7 @@ namespace ModelTest.ExtractionTools
         {
             TypeMetadata typeMetadata = new TypeMetadata(typeof(TestClass.TestEnum));
 
-            Assert.IsTrue(typeMetadata.TypeEnum == TypeTypesEnum.Enum);
+            Assert.IsTrue(typeMetadata.TypeEnum == TypeTypesEnumMetadata.Enum);
         }
 
         [TestMethod]
@@ -53,7 +53,7 @@ namespace ModelTest.ExtractionTools
         {
             TypeMetadata typeMetadata = new TypeMetadata(typeof(long));
 
-            Assert.IsTrue(typeMetadata.TypeEnum == TypeTypesEnum.Primitive);
+            Assert.IsTrue(typeMetadata.TypeEnum == TypeTypesEnumMetadata.Primitive);
         }
 
         [TestMethod]
@@ -61,7 +61,7 @@ namespace ModelTest.ExtractionTools
         {
             TypeMetadata typeMetadata = new TypeMetadata(typeof(TestClass.StructureTest));
 
-            Assert.IsTrue(typeMetadata.TypeEnum == TypeTypesEnum.Structure);
+            Assert.IsTrue(typeMetadata.TypeEnum == TypeTypesEnumMetadata.Structure);
         }
 
         [TestMethod]
@@ -70,7 +70,7 @@ namespace ModelTest.ExtractionTools
             TestClass testClass = new TestClass();
             TypeMetadata typeMetadata = new TypeMetadata(testClass.ArrayTest.GetType());
 
-            Assert.IsTrue(typeMetadata.TypeEnum == TypeTypesEnum.Array);
+            Assert.IsTrue(typeMetadata.TypeEnum == TypeTypesEnumMetadata.Array);
         }
 
         [TestMethod]
@@ -79,7 +79,7 @@ namespace ModelTest.ExtractionTools
             TestClass testClass = new TestClass();
             TypeMetadata typeMetadata = new TypeMetadata(testClass.GetType());
 
-            Assert.IsTrue(typeMetadata.TypeEnum == TypeTypesEnum.Class);
+            Assert.IsTrue(typeMetadata.TypeEnum == TypeTypesEnumMetadata.Class);
         }
 
         [TestMethod]
@@ -87,7 +87,7 @@ namespace ModelTest.ExtractionTools
         {
             TypeMetadata typeMetadata = new TypeMetadata(typeof(TestClass.TestDelegate));
 
-            Assert.IsTrue(typeMetadata.TypeEnum == TypeTypesEnum.Delegate);
+            Assert.IsTrue(typeMetadata.TypeEnum == TypeTypesEnumMetadata.Delegate);
         }
 
         [TestMethod]
@@ -95,7 +95,7 @@ namespace ModelTest.ExtractionTools
         {
             TypeMetadata typeMetadata = new TypeMetadata(typeof(ITestInterface));
 
-            Assert.IsTrue(typeMetadata.TypeEnum == TypeTypesEnum.Interface);
+            Assert.IsTrue(typeMetadata.TypeEnum == TypeTypesEnumMetadata.Interface);
         }
     }
 }

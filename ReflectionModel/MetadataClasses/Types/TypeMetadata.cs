@@ -5,18 +5,20 @@ using System.Reflection;
 using Model.MetadataClasses.Types.Members;
 using Model.MetadataDefinitions;
 using Model.MetadataExtensions;
+using ReflectionModel.MetadataExtensions;
+using ReflectionModel.MetadataDefinitions;
 
 namespace Model.MetadataClasses.Types
 {
     public class TypeMetadata
     {
         #region fields
-        public TypeTypesEnum TypeEnum { get; set; }
+        public TypeTypesEnumMetadata TypeEnum { get; set; }
 
         public string TypeName { get; set; }
         public string NamespaceName { get; set; }
         public IEnumerable<TypeMetadata> GenericArguments { get; set; }
-        public Tuple<AccessLevelEnum, SealedEnum, AbstractEnum> Modifiers { get; set; }
+        public Tuple<AccessLevelEnumMetadata, SealedEnumMetadata, AbstractEnumMetadata> Modifiers { get; set; }
         public IEnumerable<AttributeMetadata> Attributes { get; set; }
         public string FullTypeName { get; set; }
         
@@ -115,34 +117,111 @@ namespace Model.MetadataClasses.Types
             return EmitReference(declaringType);
         }
 
-        private Tuple<AccessLevelEnum, SealedEnum, AbstractEnum> EmitModifiers(Type type)
+        private Tuple<AccessLevelEnumMetadata, SealedEnumMetadata, AbstractEnumMetadata> EmitModifiers(Type type)
         {
             //set defaults
-            AccessLevelEnum _access = AccessLevelEnum.Private;
-            AbstractEnum _abstract = AbstractEnum.NotAbstract;
-            SealedEnum _sealed = SealedEnum.NotSealed;
+            AccessLevelEnumMetadata _access = AccessLevelEnumMetadata.Private;
+            AbstractEnumMetadata _abstract = AbstractEnumMetadata.NotAbstract;
+            SealedEnumMetadata _sealed = SealedEnumMetadata.NotSealed;
 
             // check if not default
             if (type.IsPublic || type.IsNestedPublic)
-                _access = AccessLevelEnum.Public;
+                _access = AccessLevelEnumMetadata.Public;
             else if (type.IsNestedPrivate)
-                _access = AccessLevelEnum.Private;
+                _access = AccessLevelEnumMetadata.Private;
             else if (type.IsNestedFamily)
-                _access = AccessLevelEnum.Protected;
+                _access = AccessLevelEnumMetadata.Protected;
             else if (type.IsNotPublic || type.IsNestedAssembly)
-                _access = AccessLevelEnum.Internal;
+                _access = AccessLevelEnumMetadata.Internal;
             else if (type.IsNestedFamORAssem || type.IsNestedFamORAssem)
-                _access = AccessLevelEnum.ProtectedInternal;
+                _access = AccessLevelEnumMetadata.ProtectedInternal;
 
             if (type.IsSealed)
-                _sealed = SealedEnum.Sealed;
+                _sealed = SealedEnumMetadata.Sealed;
 
             if (type.IsAbstract)
-                _abstract = AbstractEnum.Abstract;
+                _abstract = AbstractEnumMetadata.Abstract;
 
-            return new Tuple<AccessLevelEnum, SealedEnum, AbstractEnum>(_access, _sealed, _abstract);
+            return new Tuple<AccessLevelEnumMetadata, SealedEnumMetadata, AbstractEnumMetadata>(_access, _sealed, _abstract);
         }
         #endregion
+
+        public TypeMetadata(TypeModel model)
+        {
+            TypeEnum = EnumMapper.ConvertEnum<TypeTypesEnumMetadata, TypeTypesEnum>(model.TypeEnum);
+            TypeName = model.TypeName;
+            NamespaceName = model.NamespaceName;
+
+            GenericArguments = model.GenericArguments == null ? null :
+                model.GenericArguments.Select(EmitTypeMetadata);
+
+            Modifiers = new Tuple<AccessLevelEnumMetadata, SealedEnumMetadata, AbstractEnumMetadata>(
+                EnumMapper.ConvertEnum<AccessLevelEnumMetadata, AccessLevelEnum>(model.Modifiers.Item1),
+                EnumMapper.ConvertEnum<SealedEnumMetadata, SealedEnum>(model.Modifiers.Item2),
+                EnumMapper.ConvertEnum<AbstractEnumMetadata, AbstractEnum>(model.Modifiers.Item3));
+
+            Attributes = model.Attributes.Select(AttributeMetadata.EmitUniqueType);
+            FullTypeName = model.FullTypeName;
+
+            DeclaringType = model.DeclaringType == null ? null : EmitTypeMetadata(model.DeclaringType);
+            BaseType = model.BaseType == null ? null : EmitTypeMetadata(model.BaseType);
+
+            ImplementedInterfaces =
+                model.ImplementedInterfaces.Select(EmitTypeMetadata);
+            Fields =
+                model.Fields.Select(FieldMetadata.EmitUniqueType);
+            Methods =
+                model.Methods.Select(MethodMetadata.EmitUniqueType);
+            Properties =
+                model.Properties.Select(PropertyMetadata.EmitUniqueType);
+            Indexers =
+                model.Indexers.Select(IndexerMetadata.EmitUniqueType);
+            Events =
+                model.Events.Select(EventMetadata.EmitUniqueType);
+            Constructors =
+                model.Constructors.Select(ConstructorMetadata.EmitUniqueType);
+            NestedTypes =
+                model.NestedTypes.Select(EmitTypeMetadata);
+        }
+
+        public static TypeMetadata EmitTypeMetadata(TypeModel model)
+        {
+            return UniqueEmitter.EmitType(model, propertyModel => new TypeMetadata(propertyModel));
+        }
+
+        public static TypeModel EmitTypeModel(TypeMetadata type)
+        {
+            return UniqueEmitter.EmitType(type, propertyModel => propertyModel.ToModel());
+        }
+
+        public TypeModel ToModel()
+        {
+            TypeModel model = new TypeModel();
+            model.TypeEnum = EnumMapper.ConvertEnum<TypeTypesEnum, TypeTypesEnumMetadata>(TypeEnum);
+            model.TypeName = TypeName;
+            model.NamespaceName = NamespaceName;
+            model.GenericArguments = GenericArguments?.Select(EmitTypeModel);
+
+            model.Modifiers = new Tuple<AccessLevelEnum, SealedEnum, AbstractEnum>(
+                EnumMapper.ConvertEnum<AccessLevelEnum, AccessLevelEnumMetadata>(Modifiers.Item1),
+                EnumMapper.ConvertEnum<SealedEnum, SealedEnumMetadata>(Modifiers.Item2),
+                EnumMapper.ConvertEnum<AbstractEnum, AbstractEnumMetadata>(Modifiers.Item3));
+
+            model.Attributes = Attributes?.Select(attributeMetadata => attributeMetadata.ToModel());
+            model.FullTypeName = FullTypeName;
+            model.DeclaringType = DeclaringType == null ? null : EmitTypeModel(DeclaringType);
+            model.BaseType = DeclaringType == null ? null : EmitTypeModel(BaseType);
+            model.ImplementedInterfaces = ImplementedInterfaces?.Select(EmitTypeModel);
+            model.Fields = Fields?.Select(typeModel => typeModel.ToModel());
+            model.Methods = Methods?.Select(typeModel => typeModel.ToModel());
+            model.Properties = Properties?.Select(typeModel => typeModel.ToModel());
+            model.Indexers = Indexers?.Select(typeModel => typeModel.ToModel());
+            model.Events = Events?.Select(typeModel => typeModel.ToModel());
+            model.Constructors = Constructors?.Select(typeModel => typeModel.ToModel());
+            model.NestedTypes = NestedTypes?.Select(EmitTypeModel);
+
+            return model;
+        }
 
         protected bool Equals(TypeMetadata other)
         {

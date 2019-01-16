@@ -1,6 +1,6 @@
 ﻿namespace Model.MetadataClasses.Types.Members
 {
-    public class ParameterMetadata : MemberAbstract
+    public class IndexerModel : MemberAbstract
     {
     }
 }

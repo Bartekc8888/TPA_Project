@@ -1,7 +1,7 @@
 ﻿
 namespace Model.MetadataDefinitions
 {
-    public enum AccessLevelEnum
+    public enum AccessLevelEnumMetadata
     {
         Public,
         Protected,

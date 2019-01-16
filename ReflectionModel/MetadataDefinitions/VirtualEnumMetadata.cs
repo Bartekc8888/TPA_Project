@@ -1,7 +1,7 @@
 ﻿
 namespace Model.MetadataDefinitions
 {
-    public enum VirtualEnum
+    public enum VirtualEnumMetadata
     {
         NotVirtual,
         Virtual

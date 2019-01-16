@@ -19,19 +19,19 @@ namespace ViewModel.ModelRepresentation.Types
         {
             switch (type.TypeEnum)
             {
-                case TypeTypesEnum.Array:
+                case TypeTypesEnumMetadata.Array:
                     return new ArrayViewModel(type, name);
-                case TypeTypesEnum.Class:
+                case TypeTypesEnumMetadata.Class:
                     return new ClassViewModel(type, name);
-                case TypeTypesEnum.Delegate:
+                case TypeTypesEnumMetadata.Delegate:
                     return new DelegateViewModel(type, name);
-                case TypeTypesEnum.Interface:
+                case TypeTypesEnumMetadata.Interface:
                     return new InterfaceViewModel(type, name);
-                case TypeTypesEnum.Enum:
+                case TypeTypesEnumMetadata.Enum:
                     return new EnumViewModel(type, name);
-                case TypeTypesEnum.Primitive:
+                case TypeTypesEnumMetadata.Primitive:
                     return new PrimitiveViewModel(type, name);
-                case TypeTypesEnum.Structure:
+                case TypeTypesEnumMetadata.Structure:
                     return new StructureViewModel(type, name);
                 default:
                     throw new NotSupportedException("Unknown types type enum.");
@@ -55,7 +55,7 @@ namespace ViewModel.ModelRepresentation.Types
             }
         }
 
-        public static TypeViewModelAbstract CreateTypeViewClass(MemberAbstract member)
+        public static TypeViewModelAbstract CreateTypeViewClass(MemberAbstractMetadata member)
         {
             switch (member)
             {

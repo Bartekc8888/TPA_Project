@@ -7,20 +7,20 @@ namespace SerializationModel.MetadataClasses.Types.Members
     [DataContract(IsReference = true)]
     public class IndexerSerializationModel : MemberAbstractSerializationModel
     {
-        public IndexerSerializationModel(IndexerMetadata metadata) : base(metadata)
+        public IndexerSerializationModel(IndexerModel model) : base(model)
         {
         }
         
-        public IndexerMetadata ToModel()
+        public IndexerModel ToModel()
         {
-            IndexerMetadata parameterMetadata = new IndexerMetadata();
-            FillModel(parameterMetadata);
-            return parameterMetadata;
+            IndexerModel parameterModel = new IndexerModel();
+            FillModel(parameterModel);
+            return parameterModel;
         }
 
-        public static IndexerSerializationModel EmitUniqueType(IndexerMetadata metadata)
+        public static IndexerSerializationModel EmitUniqueType(IndexerModel model)
         {
-            return UniqueEmitter.EmitType(metadata, propertyMetadata => new IndexerSerializationModel(propertyMetadata));
+            return UniqueEmitter.EmitType(model, propertyModel => new IndexerSerializationModel(propertyModel));
         }
     }
 }
