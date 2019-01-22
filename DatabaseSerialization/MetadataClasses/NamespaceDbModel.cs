@@ -1,10 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using DatabaseSerialization.MetadataClasses.Types;
 using Model.MetadataClasses;
 
 namespace DatabaseSerialization.MetadataClasses
 {
+    [Table("Namespace")]
     public class NamespaceDbModel
     {
         public string NamespaceName { get; set; }

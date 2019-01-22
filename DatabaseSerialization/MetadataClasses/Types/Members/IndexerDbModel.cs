@@ -1,8 +1,10 @@
-﻿using DatabaseSerialization.MetadataExtensions;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using DatabaseSerialization.MetadataExtensions;
 using Model.MetadataClasses.Types.Members;
 
 namespace DatabaseSerialization.MetadataClasses.Types.Members
 {
+    [Table("Indexer")]
     public class IndexerDbModel : MemberAbstractDbModel
     {
         public IndexerDbModel(IndexerModel model) : base(model)

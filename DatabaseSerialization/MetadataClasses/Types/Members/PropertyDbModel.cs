@@ -1,9 +1,11 @@
-﻿using System.Linq;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using DatabaseSerialization.MetadataExtensions;
 using Model.MetadataClasses.Types.Members;
 
 namespace DatabaseSerialization.MetadataClasses.Types.Members
 {
+    [Table("Property")]
     public class PropertyDbModel : MemberAbstractDbModel
     {
         public MethodDbModel[] propertyMethods { get; set; }

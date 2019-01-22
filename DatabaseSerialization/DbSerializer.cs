@@ -9,6 +9,7 @@ using Model.MetadataClasses;
 namespace DatabaseSerialization
 {
     [Export(typeof(ISerialization))]
+    [ExportMetadata("Name", "Database")]
     class DbSerializer : ISerialization
     {
         public AssemblyModel Read(string path)
@@ -49,6 +50,11 @@ namespace DatabaseSerialization
                 ctx.AssemblyModels.Add(serializationModel);
                 ctx.SaveChanges();
             }
+        }
+
+        string ISerialization.GetName()
+        {
+            return "Db";
         }
     }
 }

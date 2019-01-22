@@ -1,8 +1,10 @@
-﻿using DatabaseSerialization.MetadataExtensions;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using DatabaseSerialization.MetadataExtensions;
 using Model.MetadataClasses.Types.Members;
 
 namespace DatabaseSerialization.MetadataClasses.Types.Members
 {
+    [Table("Attribute")]
     public class AttributeDbModel : MemberAbstractDbModel
     {
         public AttributeDbModel(AttributeModel model) : base(model)

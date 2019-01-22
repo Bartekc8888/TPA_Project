@@ -1,12 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.ComponentModel.Composition;
 using System.IO;
+using System.Linq;
 using System.Threading;
 using System.Windows.Input;
 using Interfaces;
-using Logging;
 using Model.MetadataClasses;
 using ViewModel.ExtractionTools;
 using ViewModel.ModelRepresentation.Types;
@@ -26,8 +27,8 @@ namespace ViewModel.Logic
         [Import]
         private ILogging logger;
 
-        [Import]
-        private ISerialization _serializer;
+        [ImportMany(typeof(ISerialization))]
+        private IEnumerable<ISerialization> _serializer;
         
         private ObservableCollection<TypeViewModelAbstract> _items;
         public ObservableCollection<TypeViewModelAbstract> Items
@@ -117,9 +118,17 @@ namespace ViewModel.Logic
             {
                 logger.Debug("Start serialize data");
 
-                _serializer.Save(_assemblyModel.ToModel(), SerializationPath);
+                _serializer.First(serialization => serialization.GetName() == "Xml").Save(_assemblyModel.ToModel(), SerializationPath);
 
                 logger.Info("End serialize data");
+            }
+            else if (_items.Count > 0)
+            {
+                logger.Debug("Start db serialize data");
+                
+                _serializer.First(serialization => serialization.GetName() == "Db").Save(_assemblyModel.ToModel(), SerializationPath);
+                
+                logger.Info("End db serialize data");
             }
         }
 
@@ -129,13 +138,21 @@ namespace ViewModel.Logic
             {
                 logger.Debug("Start deserialize data");
 
-                _assemblyModel = new AssemblyMetadata(_serializer.Read(SerializationPath));
-                
-                TypeViewModelAbstract item = ModelViewTypeFactory.CreateTypeViewClass(_assemblyModel);
-                SetNewData(item);
+                _assemblyModel = new AssemblyMetadata(_serializer.First(serialization => serialization.GetName() == "Xml").Read(SerializationPath));
 
                 logger.Info("End deserialize data");
             }
+            else
+            {
+                logger.Debug("Start db deserialize data");
+                
+                _assemblyModel = new AssemblyMetadata(_serializer.First(serialization => serialization.GetName() == "Db").Read(SerializationPath));
+                
+                logger.Info("End db deserialize data");
+            }
+            
+            TypeViewModelAbstract item = ModelViewTypeFactory.CreateTypeViewClass(_assemblyModel);
+            SetNewData(item);
         }
 
         private void SetNewData(TypeViewModelAbstract item)

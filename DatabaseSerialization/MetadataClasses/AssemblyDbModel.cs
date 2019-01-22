@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using Model.MetadataClasses;
 
 namespace DatabaseSerialization.MetadataClasses
 {
+    [Table("Assembly")]
     public class AssemblyDbModel
     {
         public string TypeName { get; set; }

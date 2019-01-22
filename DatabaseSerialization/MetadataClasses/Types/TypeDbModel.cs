@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using DatabaseSerialization.MetadataClasses.Types.Members;
 using DatabaseSerialization.MetadataDefinitions;
@@ -10,6 +11,7 @@ using SerializationModel.MetadataDefinitions;
 
 namespace DatabaseSerialization.MetadataClasses.Types
 {
+    [Table("Type")]
     public class TypeDbModel
     {
         #region fields

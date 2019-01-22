@@ -28,8 +28,12 @@ namespace DatabaseSerialization
         {
         }
 
-        public DatabaseContext() : base(System.Configuration.ConfigurationManager.
-                                        ConnectionStrings["FileDatabase"].ConnectionString)
+//        public DatabaseContext() : base(System.Configuration.ConfigurationManager.
+//                                        ConnectionStrings["FileDatabase"].ConnectionString)
+//        {
+//        }        
+        
+        public DatabaseContext() : base(@"Data Source=(LocalDB)\MSSQLLocalD;AttachDbFilename=C:\Users\barte\Desktop\tpaProject\TPA_Project\DatabaseSerializationTests\Database\TpaModelDatabase.mdf;Integrated Security=True;Connect Timeout=30;Context Connection=False")
         {
         }
 

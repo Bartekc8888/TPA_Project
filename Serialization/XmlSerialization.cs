@@ -9,6 +9,7 @@ using SerializationModel.MetadataClasses;
 namespace Serialization
 {
     [Export(typeof(ISerialization))]
+    [ExportMetadata("Name", "Xml")]
     public class XmlSerialization : ISerialization
     {
         public void Save(AssemblyModel context, string filePath)
@@ -31,6 +32,11 @@ namespace Serialization
                 AssemblySerializationModel assemblySerializationModel = (AssemblySerializationModel)serializer.ReadObject(xr);
                 return assemblySerializationModel.ToModel();
             }
+        }
+
+        string ISerialization.GetName()
+        {
+            return "Xml";
         }
     }
 }

@@ -1,8 +1,10 @@
-﻿using DatabaseSerialization.MetadataExtensions;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using DatabaseSerialization.MetadataExtensions;
 using Model.MetadataClasses.Types.Members;
 
 namespace DatabaseSerialization.MetadataClasses.Types.Members
 {
+    [Table("Parameter")]
     public class ParameterDbModel : MemberAbstractDbModel
     {
         public ParameterDbModel(ParameterModel model) : base(model)

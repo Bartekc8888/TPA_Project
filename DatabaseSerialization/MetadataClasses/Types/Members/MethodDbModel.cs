@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using DatabaseSerialization.MetadataDefinitions;
 using DatabaseSerialization.MetadataExtensions;
@@ -9,6 +10,7 @@ using SerializationModel.MetadataDefinitions;
 
 namespace DatabaseSerialization.MetadataClasses.Types.Members
 {
+    [Table("Method")]
     public class MethodDbModel
     {
         #region vars
