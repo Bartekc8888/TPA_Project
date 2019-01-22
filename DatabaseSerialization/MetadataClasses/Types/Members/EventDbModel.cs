@@ -7,6 +7,7 @@ namespace DatabaseSerialization.MetadataClasses.Types.Members
     [Table("Event")]
     public class EventDbModel : MemberAbstractDbModel
     {
+        public int Id { get; set; }
         public EventDbModel(EventModel model) : base(model)
         {
         }

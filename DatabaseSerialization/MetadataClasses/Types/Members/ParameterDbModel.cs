@@ -7,6 +7,7 @@ namespace DatabaseSerialization.MetadataClasses.Types.Members
     [Table("Parameter")]
     public class ParameterDbModel : MemberAbstractDbModel
     {
+        public int Id { get; set; }
         public ParameterDbModel(ParameterModel model) : base(model)
         {
         }

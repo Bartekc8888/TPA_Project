@@ -9,6 +9,7 @@ namespace DatabaseSerialization.MetadataClasses
     [Table("Namespace")]
     public class NamespaceDbModel
     {
+        public int Id { get; set; }
         public string NamespaceName { get; set; }
         public IEnumerable<TypeDbModel> Types { get; set; }
 

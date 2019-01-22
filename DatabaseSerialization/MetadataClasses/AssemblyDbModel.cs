@@ -8,6 +8,7 @@ namespace DatabaseSerialization.MetadataClasses
     [Table("Assembly")]
     public class AssemblyDbModel
     {
+        public int Id { get; set; }
         public string TypeName { get; set; }
         public string Name { get; set; }
         public IEnumerable<NamespaceDbModel> Namespaces { get; set; }

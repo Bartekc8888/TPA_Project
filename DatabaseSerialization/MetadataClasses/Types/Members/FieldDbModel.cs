@@ -7,6 +7,7 @@ namespace DatabaseSerialization.MetadataClasses.Types.Members
     [Table("Field")]
     public class FieldDbModel : MemberAbstractDbModel
     {
+        public int Id { get; set; }
         public TypeDbModel TypeModel { get; set; }
         
         public FieldDbModel(FieldModel model) : base(model)

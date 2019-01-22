@@ -7,6 +7,7 @@ namespace DatabaseSerialization.MetadataClasses.Types.Members
     [Table("Indexer")]
     public class IndexerDbModel : MemberAbstractDbModel
     {
+        public int Id { get; set; }
         public IndexerDbModel(IndexerModel model) : base(model)
         {
         }

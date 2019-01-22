@@ -15,6 +15,7 @@ namespace DatabaseSerialization.MetadataClasses.Types
     public class TypeDbModel
     {
         #region fields
+        public int Id { get; set; }
         public TypeTypesDbModelEnum TypeEnum { get; set; }
 
         public string TypeName { get; set; }

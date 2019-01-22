@@ -8,6 +8,7 @@ namespace DatabaseSerialization.MetadataClasses.Types.Members
     [Table("Property")]
     public class PropertyDbModel : MemberAbstractDbModel
     {
+        public int Id { get; set; }
         public MethodDbModel[] propertyMethods { get; set; }
        
         public PropertyDbModel(PropertyModel model) : base(model)

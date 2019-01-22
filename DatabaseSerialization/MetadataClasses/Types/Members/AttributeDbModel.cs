@@ -7,6 +7,7 @@ namespace DatabaseSerialization.MetadataClasses.Types.Members
     [Table("Attribute")]
     public class AttributeDbModel : MemberAbstractDbModel
     {
+        public int Id { get; set; }
         public AttributeDbModel(AttributeModel model) : base(model)
         {
         }

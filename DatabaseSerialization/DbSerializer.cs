@@ -1,6 +1,7 @@
 ﻿using System;
 using System.ComponentModel.Composition;
 using System.Data.Entity;
+using System.Data.SqlClient;
 using System.Linq;
 using DatabaseSerialization.MetadataClasses;
 using Interfaces;
@@ -47,6 +48,7 @@ namespace DatabaseSerialization
             AssemblyDbModel serializationModel = new AssemblyDbModel(context);
             using (DatabaseContext ctx = new DatabaseContext())
             {
+                bool isWorking = ctx.Database.Exists();
                 ctx.AssemblyModels.Add(serializationModel);
                 ctx.SaveChanges();
             }

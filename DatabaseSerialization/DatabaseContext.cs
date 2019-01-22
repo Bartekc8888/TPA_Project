@@ -33,7 +33,7 @@ namespace DatabaseSerialization
 //        {
 //        }        
         
-        public DatabaseContext() : base(@"Data Source=(LocalDB)\MSSQLLocalD;AttachDbFilename=C:\Users\barte\Desktop\tpaProject\TPA_Project\DatabaseSerializationTests\Database\TpaModelDatabase.mdf;Integrated Security=True;Connect Timeout=30;Context Connection=False")
+        public DatabaseContext() : base(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\barte\Desktop\tpaProject\TPA_Project\DatabaseSerializationTests\Database\TpaModelDatabase.mdf;Integrated Security=True;Connect Timeout=5")
         {
         }
 

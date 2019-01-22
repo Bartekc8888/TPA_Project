@@ -13,6 +13,7 @@ namespace DatabaseSerialization.MetadataClasses.Types.Members
     [Table("Method")]
     public class MethodDbModel
     {
+        public int Id { get; set; }
         #region vars
         public string Name { get; set; }
         public IEnumerable<TypeDbModel> GenericArguments { get; set; }
