@@ -8,6 +8,7 @@ using System.ComponentModel.Composition.Primitives;
 using System.IO;
 using System.Reflection;
 using System.Windows;
+using Interfaces;
 
 namespace MEF
 {

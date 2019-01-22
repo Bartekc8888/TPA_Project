@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using Interfaces;
 using Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 

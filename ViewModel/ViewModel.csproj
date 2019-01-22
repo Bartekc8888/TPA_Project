@@ -72,6 +72,10 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Interfaces\Interfaces.csproj">
+      <Project>{3607551a-815d-41a3-86dd-3354fa425489}</Project>
+      <Name>Interfaces</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Logging\Logging.csproj">
       <Project>{AEDFE307-4793-418A-8E44-6A4AE844810F}</Project>
       <Name>Logging</Name>
@@ -83,10 +87,6 @@
     <ProjectReference Include="..\ReflectionModel\ReflectionModel.csproj">
       <Project>{35e4e22c-a782-4df2-a1a0-6812c8119a0a}</Project>
       <Name>ReflectionModel</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Serialization\Serialization.csproj">
-      <Project>{590F25A9-DD8B-4317-82A2-18E94A1A35F6}</Project>
-      <Name>Serialization</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

@@ -2,6 +2,7 @@
 using System.ComponentModel.Composition;
 using System.Runtime.Serialization;
 using System.Xml;
+using Interfaces;
 using Model.MetadataClasses;
 using SerializationModel.MetadataClasses;
 

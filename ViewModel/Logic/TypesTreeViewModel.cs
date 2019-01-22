@@ -5,9 +5,9 @@ using System.ComponentModel.Composition;
 using System.IO;
 using System.Threading;
 using System.Windows.Input;
+using Interfaces;
 using Logging;
 using Model.MetadataClasses;
-using Serialization;
 using ViewModel.ExtractionTools;
 using ViewModel.ModelRepresentation.Types;
 

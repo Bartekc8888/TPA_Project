@@ -8,8 +8,8 @@ namespace DatabaseSerialization
 {
     public class DatabaseContext : DbContext
     {
-        public DbSet<NamespaceDbModel> NamespaceModels { get; set; }
         public DbSet<AssemblyDbModel> AssemblyModels { get; set; }
+        public DbSet<NamespaceDbModel> NamespaceModels { get; set; }
         public DbSet<TypeDbModel> Types { get; set; }
         public DbSet<ConstructorDbModel> ConstructorModels { get; set; }
         public DbSet<EventDbModel> EventModels { get; set; }
@@ -35,7 +35,6 @@ namespace DatabaseSerialization
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-
         }
     }
 }

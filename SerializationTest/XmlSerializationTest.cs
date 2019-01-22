@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Linq;
+using Interfaces;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Model.MetadataClasses;
 using Serialization;
