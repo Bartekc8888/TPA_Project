@@ -70,6 +70,10 @@ namespace ViewModel.Logic
 
         public TypesTreeViewModel()
         {
+            string executable = System.Reflection.Assembly.GetExecutingAssembly().Location;
+            string path = Path.GetDirectoryName(executable);
+            AppDomain.CurrentDomain.SetData("DataDirectory", path);
+            
             _context = SynchronizationContext.Current;
             
             SelectedPath = "";
