@@ -17,6 +17,7 @@ namespace DatabaseLoggingTest
         {
             string dbRelativePath = @"Database\TpaModelDatabase.mdf";
             string testingWorkingFolder = Environment.CurrentDirectory;
+            var instance = System.Data.Entity.SqlServer.SqlProviderServices.Instance;
             string dbPath = Path.Combine(testingWorkingFolder, dbRelativePath);
             AppDomain.CurrentDomain.SetData("DataDirectory", dbPath);
         }
