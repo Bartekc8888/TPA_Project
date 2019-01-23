@@ -21,8 +21,11 @@ namespace ModelTest
         [TestMethod]
         public void NamespacesTest()
         {
+            Assert.AreEqual(4, ReflectorTestClass.Reflector.Namespaces.ToList().Count);
             Assert.AreEqual("TPA.ApplicationArchitecture.Data.CircularReference", ReflectorTestClass.Reflector.Namespaces.FirstOrDefault(x => x.Value.NamespaceName == "TPA.ApplicationArchitecture.Data.CircularReference").Value.NamespaceName);
             Assert.AreEqual("TPA.ApplicationArchitecture.Data", ReflectorTestClass.Reflector.Namespaces.FirstOrDefault(x => x.Value.NamespaceName == "TPA.ApplicationArchitecture.Data").Value.NamespaceName);
+            Assert.AreEqual("TPA.ApplicationArchitecture.Presentation", ReflectorTestClass.Reflector.Namespaces.FirstOrDefault(x => x.Value.NamespaceName == "TPA.ApplicationArchitecture.Presentation").Value.NamespaceName);
+            Assert.AreEqual("TPA.ApplicationArchitecture.BusinessLogic", ReflectorTestClass.Reflector.Namespaces.FirstOrDefault(x => x.Value.NamespaceName == "TPA.ApplicationArchitecture.BusinessLogic").Value.NamespaceName);
         }
 
         [TestMethod]
