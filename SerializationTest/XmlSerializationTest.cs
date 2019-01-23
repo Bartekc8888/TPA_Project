@@ -15,7 +15,7 @@ namespace SerializationTest
         public void CheckiIfSerializationWorks()
         {
             ISerialization serializer = new XmlSerialization();
-            AssemblyExtractor ae = new AssemblyExtractor("../../TPA.ApplicationArchitecture.dll");
+            AssemblyExtractor ae = new AssemblyExtractor("Database/TPA.ApplicationArchitecture.dll");
             AssemblyModel am = ae.AssemblyModel.ToModel();
             serializer.Save(am, "serialized.xml");
             AssemblyModel deserialized = serializer.Read("serialized.xml");

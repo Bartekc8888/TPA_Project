@@ -14,7 +14,7 @@ namespace ModelTest
     [TestClass]
     public class ExampleDllReflection
     {
-        private readonly string dllPath = @"../../TPA.ApplicationArchitecture.dll";
+        private readonly string dllPath = "Database/TPA.ApplicationArchitecture.dll";
 
 
 
@@ -134,7 +134,7 @@ namespace ModelTest
             internal static ReflectorTestClass Reflector => m_Reflector.Value;
             internal Dictionary<string, NamespaceMetadata> Namespaces;
             internal NamespaceMetadata MyNamespace { get; private set; }
-            internal ReflectorTestClass() : base(Assembly.LoadFrom("../../TPA.ApplicationArchitecture.dll"))
+            internal ReflectorTestClass() : base(Assembly.LoadFrom("Database/TPA.ApplicationArchitecture.dll"))
             {
                 Namespaces =  base.Namespaces.ToDictionary<NamespaceMetadata, string>(x => x.NamespaceName);
                 MyNamespace = Namespaces.ContainsKey(m_NamespaceName) ? Namespaces["TPA.ApplicationArchitecture.Data"] : null;

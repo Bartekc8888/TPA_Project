@@ -16,8 +16,9 @@ using ViewModel.ExtractionTools;
 namespace DatabaseSerializationTest
 {
     [TestClass]
-    [DeploymentItem(@"Database\TpaModelDatabase.mdf", @"Database")]
     [DeploymentItem(@"Database\TPA.ApplicationArchitecture.dll", @"Database")]
+    [DeploymentItem(@"Database\TpaModelDatabase.mdf", @".")]
+    
     public class DatabaseSerializationTest
     {
         private static string _connectionString;
@@ -26,7 +27,7 @@ namespace DatabaseSerializationTest
         [ClassInitialize]
         public static void ClassInitializeMethod(TestContext context)
         {
-            string dbRelativePath = @"Database\TpaModelDatabase.mdf";
+            string dbRelativePath = @"TpaModelDatabase.mdf";
             string testingWorkingFolder = Environment.CurrentDirectory;
             string dbPath = Path.Combine(testingWorkingFolder, dbRelativePath);
             AppDomain.CurrentDomain.SetData("DataDirectory", dbPath);

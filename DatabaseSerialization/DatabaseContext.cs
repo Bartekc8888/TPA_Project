@@ -1,3 +1,4 @@
+using System;
 using System.Data.Common;
 using System.Data.Entity;
 using DatabaseSerialization.MetadataClasses;
@@ -20,21 +21,16 @@ namespace DatabaseSerialization
         public DbSet<ParameterDbModel> ParameterModels { get; set; }
         public DbSet<PropertyDbModel> PropertyModels { get; set; }
 
-        public DatabaseContext(string name) : base(name)
+        public DatabaseContext(string dbPath) : base(dbPath)
         {
-            Database.SetInitializer<DatabaseContext>(new DropCreateDatabaseAlways<DatabaseContext>());
+            Database.SetInitializer(new DropCreateDatabaseAlways<DatabaseContext>());
             Configuration.ProxyCreationEnabled = false;
         }
 
-        public DatabaseContext(DbConnection connection) : base(connection, true)
+        public DatabaseContext() : base(System.Configuration.ConfigurationManager.
+                                        ConnectionStrings["FileDatabase"].ConnectionString)
         {
-            Database.SetInitializer<DatabaseContext>(new DropCreateDatabaseAlways<DatabaseContext>());
-            Configuration.ProxyCreationEnabled = false;
-        }
-
-        public DatabaseContext() : base(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\barte\Desktop\tpaProject\TPA_Project\TestResults\Deploy_barte 2019-01-24 01_22_48\Out\Database\TpaModelDatabase.mdf;Integrated Security=True;Connect Timeout=30;Context Connection=False")
-        {
-            Database.SetInitializer<DatabaseContext>(new DropCreateDatabaseAlways<DatabaseContext>());
+            Database.SetInitializer(new DropCreateDatabaseAlways<DatabaseContext>());
             Configuration.ProxyCreationEnabled = false;
         }        
 

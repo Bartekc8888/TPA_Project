@@ -73,7 +73,7 @@ namespace ViewModel.Logic
         {
             string executable = System.Reflection.Assembly.GetExecutingAssembly().Location;
             string path = Path.GetDirectoryName(executable);
-            path += @"..\..\..\DatabaseSerializationTests\Database\TpaModelDatabase.mdf";
+            path += @"..\..\..\..\DatabaseSerializationTest\Database\TpaModelDatabase.mdf";
             path = Path.GetFullPath(path);
             
             AppDomain.CurrentDomain.SetData("DataDirectory", path);

@@ -17,8 +17,13 @@ namespace DatabaseSerialization
         public AssemblyModel Read(string path)
         {
             AssemblyModel assembly;
-            
-            using(DatabaseContext ctx = new DatabaseContext())
+            if (string.IsNullOrEmpty(path))
+            {
+                path = System.Configuration.ConfigurationManager.ConnectionStrings["FileDatabase"].ConnectionString;
+                path = $@"{path.Replace("|DataDirectory|", (string)AppDomain.CurrentDomain.GetData("DataDirectory"))}";
+            }
+
+            using (DatabaseContext ctx = new DatabaseContext(path))
             {
                 ctx.LoadData();
 
@@ -35,10 +40,14 @@ namespace DatabaseSerialization
 
         public void Save(AssemblyModel context, String path)
         {
+            if (string.IsNullOrEmpty(path))
+            {
+                path = System.Configuration.ConfigurationManager.ConnectionStrings["FileDatabase"].ConnectionString;
+                path = $@"{path.Replace("|DataDirectory|", (string)AppDomain.CurrentDomain.GetData("DataDirectory"))}";
+            }
+
             using (DatabaseContext ctx = new DatabaseContext(path))
             {
-//                ctx.Database.Delete();
-//                ctx.Database.Create();
                 AssemblyDbModel serializationModel = new AssemblyDbModel(context);
                 ctx.AssemblyModels.Add(serializationModel);
                 ctx.SaveChanges();

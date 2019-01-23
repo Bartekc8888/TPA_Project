@@ -8,9 +8,9 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace DatabaseLoggingTest
 {
     [TestClass]
-    [DeploymentItem(@"Database\TpaModelDatabase.mdf", @"Database")]
     public class DbLoggingTest
     {
+        private static string dbPath;
 
         [ClassInitialize]
         public static void ClassInitializeMethod(TestContext context)
@@ -18,14 +18,14 @@ namespace DatabaseLoggingTest
             string dbRelativePath = @"Database\TpaModelDatabase.mdf";
             string testingWorkingFolder = Environment.CurrentDirectory;
             var instance = System.Data.Entity.SqlServer.SqlProviderServices.Instance;
-            string dbPath = Path.Combine(testingWorkingFolder, dbRelativePath);
+            dbPath = Path.Combine(testingWorkingFolder, dbRelativePath);
             AppDomain.CurrentDomain.SetData("DataDirectory", dbPath);
         }
 
         [TestMethod]
         public void CheckIfLoggingIsCorrect()
         {
-            DbLogging logger = new DbLogging();
+            DbLogging logger = new DbLogging(dbPath);
             Task.Run(async () =>
             {
                 await logger.Debug("deb");
@@ -36,14 +36,14 @@ namespace DatabaseLoggingTest
             }).GetAwaiter().GetResult();
 
             string result1, result2, result3, result4, result5;
-            using (logger.DbContext = new LoggingDatabaseContext())
+            using (LoggingDatabaseContext DbContext = new LoggingDatabaseContext(dbPath))
             {
-                result1 = logger.DbContext.Set<Log>().Find(1).Message;
-                result2 = logger.DbContext.Set<Log>().Find(2).Message;
-                result3 = logger.DbContext.Set<Log>().Find(3).Message;
-                result4 = logger.DbContext.Set<Log>().Find(4).Message;
-                result5 = logger.DbContext.Set<Log>().Find(5).Message;
-                logger.DbContext.Database.Delete();
+                result1 = DbContext.Set<Log>().Find(1).Message;
+                result2 = DbContext.Set<Log>().Find(2).Message;
+                result3 = DbContext.Set<Log>().Find(3).Message;
+                result4 = DbContext.Set<Log>().Find(4).Message;
+                result5 = DbContext.Set<Log>().Find(5).Message;
+                DbContext.Database.Delete();
             }
             Assert.AreEqual("deb", result1);
             Assert.AreEqual("err", result2);

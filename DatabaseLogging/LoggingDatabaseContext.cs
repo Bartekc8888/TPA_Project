@@ -6,8 +6,7 @@ namespace DatabaseLogging
     {
         public DbSet<Log> Logs { get; set; }
 
-        public LoggingDatabaseContext() : base (System.Configuration.ConfigurationManager.
-                                                ConnectionStrings["FileDatabase"].ConnectionString)
+        public LoggingDatabaseContext(string path) : base ($@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={path};Integrated Security=True;Connect Timeout=30;Context Connection=False")
         {
             Database.SetInitializer(new CreateDatabaseIfNotExists<LoggingDatabaseContext>());
         }

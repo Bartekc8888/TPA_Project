@@ -1,6 +1,7 @@
 ﻿using Interfaces;
 using System;
 using System.ComponentModel.Composition;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace DatabaseLogging
@@ -8,13 +9,18 @@ namespace DatabaseLogging
     [Export(typeof(ILogging))]
     public class DbLogging : ILogging
     {
-        public LoggingDatabaseContext DbContext { get; set; }
+        private string path;
 
+        public DbLogging(string path)
+        {
+            this.path = path;
+        }
+        
         private async Task SaveLog(string type, string message)
         {
             await Task.Run(async () =>
              {
-                 using (DbContext = new LoggingDatabaseContext())
+                 using (LoggingDatabaseContext DbContext = new LoggingDatabaseContext(path))
                  {
                      DbContext.Database.CreateIfNotExists();
                      Log log = new Log
