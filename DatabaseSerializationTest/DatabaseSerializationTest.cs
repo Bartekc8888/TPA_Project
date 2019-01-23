@@ -1,13 +1,13 @@
 using System;
-using System.Collections.Generic;
-using System.Collections.Specialized;
 using System.IO;
 using System.Linq;
 using DatabaseSerialization;
 using DatabaseSerialization.MetadataClasses;
-using Interfaces;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Model.MetadataClasses;
+using Model.MetadataClasses.Types;
+using Model.MetadataClasses.Types.Members;
+using Model.MetadataDefinitions;
 using ViewModel.ExtractionTools;
 
 namespace DatabaseSerializationTest
@@ -65,6 +65,54 @@ namespace DatabaseSerializationTest
                 Assert.IsTrue(databaseContext.Database.Exists());
 
                 Assert.AreEqual(4, databaseContext.NamespaceModels.Count());
+            }
+        }
+        
+        [TestMethod]
+        public void AbstractClassTest()
+        {
+            using (DatabaseContext databaseContext = new DatabaseContext(_connectionString))
+            {
+                TypeModel abstractClass = databaseContext.Types.Single(x => x.TypeName == "AbstractClass").ToModel();
+                Assert.AreEqual(AbstractEnumMetadata.Abstract, abstractClass.Modifiers.Item3);
+                Assert.AreEqual(AbstractEnumMetadata.Abstract,
+                    abstractClass.Methods.Single(x => x.Name == "AbstractMethod").Modifiers.Item2);
+            }
+        }
+
+        [TestMethod]
+        public void ClassWithAttributesTest()
+        {
+            using (DatabaseContext databaseContext = new DatabaseContext(_connectionString))
+            {
+                TypeModel attributeClass =
+                    databaseContext.Types.Single(x => x.TypeName == "ClassWithAttribute").ToModel();
+                FieldModel fieldWithAttribute = attributeClass.Fields.Single(x => x.Name == "FieldWithAttribute");
+                Assert.AreEqual("FieldWithAttribute", fieldWithAttribute.Name);
+                Assert.AreEqual(1, attributeClass.Attributes.Count());
+            }
+        }
+
+        [TestMethod]
+        public void DerivedClassTest()
+        {
+            using (DatabaseContext databaseContext = new DatabaseContext(_connectionString))
+            {
+                TypeModel derivedClass =
+                    databaseContext.Types.Single(x => x.TypeName == "DerivedClass").ToModel();
+                Assert.IsNotNull(derivedClass.BaseType);
+            }
+        }
+
+        [TestMethod]
+        public void StaticClassTest()
+        {
+            using (DatabaseContext databaseContext = new DatabaseContext(_connectionString))
+            {
+                TypeModel staticClass =
+                    databaseContext.Types.Single(x => x.TypeName == "StaticClass").ToModel();
+                Assert.AreEqual(StaticEnum.Static.ToString(),
+                    staticClass.Methods.Single(x => x.Name == "StaticMethod1").Modifiers.Item3.ToString());
             }
         }
     }
