@@ -4,10 +4,16 @@ using Model.MetadataClasses.Types.Members;
 
 namespace DatabaseSerialization.MetadataClasses.Types.Members
 {
-//    [Table("Event")]
+    [Table("Event")]
     public class EventDbModel : MemberAbstractDbModel
     {
         public int Id { get; set; }
+        
+        public EventDbModel()
+        {
+            
+        }
+        
         public EventDbModel(EventModel model) : base(model)
         {
         }

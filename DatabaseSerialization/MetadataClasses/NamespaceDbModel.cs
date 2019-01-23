@@ -6,13 +6,18 @@ using Model.MetadataClasses;
 
 namespace DatabaseSerialization.MetadataClasses
 {
-//    [Table("Namespace")]
+    [Table("Namespace")]
     public class NamespaceDbModel
     {
         public int Id { get; set; }
         public string NamespaceName { get; set; }
         public ICollection<TypeDbModel> Types { get; set; }
 
+        public NamespaceDbModel()
+        {
+            
+        }
+        
         public NamespaceDbModel(NamespaceModel model)
         {
             NamespaceName = model.NamespaceName;

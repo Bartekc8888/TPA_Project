@@ -4,10 +4,16 @@ using Model.MetadataClasses.Types.Members;
 
 namespace DatabaseSerialization.MetadataClasses.Types.Members
 {
-//    [Table("Attribute")]
+    [Table("Attribute")]
     public class AttributeDbModel : MemberAbstractDbModel
     {
         public int Id { get; set; }
+        
+        public AttributeDbModel()
+        {
+            
+        }
+        
         public AttributeDbModel(AttributeModel model) : base(model)
         {
         }

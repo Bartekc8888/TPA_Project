@@ -16,6 +16,7 @@ namespace DatabaseLogging
              {
                  using (DbContext = new LoggingDatabaseContext())
                  {
+                     DbContext.Database.CreateIfNotExists();
                      Log log = new Log
                      {
                          Time = DateTime.Now,

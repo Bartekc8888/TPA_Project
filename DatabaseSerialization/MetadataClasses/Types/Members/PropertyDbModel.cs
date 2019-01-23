@@ -6,12 +6,17 @@ using Model.MetadataClasses.Types.Members;
 
 namespace DatabaseSerialization.MetadataClasses.Types.Members
 {
-//    [Table("Property")]
+    [Table("Property")]
     public class PropertyDbModel : MemberAbstractDbModel
     {
         public int Id { get; set; }
         public ICollection<MethodDbModel> propertyMethods { get; set; }
-       
+
+        public PropertyDbModel()
+        {
+            
+        }
+        
         public PropertyDbModel(PropertyModel model) : base(model)
         {
             propertyMethods = model.propertyMethods.Select(methodModel => new MethodDbModel(methodModel)).ToArray();

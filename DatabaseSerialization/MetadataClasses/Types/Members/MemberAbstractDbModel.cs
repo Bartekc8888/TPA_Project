@@ -7,6 +7,11 @@ namespace DatabaseSerialization.MetadataClasses.Types.Members
         public string Name { get; set; }
         public string TypeName { get; set; }
 
+        public MemberAbstractDbModel()
+        {
+            
+        }
+        
         public MemberAbstractDbModel(MemberAbstract member)
         {
             Name = member.Name;

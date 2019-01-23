@@ -11,7 +11,7 @@ using SerializationModel.MetadataDefinitions;
 
 namespace DatabaseSerialization.MetadataClasses.Types
 {
-//    [Table("Type")]
+    [Table("Type")]
     public class TypeDbModel : ILateBinding
     {
         #region fields
@@ -21,7 +21,9 @@ namespace DatabaseSerialization.MetadataClasses.Types
         public string TypeName { get; set; }
         public string NamespaceName { get; set; }
         public ICollection<TypeDbModel> GenericArguments { get; set; }
-        public Tuple<AccessLevelDbModelEnum, SealedDbModelEnum, AbstractDbModelEnum> Modifiers { get; set; }
+        public AccessLevelDbModelEnum Item1 { get; set; }
+        public SealedDbModelEnum Item2 { get; set; }
+        public AbstractDbModelEnum Item3 { get; set; }
         public ICollection<AttributeDbModel> Attributes { get; set; }
         public string FullTypeName { get; set; }
         
@@ -39,16 +41,20 @@ namespace DatabaseSerialization.MetadataClasses.Types
         public ICollection<TypeDbModel> NestedTypes { get; set; }
         #endregion
 
+        public TypeDbModel()
+        {
+            
+        }
+        
         public TypeDbModel(TypeModel model)
         {
             TypeEnum = EnumMapper.ConvertEnum<TypeTypesDbModelEnum, TypeTypesEnum>(model.TypeEnum);
             TypeName = model.TypeName;
             NamespaceName = model.NamespaceName;
 
-            Modifiers = new Tuple<AccessLevelDbModelEnum, SealedDbModelEnum, AbstractDbModelEnum> (
-                EnumMapper.ConvertEnum<AccessLevelDbModelEnum, AccessLevelEnum>(model.Modifiers.Item1),
-                EnumMapper.ConvertEnum<SealedDbModelEnum, SealedEnum>(model.Modifiers.Item2),
-                EnumMapper.ConvertEnum<AbstractDbModelEnum, AbstractEnum>(model.Modifiers.Item3));
+            Item1 = EnumMapper.ConvertEnum<AccessLevelDbModelEnum, AccessLevelEnum>(model.Modifiers.Item1);
+            Item2 = EnumMapper.ConvertEnum<SealedDbModelEnum, SealedEnum>(model.Modifiers.Item2);
+            Item3 = EnumMapper.ConvertEnum<AbstractDbModelEnum, AbstractEnum>(model.Modifiers.Item3);
 
             Attributes = model.Attributes.Select(AttributeDbModel.EmitUniqueType).ToList();
             FullTypeName = model.FullTypeName;
@@ -84,9 +90,9 @@ namespace DatabaseSerialization.MetadataClasses.Types
             model.GenericArguments = GenericArguments?.Select(EmitTypeModel);
 
             model.Modifiers = new Tuple<AccessLevelEnum, SealedEnum, AbstractEnum>(
-                EnumMapper.ConvertEnum<AccessLevelEnum, AccessLevelDbModelEnum>(Modifiers.Item1),
-                EnumMapper.ConvertEnum<SealedEnum, SealedDbModelEnum>(Modifiers.Item2),
-                EnumMapper.ConvertEnum<AbstractEnum, AbstractDbModelEnum>(Modifiers.Item3));
+                EnumMapper.ConvertEnum<AccessLevelEnum, AccessLevelDbModelEnum>(Item1),
+                EnumMapper.ConvertEnum<SealedEnum, SealedDbModelEnum>(Item2),
+                EnumMapper.ConvertEnum<AbstractEnum, AbstractDbModelEnum>(Item3));
 
             model.Attributes = Attributes?.Select(attributeMetadata => attributeMetadata.ToModel());
             model.FullTypeName = FullTypeName;
@@ -108,7 +114,7 @@ namespace DatabaseSerialization.MetadataClasses.Types
         {
             return TypeEnum == other.TypeEnum && string.Equals(TypeName, other.TypeName) &&
                    string.Equals(NamespaceName, other.NamespaceName) &&
-                   Equals(GenericArguments, other.GenericArguments) && Equals(Modifiers, other.Modifiers) &&
+                   Equals(GenericArguments, other.GenericArguments) &&
                    Equals(Attributes, other.Attributes) && string.Equals(FullTypeName, other.FullTypeName) &&
                    Equals(ImplementedInterfaces, other.ImplementedInterfaces) && Equals(Fields, other.Fields) &&
                    Equals(Methods, other.Methods) && Equals(Properties, other.Properties) &&
@@ -132,7 +138,6 @@ namespace DatabaseSerialization.MetadataClasses.Types
                 hashCode = (hashCode * 397) ^ (TypeName != null ? TypeName.GetHashCode() : 0);
                 hashCode = (hashCode * 397) ^ (NamespaceName != null ? NamespaceName.GetHashCode() : 0);
                 hashCode = (hashCode * 397) ^ (GenericArguments != null ? GenericArguments.GetHashCode() : 0);
-                hashCode = (hashCode * 397) ^ (Modifiers != null ? Modifiers.GetHashCode() : 0);
                 hashCode = (hashCode * 397) ^ (Attributes != null ? Attributes.GetHashCode() : 0);
                 hashCode = (hashCode * 397) ^ (FullTypeName != null ? FullTypeName.GetHashCode() : 0);
                 hashCode = (hashCode * 397) ^ (ImplementedInterfaces != null ? ImplementedInterfaces.GetHashCode() : 0);

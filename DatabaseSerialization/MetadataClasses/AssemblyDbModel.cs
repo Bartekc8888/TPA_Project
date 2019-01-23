@@ -5,7 +5,7 @@ using Model.MetadataClasses;
 
 namespace DatabaseSerialization.MetadataClasses
 {
-//    [Table("Assembly")]
+    [Table("Assembly")]
     public class AssemblyDbModel
     {
         public int Id { get; set; }
@@ -13,6 +13,11 @@ namespace DatabaseSerialization.MetadataClasses
         public string Name { get; set; }
         public ICollection<NamespaceDbModel> Namespaces { get; set; }
 
+        public AssemblyDbModel()
+        {
+            
+        }
+        
         public AssemblyDbModel(AssemblyModel model)
         {
             TypeName = model.TypeName;

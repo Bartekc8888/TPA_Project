@@ -22,18 +22,20 @@ namespace DatabaseSerialization
 
         public DatabaseContext(string name) : base(name)
         {
-            Configuration.LazyLoadingEnabled = true;
+            Database.SetInitializer<DatabaseContext>(new DropCreateDatabaseAlways<DatabaseContext>());
+            Configuration.ProxyCreationEnabled = false;
         }
 
         public DatabaseContext(DbConnection connection) : base(connection, true)
         {
-            Configuration.LazyLoadingEnabled = true;
+            Database.SetInitializer<DatabaseContext>(new DropCreateDatabaseAlways<DatabaseContext>());
+            Configuration.ProxyCreationEnabled = false;
         }
 
-        public DatabaseContext() : base(System.Configuration.ConfigurationManager.
-                                        ConnectionStrings["FileDatabase"].ConnectionString)
+        public DatabaseContext() : base(@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\barte\Desktop\tpaProject\TPA_Project\TestResults\Deploy_barte 2019-01-24 01_22_48\Out\Database\TpaModelDatabase.mdf;Integrated Security=True;Connect Timeout=30;Context Connection=False")
         {
-            Configuration.LazyLoadingEnabled = true;
+            Database.SetInitializer<DatabaseContext>(new DropCreateDatabaseAlways<DatabaseContext>());
+            Configuration.ProxyCreationEnabled = false;
         }        
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
@@ -61,45 +63,32 @@ namespace DatabaseSerialization
             modelBuilder.Entity<AssemblyDbModel>().HasMany(t => t.Namespaces).WithMany();
         }
 
-        public void ClearDatabase()
+        public void LoadData()
         {
-            Database.ExecuteSqlCommand("ALTER TABLE AssemblyDbModel NOCHECK CONSTRAINT ALL");
-            Database.ExecuteSqlCommand("ALTER TABLE NamespaceDbModel NOCHECK CONSTRAINT ALL");
-            Database.ExecuteSqlCommand("ALTER TABLE TypeDbModel NOCHECK CONSTRAINT ALL");
-            Database.ExecuteSqlCommand("ALTER TABLE ConstructorDbMode NOCHECK CONSTRAINT ALL");
-            Database.ExecuteSqlCommand("ALTER TABLE EventDbModel NOCHECK CONSTRAINT ALL");
-            Database.ExecuteSqlCommand("ALTER TABLE FieldDbModel NOCHECK CONSTRAINT ALL");
-            Database.ExecuteSqlCommand("ALTER TABLE IndexerDbModel NOCHECK CONSTRAINT ALL");
-            Database.ExecuteSqlCommand("ALTER TABLE AttributeDbModel NOCHECK CONSTRAINT ALL");
-            Database.ExecuteSqlCommand("ALTER TABLE MethodDbModel NOCHECK CONSTRAINT ALL");
-            Database.ExecuteSqlCommand("ALTER TABLE ParameterDbModel NOCHECK CONSTRAINT ALL");
-            Database.ExecuteSqlCommand("ALTER TABLE PropertyDbModel NOCHECK CONSTRAINT ALL");
-
-            Database.ExecuteSqlCommand("TRUNCATE TABLE AssemblyDbModel");
-            Database.ExecuteSqlCommand("TRUNCATE TABLE NamespaceDbModel");
-            Database.ExecuteSqlCommand("TRUNCATE TABLE TypeDbModel");
-            Database.ExecuteSqlCommand("TRUNCATE TABLE ConstructorDbMode");
-            Database.ExecuteSqlCommand("TRUNCATE TABLE EventDbModel");
-            Database.ExecuteSqlCommand("TRUNCATE TABLE FieldDbModel");
-            Database.ExecuteSqlCommand("TRUNCATE TABLE IndexerDbModel");
-            Database.ExecuteSqlCommand("TRUNCATE TABLE AttributeDbModel");
-            Database.ExecuteSqlCommand("TRUNCATE TABLE MethodDbModel");
-            Database.ExecuteSqlCommand("TRUNCATE TABLE ParameterDbModel");
-            Database.ExecuteSqlCommand("TRUNCATE TABLE PropertyDbModel");
-            
-            Database.ExecuteSqlCommand("ALTER TABLE AssemblyDbModel CHECK CONSTRAINT ALL");
-            Database.ExecuteSqlCommand("ALTER TABLE NamespaceDbModel CHECK CONSTRAINT ALL");
-            Database.ExecuteSqlCommand("ALTER TABLE TypeDbModel CHECK CONSTRAINT ALL");
-            Database.ExecuteSqlCommand("ALTER TABLE ConstructorDbMode CHECK CONSTRAINT ALL");
-            Database.ExecuteSqlCommand("ALTER TABLE EventDbModel CHECK CONSTRAINT ALL");
-            Database.ExecuteSqlCommand("ALTER TABLE FieldDbModel CHECK CONSTRAINT ALL");
-            Database.ExecuteSqlCommand("ALTER TABLE IndexerDbModel CHECK CONSTRAINT ALL");
-            Database.ExecuteSqlCommand("ALTER TABLE AttributeDbModel CHECK CONSTRAINT ALL");
-            Database.ExecuteSqlCommand("ALTER TABLE MethodDbModel CHECK CONSTRAINT ALL");
-            Database.ExecuteSqlCommand("ALTER TABLE ParameterDbModel CHECK CONSTRAINT ALL");
-            Database.ExecuteSqlCommand("ALTER TABLE PropertyDbModel CHECK CONSTRAINT ALL");
-            
-            SaveChanges();
+            AssemblyModels.Include(t => t.Namespaces).Load();
+            NamespaceModels.Include(t => t.Types).Load();
+            Types.Include(t => t.GenericArguments)
+                .Include(t => t.Attributes)
+                .Include(t => t.DeclaringType)
+                .Include(t => t.BaseType)
+                .Include(t => t.ImplementedInterfaces)
+                .Include(t => t.Fields)
+                .Include(t => t.Methods)
+                .Include(t => t.Properties)
+                .Include(t => t.Indexers)
+                .Include(t => t.Events)
+                .Include(t => t.Constructors)
+                .Include(t => t.NestedTypes).Load();
+            ConstructorModels.Include(t => t.GenericArguments)
+                .Include(t => t.Parameters).Load();
+            EventModels.Load();
+            FieldModels.Include(t => t.TypeModel).Load();
+            IndexerModels.Load();
+            AttributeModels.Load();
+            MethodModels.Include(t => t.GenericArguments)
+                .Include(t => t.Parameters).Load();
+            ParameterModels.Load();
+            PropertyModels.Include(t => t.propertyMethods).Load();
         }
     }
 }

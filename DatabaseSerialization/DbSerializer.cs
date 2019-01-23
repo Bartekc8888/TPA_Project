@@ -2,6 +2,7 @@
 using System.ComponentModel.Composition;
 using System.Data.Entity;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using DatabaseSerialization.MetadataClasses;
 using Interfaces;
@@ -19,17 +20,7 @@ namespace DatabaseSerialization
             
             using(DatabaseContext ctx = new DatabaseContext())
             {
-                ctx.AssemblyModels.Load();
-                ctx.NamespaceModels.Load();
-                ctx.Types.Load();
-                ctx.ConstructorModels.Load();
-                ctx.EventModels.Load();
-                ctx.FieldModels.Load();
-                ctx.IndexerModels.Load();
-                ctx.AttributeModels.Load();
-                ctx.MethodModels.Load();
-                ctx.ParameterModels.Load();
-                ctx.PropertyModels.Load();
+                ctx.LoadData();
 
                 assembly = ctx.AssemblyModels.FirstOrDefault()?.ToModel();
 
@@ -44,9 +35,10 @@ namespace DatabaseSerialization
 
         public void Save(AssemblyModel context, String path)
         {
-//            Database.SetInitializer(new DropCreateDatabaseAlways<DatabaseContext>());
-            using (DatabaseContext ctx = new DatabaseContext())
+            using (DatabaseContext ctx = new DatabaseContext(path))
             {
+//                ctx.Database.Delete();
+//                ctx.Database.Create();
                 AssemblyDbModel serializationModel = new AssemblyDbModel(context);
                 ctx.AssemblyModels.Add(serializationModel);
                 ctx.SaveChanges();

@@ -3,6 +3,9 @@ using System.IO;
 using System.Linq;
 using DatabaseSerialization;
 using DatabaseSerialization.MetadataClasses;
+using DatabaseSerialization.MetadataClasses.Types;
+using DatabaseSerialization.MetadataClasses.Types.Members;
+using Interfaces;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Model.MetadataClasses;
 using Model.MetadataClasses.Types;
@@ -36,12 +39,8 @@ namespace DatabaseSerializationTest
             AssemblyExtractor ae = new AssemblyExtractor(@"Database\TPA.ApplicationArchitecture.dll");
             _assemblyModel = ae.AssemblyModel.ToModel();
             
-            using (DatabaseContext databaseContext = new DatabaseContext(_connectionString))
-            {
-                AssemblyDbModel assemblyDbModel = new AssemblyDbModel(_assemblyModel);
-                databaseContext.AssemblyModels.Add(assemblyDbModel);
-                databaseContext.SaveChanges();
-            }
+            ISerialization serialization = new DbSerializer();
+            serialization.Save(_assemblyModel, _connectionString);
         }
         
         [TestMethod]
@@ -68,52 +67,82 @@ namespace DatabaseSerializationTest
             }
         }
         
-//        [TestMethod]
-//        public void AbstractClassTest()
-//        {
-//            using (DatabaseContext databaseContext = new DatabaseContext(_connectionString))
-//            {
-//                TypeModel abstractClass = databaseContext.Types.Single(x => x.TypeName == "AbstractClass").ToModel();
-//                Assert.AreEqual(AbstractEnumMetadata.Abstract, abstractClass.Modifiers.Item3);
-//                Assert.AreEqual(AbstractEnumMetadata.Abstract,
-//                    abstractClass.Methods.Single(x => x.Name == "AbstractMethod").Modifiers.Item2);
-//            }
-//        }
-//
-//        [TestMethod]
-//        public void ClassWithAttributesTest()
-//        {
-//            using (DatabaseContext databaseContext = new DatabaseContext(_connectionString))
-//            {
-//                TypeModel attributeClass =
-//                    databaseContext.Types.Single(x => x.TypeName == "ClassWithAttribute").ToModel();
-//                FieldModel fieldWithAttribute = attributeClass.Fields.Single(x => x.Name == "FieldWithAttribute");
-//                Assert.AreEqual("FieldWithAttribute", fieldWithAttribute.Name);
-//                Assert.AreEqual(1, attributeClass.Attributes.Count());
-//            }
-//        }
-//
-//        [TestMethod]
-//        public void DerivedClassTest()
-//        {
-//            using (DatabaseContext databaseContext = new DatabaseContext(_connectionString))
-//            {
-//                TypeModel derivedClass =
-//                    databaseContext.Types.Single(x => x.TypeName == "DerivedClass").ToModel();
-//                Assert.IsNotNull(derivedClass.BaseType);
-//            }
-//        }
-//
-//        [TestMethod]
-//        public void StaticClassTest()
-//        {
-//            using (DatabaseContext databaseContext = new DatabaseContext(_connectionString))
-//            {
-//                TypeModel staticClass =
-//                    databaseContext.Types.Single(x => x.TypeName == "StaticClass").ToModel();
-//                Assert.AreEqual(StaticEnum.Static.ToString(),
-//                    staticClass.Methods.Single(x => x.Name == "StaticMethod1").Modifiers.Item3.ToString());
-//            }
-//        }
+        [TestMethod]
+        public void AbstractClassTest()
+        {
+            using (DatabaseContext databaseContext = new DatabaseContext(_connectionString))
+            {
+                databaseContext.LoadData();
+
+                TypeDbModel abstractClass = databaseContext.Types.Single(x => x.TypeName == "AbstractClass");
+                Assert.IsNotNull(abstractClass);
+            }
+        }
+
+        [TestMethod]
+        public void ClassWithAttributesTest()
+        {
+            using (DatabaseContext databaseContext = new DatabaseContext(_connectionString))
+            {
+                databaseContext.LoadData();
+
+                TypeDbModel attributeClass =
+                    databaseContext.Types.Single(x => x.TypeName == "ClassWithAttribute");
+                Assert.AreEqual(1, attributeClass.Attributes.Count());
+            }
+        }
+        
+        [TestMethod]
+        public void InterfaceTest()
+        {
+            using (DatabaseContext databaseContext = new DatabaseContext(_connectionString))
+            {
+                databaseContext.LoadData();
+
+                TypeModel interfaceClass = databaseContext.Types.Single(x => x.TypeName == "IExample").ToModel();
+                Assert.AreEqual(AbstractEnum.Abstract, interfaceClass.Modifiers.Item3);
+                Assert.AreEqual(AbstractEnum.Abstract, interfaceClass.Methods.Single(x => x.Name == "MethodA").Modifiers.Item2);
+            }
+        }
+
+        [TestMethod]
+        public void ImplementedInterfaceTest()
+        {
+            using (DatabaseContext databaseContext = new DatabaseContext(_connectionString))
+            {
+                databaseContext.LoadData();
+
+                TypeModel _interfaceClass =
+                    databaseContext.Types.Single(x => x.TypeName == "IExample").ToModel();
+                TypeModel implementedInterfaceClass =
+                    databaseContext.Types.Single(x => x.TypeName == "ImplementationOfIExample").ToModel();
+                Assert.IsNotNull(implementedInterfaceClass);
+            }
+        }
+
+        [TestMethod]
+        public void NestedClassTest()
+        {
+            using (DatabaseContext databaseContext = new DatabaseContext(_connectionString))
+            {
+                databaseContext.LoadData();
+
+                TypeModel outerClass = databaseContext.Types.Single(x => x.TypeName == "OuterClass").ToModel();
+                Assert.IsNotNull(outerClass);
+            }
+        }
+
+        [TestMethod]
+        public void StaticClassTest()
+        {
+            using (DatabaseContext databaseContext = new DatabaseContext(_connectionString))
+            {
+                databaseContext.LoadData();
+
+                TypeModel staticClass = databaseContext.Types.Single(x => x.TypeName == "StaticClass").ToModel();
+                Assert.AreEqual(StaticEnum.Static.ToString(),
+                    staticClass.Methods.Single(x => x.Name == "StaticMethod1").Modifiers.Item3.ToString());
+            }
+        }
     }
 }
