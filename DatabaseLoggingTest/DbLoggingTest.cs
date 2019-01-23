@@ -8,8 +8,19 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace DatabaseLoggingTest
 {
     [TestClass]
+    [DeploymentItem(@"Database\TpaModelDatabase.mdf", @"Database")]
     public class DbLoggingTest
     {
+
+        [ClassInitialize]
+        public static void ClassInitializeMethod(TestContext context)
+        {
+            string dbRelativePath = @"Database\TpaModelDatabase.mdf";
+            string testingWorkingFolder = Environment.CurrentDirectory;
+            string dbPath = Path.Combine(testingWorkingFolder, dbRelativePath);
+            AppDomain.CurrentDomain.SetData("DataDirectory", dbPath);
+        }
+
         [TestMethod]
         public void CheckIfLoggingIsCorrect()
         {
