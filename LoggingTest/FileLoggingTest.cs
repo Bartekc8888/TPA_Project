@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Threading.Tasks;
 using Interfaces;
 using Logging;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -19,11 +20,14 @@ namespace LoggingTest
             }
 
             ILogging logger = new FileLogging("loggingTest.txt", "Logging test");
-            logger.Debug("deb");
-            logger.Error("err");
-            logger.Fatal("fat");
-            logger.Info("inf");
-            logger.Warn("war");
+            Task.Run(async () =>
+            {
+                await logger.Debug("deb");
+                await logger.Error("err");
+                await logger.Fatal("fat");
+                await logger.Info("inf");
+                await logger.Warn("war");
+            }).GetAwaiter().GetResult();
 
             fileTest.Refresh();
             Assert.IsTrue(fileTest.Exists);

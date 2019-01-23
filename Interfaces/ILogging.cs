@@ -1,11 +1,13 @@
-﻿namespace Interfaces
+﻿using System.Threading.Tasks;
+
+namespace Interfaces
 {
     public interface ILogging
     {
-        void Debug(string message);
-        void Info(string message);
-        void Warn(string message);
-        void Error(string message);
-        void Fatal(string message);
+        Task Debug(string message);
+        Task Info(string message);
+        Task Warn(string message);
+        Task Error(string message);
+        Task Fatal(string message);
     }
 }

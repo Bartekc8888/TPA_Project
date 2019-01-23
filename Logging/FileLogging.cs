@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.Composition;
 using System.Diagnostics;
+using System.Threading.Tasks;
 using Interfaces;
 
 namespace Logging
@@ -14,34 +15,54 @@ namespace Logging
             listener = new TextWriterTraceListener(fileName, instanceName);
         }        
 
-        public void Debug(string message)
+        public Task Debug(string message)
         {
-            listener.WriteLine("Debug :: " + message);
-            listener.Flush();
+            Task task = Task.Run(() =>
+            {
+                listener.WriteLine("Debug :: " + message);
+                listener.Flush();
+            });
+            return task;
         }
 
-        public void Error(string message)
+        public Task Error(string message)
         {
-            listener.WriteLine("Error :: " + message);
-            listener.Flush();
+            Task task = Task.Run(() =>
+            {
+                listener.WriteLine("Error :: " + message);
+                listener.Flush();
+            });
+            return task;
         }
 
-        public void Fatal(string message)
+        public Task Fatal(string message)
         {
-            listener.WriteLine("Fatal :: " + message);
-            listener.Flush();
+            Task task = Task.Run(() =>
+            {
+                listener.WriteLine("Fatal :: " + message);
+                listener.Flush();
+            });
+            return task;
         }
 
-        public void Info(string message)
+        public Task Info(string message)
         {
-            listener.WriteLine("Info :: " + message);
-            listener.Flush();
+            Task task = Task.Run(() =>
+            {
+                listener.WriteLine("Info :: " + message);
+                listener.Flush();
+            });
+            return task;
         }
 
-        public void Warn(string message)
+        public Task Warn(string message)
         {
-            listener.WriteLine("Warn :: " + message);
-            listener.Flush();
+            Task task = Task.Run(() =>
+            {
+                listener.WriteLine("Warn :: " + message);
+                listener.Flush();
+            });
+            return task;
         }
     }
 }
