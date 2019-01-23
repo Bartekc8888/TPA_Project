@@ -4,7 +4,7 @@ using Model.MetadataClasses.Types.Members;
 
 namespace DatabaseSerialization.MetadataClasses.Types.Members
 {
-    [Table("Indexer")]
+//    [Table("Indexer")]
     public class IndexerDbModel : MemberAbstractDbModel
     {
         public int Id { get; set; }

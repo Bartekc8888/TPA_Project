@@ -11,8 +11,8 @@ using SerializationModel.MetadataDefinitions;
 
 namespace DatabaseSerialization.MetadataClasses.Types
 {
-    [Table("Type")]
-    public class TypeDbModel
+//    [Table("Type")]
+    public class TypeDbModel : ILateBinding
     {
         #region fields
         public int Id { get; set; }
@@ -20,23 +20,23 @@ namespace DatabaseSerialization.MetadataClasses.Types
 
         public string TypeName { get; set; }
         public string NamespaceName { get; set; }
-        public IEnumerable<TypeDbModel> GenericArguments { get; set; }
+        public ICollection<TypeDbModel> GenericArguments { get; set; }
         public Tuple<AccessLevelDbModelEnum, SealedDbModelEnum, AbstractDbModelEnum> Modifiers { get; set; }
-        public IEnumerable<AttributeDbModel> Attributes { get; set; }
+        public ICollection<AttributeDbModel> Attributes { get; set; }
         public string FullTypeName { get; set; }
         
         public TypeDbModel DeclaringType { get; set; }
 
         public TypeDbModel BaseType { get; set; }
-        public IEnumerable<TypeDbModel> ImplementedInterfaces { get; set; }
+        public ICollection<TypeDbModel> ImplementedInterfaces { get; set; }
 
-        public IEnumerable<FieldDbModel> Fields { get; set; }
-        public IEnumerable<MethodDbModel> Methods { get; set; }
-        public IEnumerable<PropertyDbModel> Properties { get; set; }
-        public IEnumerable<IndexerDbModel> Indexers { get; set; }
-        public IEnumerable<EventDbModel> Events { get; set; }
-        public IEnumerable<ConstructorDbModel> Constructors { get; set; }
-        public IEnumerable<TypeDbModel> NestedTypes { get; set; }
+        public ICollection<FieldDbModel> Fields { get; set; }
+        public ICollection<MethodDbModel> Methods { get; set; }
+        public ICollection<PropertyDbModel> Properties { get; set; }
+        public ICollection<IndexerDbModel> Indexers { get; set; }
+        public ICollection<EventDbModel> Events { get; set; }
+        public ICollection<ConstructorDbModel> Constructors { get; set; }
+        public ICollection<TypeDbModel> NestedTypes { get; set; }
         #endregion
 
         public TypeDbModel(TypeModel model)
@@ -45,36 +45,24 @@ namespace DatabaseSerialization.MetadataClasses.Types
             TypeName = model.TypeName;
             NamespaceName = model.NamespaceName;
 
-            GenericArguments = model.GenericArguments == null ? null :
-                model.GenericArguments.Select(EmitTypeDbModel);
-
             Modifiers = new Tuple<AccessLevelDbModelEnum, SealedDbModelEnum, AbstractDbModelEnum> (
                 EnumMapper.ConvertEnum<AccessLevelDbModelEnum, AccessLevelEnum>(model.Modifiers.Item1),
                 EnumMapper.ConvertEnum<SealedDbModelEnum, SealedEnum>(model.Modifiers.Item2),
                 EnumMapper.ConvertEnum<AbstractDbModelEnum, AbstractEnum>(model.Modifiers.Item3));
 
-            Attributes = model.Attributes.Select(AttributeDbModel.EmitUniqueType);
+            Attributes = model.Attributes.Select(AttributeDbModel.EmitUniqueType).ToList();
             FullTypeName = model.FullTypeName;
-            
-            DeclaringType = model.DeclaringType == null ? null : EmitTypeDbModel(model.DeclaringType);
-            BaseType = model.BaseType == null ? null : EmitTypeDbModel(model.BaseType);
 
-            ImplementedInterfaces =
-                model.ImplementedInterfaces.Select(EmitTypeDbModel);
-            Fields =
-                model.Fields.Select(FieldDbModel.EmitUniqueType);
             Methods =
-                model.Methods.Select(MethodDbModel.EmitUniqueType);
+                model.Methods.Select(MethodDbModel.EmitUniqueType).ToList();
             Properties =
-                model.Properties.Select(PropertyDbModel.EmitUniqueType);
+                model.Properties.Select(PropertyDbModel.EmitUniqueType).ToList();
             Indexers =
-                model.Indexers.Select(IndexerDbModel.EmitUniqueType);
+                model.Indexers.Select(IndexerDbModel.EmitUniqueType).ToList();
             Events =
-                model.Events.Select(EventDbModel.EmitUniqueType);
+                model.Events.Select(EventDbModel.EmitUniqueType).ToList();
             Constructors =
-                model.Constructors.Select(ConstructorDbModel.EmitUniqueType);
-            NestedTypes =
-                model.NestedTypes.Select(EmitTypeDbModel);
+                model.Constructors.Select(ConstructorDbModel.EmitUniqueType).ToList();
         }
 
         public static TypeDbModel EmitTypeDbModel(TypeModel model)
@@ -157,6 +145,23 @@ namespace DatabaseSerialization.MetadataClasses.Types
                 hashCode = (hashCode * 397) ^ (NestedTypes != null ? NestedTypes.GetHashCode() : 0);
                 return hashCode;
             }
+        }
+
+        public void LateBinding(object other)
+        {
+            TypeModel model = (TypeModel) other;
+            GenericArguments = model.GenericArguments == null ? null :
+                model.GenericArguments.Select(EmitTypeDbModel).ToList();
+            
+            DeclaringType = model.DeclaringType == null ? null : EmitTypeDbModel(model.DeclaringType);
+            BaseType = model.BaseType == null ? null : EmitTypeDbModel(model.BaseType);
+            
+            ImplementedInterfaces =
+                model.ImplementedInterfaces.Select(EmitTypeDbModel).ToList();
+            NestedTypes =
+                model.NestedTypes.Select(EmitTypeDbModel).ToList();
+            Fields =
+                model.Fields.Select(FieldDbModel.EmitUniqueType).ToList();
         }
     }
 }

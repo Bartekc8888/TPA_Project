@@ -10,25 +10,25 @@ using SerializationModel.MetadataDefinitions;
 
 namespace DatabaseSerialization.MetadataClasses.Types.Members
 {
-    [Table("Method")]
+//    [Table("Method")]
     public class MethodDbModel
     {
         public int Id { get; set; }
         #region vars
         public string Name { get; set; }
-        public IEnumerable<TypeDbModel> GenericArguments { get; set; }
+        public ICollection<TypeDbModel> GenericArguments { get; set; }
         public Tuple<AccessLevelDbModelEnum, AbstractDbModelEnum, StaticDbModelEnum,
             VirtualDbModelEnum, OverrideDbModelEnum> Modifiers { get; set; }
         public string ReturnType { get; set; }
         public bool Extension { get; set; }
-        public IEnumerable<ParameterDbModel> Parameters { get; set; }
+        public ICollection<ParameterDbModel> Parameters { get; set; }
         #endregion
 
         public MethodDbModel(MethodModel model)
         {
             Name = model.Name;
             GenericArguments = model.GenericArguments == null ? null :
-                model.GenericArguments.Select(TypeDbModel.EmitTypeDbModel);
+                model.GenericArguments.Select(TypeDbModel.EmitTypeDbModel).ToList();
             
             Modifiers = new Tuple<AccessLevelDbModelEnum, AbstractDbModelEnum, StaticDbModelEnum,
                 VirtualDbModelEnum, OverrideDbModelEnum> (
@@ -42,7 +42,7 @@ namespace DatabaseSerialization.MetadataClasses.Types.Members
             ReturnType = model.ReturnType;
             Extension = model.Extension;
             Parameters =
-                model.Parameters.Select(ParameterDbModel.EmitUniqueType);
+                model.Parameters.Select(ParameterDbModel.EmitUniqueType).ToList();
         }
 
         public MethodModel ToModel()

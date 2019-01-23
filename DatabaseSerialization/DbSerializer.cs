@@ -11,7 +11,7 @@ namespace DatabaseSerialization
 {
     [Export(typeof(ISerialization))]
     [ExportMetadata("Name", "Database")]
-    class DbSerializer : ISerialization
+    public class DbSerializer : ISerialization
     {
         public AssemblyModel Read(string path)
         {
@@ -44,11 +44,10 @@ namespace DatabaseSerialization
 
         public void Save(AssemblyModel context, String path)
         {
-            Database.SetInitializer(new DropCreateDatabaseAlways<DatabaseContext>());
-            AssemblyDbModel serializationModel = new AssemblyDbModel(context);
+//            Database.SetInitializer(new DropCreateDatabaseAlways<DatabaseContext>());
             using (DatabaseContext ctx = new DatabaseContext())
             {
-                bool isWorking = ctx.Database.Exists();
+                AssemblyDbModel serializationModel = new AssemblyDbModel(context);
                 ctx.AssemblyModels.Add(serializationModel);
                 ctx.SaveChanges();
             }

@@ -14,6 +14,10 @@ namespace DatabaseSerialization.MetadataExtensions
                 {
                     T1 newTypeModel = createType(model);
                     ReferenceDbModelMap.AllSerializedTypes.Add(model, newTypeModel);
+                    if (typeof(T1).IsAssignableFrom(typeof(ILateBinding)))
+                    {
+                        ((ILateBinding)newTypeModel).LateBinding(model);
+                    }
                     return newTypeModel;
                 }
                 else

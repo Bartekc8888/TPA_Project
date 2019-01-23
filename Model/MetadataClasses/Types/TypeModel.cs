@@ -28,7 +28,7 @@ namespace Model.MetadataClasses.Types
         protected bool Equals(TypeModel other)
         {
             return string.Equals(TypeName, other.TypeName) && string.Equals(NamespaceName, other.NamespaceName) &&
-                   string.Equals(FullTypeName, other.FullTypeName);
+                   string.Equals(FullTypeName, other.FullTypeName) && Equals(TypeEnum, other.TypeEnum);
         }
 
         public override bool Equals(object obj)

@@ -4,7 +4,7 @@ using Model.MetadataClasses.Types.Members;
 
 namespace DatabaseSerialization.MetadataClasses.Types.Members
 {
-    [Table("Field")]
+//    [Table("Field")]
     public class FieldDbModel : MemberAbstractDbModel
     {
         public int Id { get; set; }

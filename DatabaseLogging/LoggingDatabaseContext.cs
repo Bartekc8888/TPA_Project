@@ -6,7 +6,8 @@ namespace DatabaseLogging
     {
         public DbSet<Log> Logs { get; set; }
 
-        public LoggingDatabaseContext() : base (@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Michal\Desktop\TPA_Project\DatabaseSerializationTests\Database\TpaModelsDatabase.mdf;Integrated Security=True;Connect Timeout=5")
+        public LoggingDatabaseContext() : base (System.Configuration.ConfigurationManager.
+                                                ConnectionStrings["FileDatabase"].ConnectionString)
         {
             Database.SetInitializer(new CreateDatabaseIfNotExists<LoggingDatabaseContext>());
         }

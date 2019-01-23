@@ -1,15 +1,16 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using DatabaseSerialization.MetadataExtensions;
 using Model.MetadataClasses.Types.Members;
 
 namespace DatabaseSerialization.MetadataClasses.Types.Members
 {
-    [Table("Property")]
+//    [Table("Property")]
     public class PropertyDbModel : MemberAbstractDbModel
     {
         public int Id { get; set; }
-        public MethodDbModel[] propertyMethods { get; set; }
+        public ICollection<MethodDbModel> propertyMethods { get; set; }
        
         public PropertyDbModel(PropertyModel model) : base(model)
         {

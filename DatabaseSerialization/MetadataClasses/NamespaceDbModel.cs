@@ -6,17 +6,17 @@ using Model.MetadataClasses;
 
 namespace DatabaseSerialization.MetadataClasses
 {
-    [Table("Namespace")]
+//    [Table("Namespace")]
     public class NamespaceDbModel
     {
         public int Id { get; set; }
         public string NamespaceName { get; set; }
-        public IEnumerable<TypeDbModel> Types { get; set; }
+        public ICollection<TypeDbModel> Types { get; set; }
 
         public NamespaceDbModel(NamespaceModel model)
         {
             NamespaceName = model.NamespaceName;
-            Types = model.Types.Select(TypeDbModel.EmitTypeDbModel);
+            Types = model.Types.Select(TypeDbModel.EmitTypeDbModel).ToList();
         }
         
         public NamespaceModel ToModel()

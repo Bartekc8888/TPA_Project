@@ -5,19 +5,19 @@ using Model.MetadataClasses;
 
 namespace DatabaseSerialization.MetadataClasses
 {
-    [Table("Assembly")]
+//    [Table("Assembly")]
     public class AssemblyDbModel
     {
         public int Id { get; set; }
         public string TypeName { get; set; }
         public string Name { get; set; }
-        public IEnumerable<NamespaceDbModel> Namespaces { get; set; }
+        public ICollection<NamespaceDbModel> Namespaces { get; set; }
 
         public AssemblyDbModel(AssemblyModel model)
         {
             TypeName = model.TypeName;
             Name = model.Name;
-            Namespaces = model.Namespaces.Select(namespaceModel => new NamespaceDbModel(namespaceModel));
+            Namespaces = model.Namespaces.Select(namespaceModel => new NamespaceDbModel(namespaceModel)).ToList();
         }
 
         public AssemblyModel ToModel()

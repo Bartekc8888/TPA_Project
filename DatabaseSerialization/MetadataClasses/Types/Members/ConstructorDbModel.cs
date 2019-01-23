@@ -4,7 +4,7 @@ using Model.MetadataClasses.Types.Members;
 
 namespace DatabaseSerialization.MetadataClasses.Types.Members
 {
-    [Table("Constructor")]
+//    [Table("Constructor")]
     public class ConstructorDbModel : MethodDbModel
     {
         public int Id { get; set; }

@@ -93,6 +93,7 @@
     <Compile Include="MetadataDefinitions\StaticDbModelEnum.cs" />
     <Compile Include="MetadataDefinitions\TypeTypesDbModelEnum.cs" />
     <Compile Include="MetadataDefinitions\VirtualSerializationModelEnum.cs" />
+    <Compile Include="MetadataExtensions\ILateBinding.cs" />
     <Compile Include="MetadataExtensions\ReferenceDbModelMap.cs" />
     <Compile Include="MetadataExtensions\UniqueEmitter.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

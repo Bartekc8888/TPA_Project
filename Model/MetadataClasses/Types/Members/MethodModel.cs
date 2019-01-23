@@ -15,9 +15,8 @@ namespace Model.MetadataClasses.Types.Members
 
         protected bool Equals(MethodModel other)
         {
-            return string.Equals(Name, other.Name) && Equals(GenericArguments, other.GenericArguments) &&
-                   Equals(Modifiers, other.Modifiers) && string.Equals(ReturnType, other.ReturnType) &&
-                   Extension == other.Extension && Equals(Parameters, other.Parameters);
+            return string.Equals(Name, other.Name) && string.Equals(ReturnType, other.ReturnType) &&
+                   Equals(Parameters, other.Parameters);
         }
 
         public override bool Equals(object obj)

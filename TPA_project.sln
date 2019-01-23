@@ -33,7 +33,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Interfaces", "Interfaces\In
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MefDllCopy", "MefDllCopy\MefDllCopy.csproj", "{75D0A14E-3637-4F37-9596-6EBA498047C6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseSerializationTests", "DatabaseSerializationTests\DatabaseSerializationTests.csproj", "{1071365F-1D80-481C-B48E-2650B885D6B8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseSerializationTest", "DatabaseSerializationTest\DatabaseSerializationTest.csproj", "{FA3B10D4-05F1-4EC3-9A94-558C97B7C82A}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseLogging", "DatabaseLogging\DatabaseLogging.csproj", "{8EDA217E-126B-4431-A535-5EF8560E6133}"
 EndProject
@@ -108,10 +108,9 @@ Global
 		{75D0A14E-3637-4F37-9596-6EBA498047C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{75D0A14E-3637-4F37-9596-6EBA498047C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{75D0A14E-3637-4F37-9596-6EBA498047C6}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1071365F-1D80-481C-B48E-2650B885D6B8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1071365F-1D80-481C-B48E-2650B885D6B8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1071365F-1D80-481C-B48E-2650B885D6B8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1071365F-1D80-481C-B48E-2650B885D6B8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FA3B10D4-05F1-4EC3-9A94-558C97B7C82A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FA3B10D4-05F1-4EC3-9A94-558C97B7C82A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FA3B10D4-05F1-4EC3-9A94-558C97B7C82A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{8EDA217E-126B-4431-A535-5EF8560E6133}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{8EDA217E-126B-4431-A535-5EF8560E6133}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8EDA217E-126B-4431-A535-5EF8560E6133}.Release|Any CPU.ActiveCfg = Release|Any CPU
