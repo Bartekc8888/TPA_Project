@@ -48,6 +48,12 @@ namespace DatabaseSerialization
 
             using (DatabaseContext ctx = new DatabaseContext(path))
             {
+                if (ctx.Database.Exists())
+                {
+                    ctx.Database.Delete();
+                }
+                ctx.Database.Create();
+                
                 AssemblyDbModel serializationModel = new AssemblyDbModel(context);
                 ctx.AssemblyModels.Add(serializationModel);
                 ctx.SaveChanges();

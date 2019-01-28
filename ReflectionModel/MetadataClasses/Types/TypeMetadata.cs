@@ -209,7 +209,7 @@ namespace Model.MetadataClasses.Types
             model.Attributes = Attributes?.Select(attributeMetadata => attributeMetadata.ToModel());
             model.FullTypeName = FullTypeName;
             model.DeclaringType = DeclaringType == null ? null : EmitTypeModel(DeclaringType);
-            model.BaseType = DeclaringType == null ? null : EmitTypeModel(BaseType);
+            model.BaseType = BaseType == null ? null : EmitTypeModel(BaseType);
             model.ImplementedInterfaces = ImplementedInterfaces?.Select(EmitTypeModel);
             model.Fields = Fields?.Select(typeModel => typeModel.ToModel());
             model.Methods = Methods?.Select(typeModel => typeModel.ToModel());

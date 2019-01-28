@@ -23,14 +23,14 @@ namespace DatabaseSerialization
 
         public DatabaseContext(string dbPath) : base(dbPath)
         {
-            Database.SetInitializer(new DropCreateDatabaseAlways<DatabaseContext>());
+            Database.SetInitializer(new DropCreateDatabaseIfModelChanges<DatabaseContext>());
             Configuration.ProxyCreationEnabled = false;
         }
 
         public DatabaseContext() : base(System.Configuration.ConfigurationManager.
                                         ConnectionStrings["FileDatabase"].ConnectionString)
         {
-            Database.SetInitializer(new DropCreateDatabaseAlways<DatabaseContext>());
+            Database.SetInitializer(new DropCreateDatabaseIfModelChanges<DatabaseContext>());
             Configuration.ProxyCreationEnabled = false;
         }        
 

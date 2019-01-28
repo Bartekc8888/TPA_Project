@@ -11,7 +11,7 @@ using SerializationModel.MetadataDefinitions;
 namespace DatabaseSerialization.MetadataClasses.Types.Members
 {
     [Table("Method")]
-    public class MethodDbModel
+    public class MethodDbModel : ILateBinding
     {
         public int Id { get; set; }
         #region vars
@@ -35,8 +35,6 @@ namespace DatabaseSerialization.MetadataClasses.Types.Members
         public MethodDbModel(MethodModel model)
         {
             Name = model.Name;
-            GenericArguments = model.GenericArguments == null ? null :
-                model.GenericArguments.Select(TypeDbModel.EmitTypeDbModel).ToList();
             
             Item1 = EnumMapper.ConvertEnum<AccessLevelDbModelEnum, AccessLevelEnum>(model.Modifiers.Item1);
             Item2 = EnumMapper.ConvertEnum<AbstractDbModelEnum, AbstractEnum>(model.Modifiers.Item2);
@@ -46,8 +44,6 @@ namespace DatabaseSerialization.MetadataClasses.Types.Members
 
             ReturnType = model.ReturnType;
             Extension = model.Extension;
-            Parameters =
-                model.Parameters.Select(ParameterDbModel.EmitUniqueType).ToList();
         }
 
         public MethodModel ToModel()
@@ -106,6 +102,16 @@ namespace DatabaseSerialization.MetadataClasses.Types.Members
                 hashCode = (hashCode * 397) ^ (Parameters != null ? Parameters.GetHashCode() : 0);
                 return hashCode;
             }
+        }
+
+        public void LateBinding(object other)
+        {
+            MethodModel model = (MethodModel) other;
+            
+            GenericArguments = model.GenericArguments == null ? null :
+                model.GenericArguments.Select(TypeDbModel.EmitTypeDbModel).ToList();
+            Parameters =
+                model.Parameters.Select(ParameterDbModel.EmitUniqueType).ToList();
         }
     }
 }

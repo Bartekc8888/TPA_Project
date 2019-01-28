@@ -7,7 +7,7 @@ using Model.MetadataClasses.Types.Members;
 namespace DatabaseSerialization.MetadataClasses.Types.Members
 {
     [Table("Property")]
-    public class PropertyDbModel : MemberAbstractDbModel
+    public class PropertyDbModel : MemberAbstractDbModel, ILateBinding
     {
         public int Id { get; set; }
         public ICollection<MethodDbModel> propertyMethods { get; set; }
@@ -19,7 +19,6 @@ namespace DatabaseSerialization.MetadataClasses.Types.Members
         
         public PropertyDbModel(PropertyModel model) : base(model)
         {
-            propertyMethods = model.propertyMethods.Select(methodModel => new MethodDbModel(methodModel)).ToArray();
         }
 
         public PropertyModel ToModel()
@@ -55,6 +54,12 @@ namespace DatabaseSerialization.MetadataClasses.Types.Members
             {
                 return (base.GetHashCode() * 397) ^ (propertyMethods != null ? propertyMethods.GetHashCode() : 0);
             }
+        }
+
+        public void LateBinding(object other)
+        {
+            PropertyModel model = (PropertyModel) other;
+            propertyMethods = model.propertyMethods.Select(methodModel => new MethodDbModel(methodModel)).ToArray();
         }
     }
 }

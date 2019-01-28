@@ -56,19 +56,7 @@ namespace DatabaseSerialization.MetadataClasses.Types
             Item2 = EnumMapper.ConvertEnum<SealedDbModelEnum, SealedEnum>(model.Modifiers.Item2);
             Item3 = EnumMapper.ConvertEnum<AbstractDbModelEnum, AbstractEnum>(model.Modifiers.Item3);
 
-            Attributes = model.Attributes.Select(AttributeDbModel.EmitUniqueType).ToList();
             FullTypeName = model.FullTypeName;
-
-            Methods =
-                model.Methods.Select(MethodDbModel.EmitUniqueType).ToList();
-            Properties =
-                model.Properties.Select(PropertyDbModel.EmitUniqueType).ToList();
-            Indexers =
-                model.Indexers.Select(IndexerDbModel.EmitUniqueType).ToList();
-            Events =
-                model.Events.Select(EventDbModel.EmitUniqueType).ToList();
-            Constructors =
-                model.Constructors.Select(ConstructorDbModel.EmitUniqueType).ToList();
         }
 
         public static TypeDbModel EmitTypeDbModel(TypeModel model)
@@ -87,6 +75,9 @@ namespace DatabaseSerialization.MetadataClasses.Types
             model.TypeEnum = EnumMapper.ConvertEnum<TypeTypesEnum, TypeTypesDbModelEnum>(TypeEnum);
             model.TypeName = TypeName;
             model.NamespaceName = NamespaceName;
+            model.BaseType = EmitTypeModel(BaseType);
+            model.DeclaringType = EmitTypeModel(DeclaringType);
+            model.NamespaceName = NamespaceName;
             model.GenericArguments = GenericArguments?.Select(EmitTypeModel);
 
             model.Modifiers = new Tuple<AccessLevelEnum, SealedEnum, AbstractEnum>(
@@ -96,8 +87,7 @@ namespace DatabaseSerialization.MetadataClasses.Types
 
             model.Attributes = Attributes?.Select(attributeMetadata => attributeMetadata.ToModel());
             model.FullTypeName = FullTypeName;
-            model.DeclaringType = DeclaringType == null ? null : EmitTypeModel(DeclaringType);
-            model.BaseType = DeclaringType == null ? null : EmitTypeModel(BaseType);
+
             model.ImplementedInterfaces = ImplementedInterfaces?.Select(EmitTypeModel);
             model.Fields = Fields?.Select(typeModel => typeModel.ToModel());
             model.Methods = Methods?.Select(typeModel => typeModel.ToModel());
@@ -155,9 +145,13 @@ namespace DatabaseSerialization.MetadataClasses.Types
         public void LateBinding(object other)
         {
             TypeModel model = (TypeModel) other;
+            DeclaringType = model.DeclaringType == null ? null : EmitTypeDbModel(model.DeclaringType);
+            BaseType = model.BaseType == null ? null : EmitTypeDbModel(model.BaseType);
+            
             GenericArguments = model.GenericArguments == null ? null :
                 model.GenericArguments.Select(EmitTypeDbModel).ToList();
             
+            Attributes = model.Attributes.Select(AttributeDbModel.EmitUniqueType).ToList();
             DeclaringType = model.DeclaringType == null ? null : EmitTypeDbModel(model.DeclaringType);
             BaseType = model.BaseType == null ? null : EmitTypeDbModel(model.BaseType);
             
@@ -167,6 +161,17 @@ namespace DatabaseSerialization.MetadataClasses.Types
                 model.NestedTypes.Select(EmitTypeDbModel).ToList();
             Fields =
                 model.Fields.Select(FieldDbModel.EmitUniqueType).ToList();
+            
+            Methods =
+                model.Methods.Select(MethodDbModel.EmitUniqueType).ToList();
+            Properties =
+                model.Properties.Select(PropertyDbModel.EmitUniqueType).ToList();
+            Indexers =
+                model.Indexers.Select(IndexerDbModel.EmitUniqueType).ToList();
+            Events =
+                model.Events.Select(EventDbModel.EmitUniqueType).ToList();
+            Constructors =
+                model.Constructors.Select(ConstructorDbModel.EmitUniqueType).ToList();
         }
     }
 }

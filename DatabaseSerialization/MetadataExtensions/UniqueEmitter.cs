@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 
 namespace DatabaseSerialization.MetadataExtensions
 {
@@ -14,7 +15,7 @@ namespace DatabaseSerialization.MetadataExtensions
                 {
                     T1 newTypeModel = createType(model);
                     ReferenceDbModelMap.AllSerializedTypes.Add(model, newTypeModel);
-                    if (typeof(T1).IsAssignableFrom(typeof(ILateBinding)))
+                    if (((IList) typeof(T1).GetInterfaces()).Contains(typeof(ILateBinding)))
                     {
                         ((ILateBinding)newTypeModel).LateBinding(model);
                     }

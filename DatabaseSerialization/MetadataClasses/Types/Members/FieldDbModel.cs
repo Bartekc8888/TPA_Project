@@ -5,7 +5,7 @@ using Model.MetadataClasses.Types.Members;
 namespace DatabaseSerialization.MetadataClasses.Types.Members
 {
     [Table("Field")]
-    public class FieldDbModel : MemberAbstractDbModel
+    public class FieldDbModel : MemberAbstractDbModel, ILateBinding
     {
         public int Id { get; set; }
         public TypeDbModel TypeModel { get; set; }
@@ -17,7 +17,7 @@ namespace DatabaseSerialization.MetadataClasses.Types.Members
         
         public FieldDbModel(FieldModel model) : base(model)
         {
-            TypeModel = TypeDbModel.EmitTypeDbModel(model.TypeModel);
+            
         }
         
         public FieldModel ToModel()
@@ -31,6 +31,12 @@ namespace DatabaseSerialization.MetadataClasses.Types.Members
         public static FieldDbModel EmitUniqueType(FieldModel model)
         {
             return UniqueEmitter.EmitType(model, propertyModel => new FieldDbModel(propertyModel));
+        }
+
+        public void LateBinding(object other)
+        {
+            FieldModel model = (FieldModel) other;
+            TypeModel = TypeDbModel.EmitTypeDbModel(model.TypeModel);
         }
     }
 }
