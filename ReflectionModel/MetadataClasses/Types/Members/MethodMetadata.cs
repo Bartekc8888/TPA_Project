@@ -119,8 +119,7 @@ namespace Model.MetadataClasses.Types.Members
         public MethodMetadata(MethodModel model)
         {
             Name = model.Name;
-            GenericArguments = model.GenericArguments == null ? null :
-                model.GenericArguments.Select(TypeMetadata.EmitTypeMetadata);
+            GenericArguments = model.GenericArguments?.Select(TypeMetadata.EmitTypeMetadata);
 
             Modifiers = new Tuple<AccessLevelEnumMetadata, AbstractEnumMetadata, StaticEnumMetadata,
                 VirtualEnumMetadata, OverrideEnumMetadata>(
@@ -139,25 +138,27 @@ namespace Model.MetadataClasses.Types.Members
 
         public MethodModel ToModel()
         {
-            MethodModel methodModel = new MethodModel();
-            methodModel.Name = Name;
+            MethodModel methodModel = new MethodModel
+            {
+                Name = Name,
 
-            methodModel.GenericArguments =
-                GenericArguments?.Select(typeModel => typeModel.ToModel());
+                GenericArguments =
+                GenericArguments?.Select(typeModel => typeModel.ToModel()),
 
-            methodModel.Modifiers = new Tuple<AccessLevelEnum, AbstractEnum, StaticEnum,
+                Modifiers = new Tuple<AccessLevelEnum, AbstractEnum, StaticEnum,
                 VirtualEnum, OverrideEnum>(
                 EnumMapper.ConvertEnum<AccessLevelEnum, AccessLevelEnumMetadata>(Modifiers.Item1),
                 EnumMapper.ConvertEnum<AbstractEnum, AbstractEnumMetadata>(Modifiers.Item2),
                 EnumMapper.ConvertEnum<StaticEnum, StaticEnumMetadata>(Modifiers.Item3),
                 EnumMapper.ConvertEnum<VirtualEnum, VirtualEnumMetadata>(Modifiers.Item4),
                 EnumMapper.ConvertEnum<OverrideEnum, OverrideEnumMetadata>(Modifiers.Item5)
-            );
+            ),
 
-            methodModel.ReturnType = ReturnType;
-            methodModel.Extension = Extension;
-            methodModel.Parameters =
-                Parameters?.Select(parameterModel => parameterModel.ToModel());
+                ReturnType = ReturnType,
+                Extension = Extension,
+                Parameters =
+                Parameters?.Select(parameterModel => parameterModel.ToModel())
+            };
 
             return methodModel;
         }
@@ -176,7 +177,7 @@ namespace Model.MetadataClasses.Types.Members
 
         public override bool Equals(object obj)
         {
-            if (ReferenceEquals(null, obj)) return false;
+            if (obj is null) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != this.GetType()) return false;
             return Equals((MethodMetadata) obj);

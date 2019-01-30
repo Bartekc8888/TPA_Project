@@ -22,14 +22,14 @@ namespace ViewModel.Logic
         private readonly SynchronizationContext _context;
 
         [Import]
-        private IFileChooser _fileChooser;
+        private IFileChooser _fileChooser = null;
         
         [Import]
-        private ILogging logger;
+        private ILogging _logger = null;
 
         [Import]
-        private ISerialization _serializer;
-        
+        private ISerialization _serializer = null;
+
         private ObservableCollection<TypeViewModelAbstract> _items;
         public ObservableCollection<TypeViewModelAbstract> Items
         {
@@ -85,7 +85,7 @@ namespace ViewModel.Logic
 
         public bool IsPathValid()
         {
-            logger.Debug("Check if file path is correct");
+            _logger.Debug("Check if file path is correct");
             string extension = Path.GetExtension(SelectedPath);
             return File.Exists(SelectedPath) && (extension == ".dll" || extension == ".exe");
         }
@@ -93,7 +93,7 @@ namespace ViewModel.Logic
         public void ChooseFile()
         {
             SelectedPath = _fileChooser.ChooseFilePath();
-            logger.Info("File was chosen");
+            _logger.Info("File was chosen");
         }
 
         public void ExtractData()
@@ -104,29 +104,29 @@ namespace ViewModel.Logic
                 
                 TypeViewModelAbstract item = ModelViewTypeFactory.CreateTypeViewClass(_assemblyModel);
                 SetNewData(item);
-                logger.Info("New data was set");
+                _logger.Info("New data was set");
             }
         }
 
         public void SerializeData()
         {
-            logger.Debug("Start serialize data");
+            _logger.Debug("Start serialize data");
 
             _serializer.Save(_assemblyModel.ToModel(), SerializationPath);
 
-            logger.Info("End serialize data");
+            _logger.Info("End serialize data");
         }
 
         public void DeserializeData()
         {
-            logger.Debug("Start deserialize data");
+            _logger.Debug("Start deserialize data");
 
             _assemblyModel = new AssemblyMetadata(_serializer.Read(SerializationPath));
                 
             TypeViewModelAbstract item = ModelViewTypeFactory.CreateTypeViewClass(_assemblyModel);
             SetNewData(item);
 
-            logger.Info("End deserialize data");
+            _logger.Info("End deserialize data");
         }
 
         private void SetNewData(TypeViewModelAbstract item)

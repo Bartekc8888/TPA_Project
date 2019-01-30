@@ -11,16 +11,18 @@ namespace Serialization.MetadataClasses.Types.Members
         {
         }
         
-        public ConstructorModel ToModel()
+        public new ConstructorModel ToModel()
         {
             MethodModel methodModel = base.ToModel();
-            ConstructorModel constructorModel = new ConstructorModel();
-            constructorModel.Extension = methodModel.Extension;
-            constructorModel.GenericArguments = methodModel.GenericArguments;
-            constructorModel.Modifiers = methodModel.Modifiers;
-            constructorModel.Name = methodModel.Name;
-            constructorModel.Parameters = methodModel.Parameters;
-            constructorModel.ReturnType = methodModel.ReturnType;
+            ConstructorModel constructorModel = new ConstructorModel
+            {
+                Extension = methodModel.Extension,
+                GenericArguments = methodModel.GenericArguments,
+                Modifiers = methodModel.Modifiers,
+                Name = methodModel.Name,
+                Parameters = methodModel.Parameters,
+                ReturnType = methodModel.ReturnType
+            };
             return constructorModel;
         }
 

@@ -5,8 +5,11 @@ using Model.MetadataClasses.Types;
 using Model.MetadataClasses.Types.Members;
 using Model.MetadataDefinitions;
 
-namespace ModelTest
+namespace ReflectionModelTest.MetadataClasses.Types
 {
+#pragma warning disable 67
+#pragma warning disable 169
+#pragma warning disable 649
     [TestClass]
     public class TypeMetadataTest
     {
@@ -96,8 +99,13 @@ namespace ModelTest
         {
             public delegate string TestDelegate(string str);
 
+
             event TestDelegate TestEvent;
+
         }
+#pragma warning restore 67
+#pragma warning restore 169
+#pragma warning restore 649
 
         [TestMethod]
         public void EmitDeclaringTypeTest()

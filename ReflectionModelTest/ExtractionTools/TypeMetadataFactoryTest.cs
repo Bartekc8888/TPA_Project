@@ -4,6 +4,8 @@ using Model.MetadataDefinitions;
 
 namespace ModelTest.ExtractionTools
 {
+#pragma warning disable 169
+#pragma warning disable 67
     [TestClass]
     public class TypeMetadataFactoryTest
     {
@@ -34,7 +36,9 @@ namespace ModelTest.ExtractionTools
             public delegate string TestDelegate(string str);
             event TestDelegate TestEvent;
         }
-
+#pragma warning restore 169
+#pragma warning restore 67
+        
         public interface ITestInterface
         {
 
