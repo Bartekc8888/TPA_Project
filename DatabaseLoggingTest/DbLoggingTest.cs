@@ -8,7 +8,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace DatabaseLoggingTest
 {
     [TestClass]
-    [DeploymentItem(@"Database\TpaLoggingDatabase.mdf", @"Database")]
+    [DeploymentItem(@"Database\", @"Database")]
     public class DbLoggingTest
     {
         private static string dbPath;

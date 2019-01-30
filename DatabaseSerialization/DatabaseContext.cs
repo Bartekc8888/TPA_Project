@@ -24,14 +24,14 @@ namespace DatabaseSerialization
         public DatabaseContext(string dbPath) : base(dbPath)
         {
             Database.SetInitializer(new DropCreateDatabaseIfModelChanges<DatabaseContext>());
-            Configuration.ProxyCreationEnabled = false;
+            Configuration.LazyLoadingEnabled = true;
         }
 
         public DatabaseContext() : base(System.Configuration.ConfigurationManager.
                                         ConnectionStrings["FileDatabase"].ConnectionString)
         {
             Database.SetInitializer(new DropCreateDatabaseIfModelChanges<DatabaseContext>());
-            Configuration.ProxyCreationEnabled = false;
+            Configuration.LazyLoadingEnabled = true;
         }        
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
