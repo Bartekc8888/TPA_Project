@@ -9,7 +9,7 @@ namespace Model.MetadataClasses.Types.Members
     {
         internal static IEnumerable<AttributeMetadata> EmitAttributes(Type type)
         {
-            return from attrib in type.GetCustomAttributes()
+            return from attrib in type.GetCustomAttributesData()
                    select new AttributeMetadata(attrib.ToString());
         }
         

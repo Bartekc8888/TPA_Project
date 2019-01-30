@@ -77,7 +77,9 @@ namespace Model.MetadataClasses.Types.Members
 
         private static bool EmitExtension(MethodBase method)
         {
-            return method.IsDefined(typeof(ExtensionAttribute), true);
+            return method.CustomAttributes
+                         .Where(x => x.AttributeType == typeof(ExtensionAttribute))
+                         .Count() == 1;
         }
 
         private static Tuple<AccessLevelEnumMetadata, AbstractEnumMetadata, StaticEnumMetadata, VirtualEnumMetadata, OverrideEnumMetadata> EmitModifiers(MethodBase method)
