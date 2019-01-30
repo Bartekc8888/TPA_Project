@@ -2,9 +2,9 @@
 using System.Linq;
 using System.Runtime.Serialization;
 using Model.MetadataClasses;
-using SerializationModel.MetadataClasses.Types;
+using Serialization.MetadataClasses.Types;
 
-namespace SerializationModel.MetadataClasses
+namespace Serialization.MetadataClasses
 {
     [DataContract(IsReference = true)]
     public class NamespaceSerializationModel

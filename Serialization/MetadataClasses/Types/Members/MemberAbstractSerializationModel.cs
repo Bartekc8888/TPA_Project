@@ -1,7 +1,7 @@
 ﻿using System.Runtime.Serialization;
 using Model.MetadataClasses.Types.Members;
 
-namespace SerializationModel.MetadataClasses.Types.Members
+namespace Serialization.MetadataClasses.Types.Members
 {
     [DataContract(IsReference = true)]
     public abstract class MemberAbstractSerializationModel

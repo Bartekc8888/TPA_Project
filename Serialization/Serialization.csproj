@@ -44,6 +44,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MetadataClasses\AssemblySerializationModel.cs" />
+    <Compile Include="MetadataClasses\NamespaceSerializationModel.cs" />
+    <Compile Include="MetadataClasses\Types\Members\AttributeSerializationModel.cs" />
+    <Compile Include="MetadataClasses\Types\Members\ConstructorSerializationModel.cs" />
+    <Compile Include="MetadataClasses\Types\Members\EventSerializationModel.cs" />
+    <Compile Include="MetadataClasses\Types\Members\FieldSerializationModel.cs" />
+    <Compile Include="MetadataClasses\Types\Members\IndexerSerializationModel.cs" />
+    <Compile Include="MetadataClasses\Types\Members\MemberAbstractSerializationModel.cs" />
+    <Compile Include="MetadataClasses\Types\Members\MethodSerializationModel.cs" />
+    <Compile Include="MetadataClasses\Types\Members\ParameterSerializationModel.cs" />
+    <Compile Include="MetadataClasses\Types\Members\PropertySerializationModel.cs" />
+    <Compile Include="MetadataClasses\Types\TypeSerializationModel.cs" />
+    <Compile Include="MetadataDefinitions\AbstractSerializationModelEnum.cs" />
+    <Compile Include="MetadataDefinitions\AccessLevelSerializationModelEnum.cs" />
+    <Compile Include="MetadataDefinitions\EnumMapper.cs" />
+    <Compile Include="MetadataDefinitions\OverrideSerializationModelEnum.cs" />
+    <Compile Include="MetadataDefinitions\SealedSerializationModelEnum.cs" />
+    <Compile Include="MetadataDefinitions\StaticSerializationModelEnum.cs" />
+    <Compile Include="MetadataDefinitions\TypeTypesSerializationModelEnum.cs" />
+    <Compile Include="MetadataDefinitions\VirtualSerializationModelEnum.cs" />
+    <Compile Include="MetadataExtensions\ReferenceSerializationModelMap.cs" />
+    <Compile Include="MetadataExtensions\UniqueEmitter.cs" />
     <Compile Include="XmlSerialization.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -55,10 +77,6 @@
     <ProjectReference Include="..\Model\Model.csproj">
       <Project>{d985872e-2ffb-4093-a22b-47fe7eca3828}</Project>
       <Name>Model</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\SerializationModel\SerializationModel.csproj">
-      <Project>{20a28368-d9ec-4610-a302-70999950edfb}</Project>
-      <Name>SerializationModel</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

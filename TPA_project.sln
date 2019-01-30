@@ -23,8 +23,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LoggingTest", "LoggingTest\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SerializationTest", "SerializationTest\SerializationTest.csproj", "{606F08A3-4651-48F3-ABA9-AFFA78827E6F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SerializationModel", "SerializationModel\SerializationModel.csproj", "{20A28368-D9EC-4610-A302-70999950EDFB}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "Model\Model.csproj", "{D985872E-2FFB-4093-A22B-47FE7ECA3828}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseSerialization", "DatabaseSerialization\DatabaseSerialization.csproj", "{4E53C5B5-1DFA-44B1-B792-66FBB40F32B6}"
@@ -91,10 +89,6 @@ Global
 		{606F08A3-4651-48F3-ABA9-AFFA78827E6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{606F08A3-4651-48F3-ABA9-AFFA78827E6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{606F08A3-4651-48F3-ABA9-AFFA78827E6F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{20A28368-D9EC-4610-A302-70999950EDFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{20A28368-D9EC-4610-A302-70999950EDFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{20A28368-D9EC-4610-A302-70999950EDFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{20A28368-D9EC-4610-A302-70999950EDFB}.Release|Any CPU.Build.0 = Release|Any CPU
 		{D985872E-2FFB-4093-A22B-47FE7ECA3828}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{D985872E-2FFB-4093-A22B-47FE7ECA3828}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D985872E-2FFB-4093-A22B-47FE7ECA3828}.Release|Any CPU.ActiveCfg = Release|Any CPU

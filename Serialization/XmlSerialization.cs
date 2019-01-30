@@ -4,7 +4,7 @@ using System.Runtime.Serialization;
 using System.Xml;
 using Interfaces;
 using Model.MetadataClasses;
-using SerializationModel.MetadataClasses;
+using Serialization.MetadataClasses;
 
 namespace Serialization
 {

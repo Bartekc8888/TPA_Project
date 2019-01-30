@@ -1,6 +1,6 @@
 using System;
 
-namespace SerializationModel.MetadataDefinitions
+namespace Serialization.MetadataDefinitions
 {
     public class EnumMapper
     {

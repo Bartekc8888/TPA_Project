@@ -4,11 +4,11 @@ using System.Linq;
 using System.Runtime.Serialization;
 using Model.MetadataClasses.Types;
 using Model.MetadataDefinitions;
-using SerializationModel.MetadataClasses.Types.Members;
-using SerializationModel.MetadataDefinitions;
-using SerializationModel.MetadataExtensions;
+using Serialization.MetadataClasses.Types.Members;
+using Serialization.MetadataDefinitions;
+using Serialization.MetadataExtensions;
 
-namespace SerializationModel.MetadataClasses.Types
+namespace Serialization.MetadataClasses.Types
 {
     [DataContract(IsReference = true)]
     public class TypeSerializationModel

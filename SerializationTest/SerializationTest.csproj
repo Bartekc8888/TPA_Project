@@ -65,7 +65,7 @@
       <Name>Model</Name>
     </ProjectReference>
     <ProjectReference Include="..\ReflectionModel\ReflectionModel.csproj">
-      <Project>{35E4E22C-A782-4DF2-A1A0-6812C8119A0A}</Project>
+      <Project>{35e4e22c-a782-4df2-a1a0-6812c8119a0a}</Project>
       <Name>ReflectionModel</Name>
     </ProjectReference>
     <ProjectReference Include="..\Serialization\Serialization.csproj">

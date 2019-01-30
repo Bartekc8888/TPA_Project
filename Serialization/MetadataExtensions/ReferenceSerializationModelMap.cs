@@ -1,9 +1,6 @@
 using System.Collections.Generic;
-using System.Runtime.Serialization;
-using Model.MetadataClasses.Types;
-using SerializationModel.MetadataClasses.Types;
 
-namespace SerializationModel.MetadataExtensions
+namespace Serialization.MetadataExtensions
 {
     public static class ReferenceSerializationModelMap
     {

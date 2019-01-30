@@ -1,9 +1,9 @@
 ﻿using System.Linq;
 using System.Runtime.Serialization;
 using Model.MetadataClasses.Types.Members;
-using SerializationModel.MetadataExtensions;
+using Serialization.MetadataExtensions;
 
-namespace SerializationModel.MetadataClasses.Types.Members
+namespace Serialization.MetadataClasses.Types.Members
 {
     [DataContract(IsReference = true)]
     public class PropertySerializationModel : MemberAbstractSerializationModel

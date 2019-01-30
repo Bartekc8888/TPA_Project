@@ -1,6 +1,6 @@
 using System;
 
-namespace SerializationModel.MetadataExtensions
+namespace Serialization.MetadataExtensions
 {
     
     public static class UniqueEmitter

@@ -3,7 +3,7 @@ using System.Linq;
 using System.Runtime.Serialization;
 using Model.MetadataClasses;
 
-namespace SerializationModel.MetadataClasses
+namespace Serialization.MetadataClasses
 {
     [DataContract(IsReference = true)]
     public class AssemblySerializationModel

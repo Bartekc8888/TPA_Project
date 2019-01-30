@@ -1,7 +1,7 @@
 ﻿
 using System.Runtime.Serialization;
 
-namespace SerializationModel.MetadataDefinitions
+namespace Serialization.MetadataDefinitions
 {
     [DataContract]
     public enum AccessLevelSerializationModelEnum
