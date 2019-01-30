@@ -1,11 +1,10 @@
 ﻿using System;
-using Model.MetadataClasses;
 
 namespace Interfaces
 {
     public interface ISerialization
     {
-        AssemblyModel Read(String path);
-        void Save(AssemblyModel context, String path);
+        Object Read(String path);
+        void Save(Object context, String path);
     }
 }

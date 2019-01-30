@@ -1,5 +1,4 @@
-﻿using CommonServiceLocator;
-using Logging;
+﻿using Logging;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -19,7 +18,7 @@ namespace MEF
         protected ILogging Logger { get; set; }
         protected Object Shell { get; set; }
         protected AggregateCatalog AggregateCatalog { get; set; }
-        protected CompositionContainer Container { get; set; }
+        public CompositionContainer Container { get; set; }
 
 
         public virtual void Run()

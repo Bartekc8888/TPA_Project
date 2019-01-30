@@ -75,11 +75,6 @@
     <Compile Include="ModelRepresentation\Types\ModelViewTypeFactory.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="log4.config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\Interfaces\Interfaces.csproj">
       <Project>{3607551a-815d-41a3-86dd-3354fa425489}</Project>
       <Name>Interfaces</Name>

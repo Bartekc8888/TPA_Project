@@ -12,14 +12,14 @@ namespace Serialization
     [ExportMetadata("Name", "Xml")]
     public class XmlSerialization : ISerialization
     {
-        public void Save(AssemblyModel context, string filePath)
+        public void Save(Object context, string filePath)
         {
             if (string.IsNullOrEmpty(filePath))
             {
                 throw new ArgumentException("File path cannot be empty");
             }
             
-            AssemblySerializationModel assemblySerializationModel = new AssemblySerializationModel(context);
+            AssemblySerializationModel assemblySerializationModel = new AssemblySerializationModel((AssemblyModel)context);
 
             XmlWriterSettings xmlWriterSettings = new XmlWriterSettings { Indent = true };
             DataContractSerializer serializer = new DataContractSerializer(assemblySerializationModel.GetType(), null, int.MaxValue, false, true, null, null);
@@ -29,7 +29,7 @@ namespace Serialization
             }
         }
 
-        AssemblyModel ISerialization.Read(string filePath)
+        Object ISerialization.Read(string filePath)
         {
             if (string.IsNullOrEmpty(filePath))
             {

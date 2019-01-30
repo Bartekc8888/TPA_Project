@@ -14,7 +14,7 @@ namespace DatabaseSerialization
     [Export(typeof(ISerialization))]
     public class DbSerializer : ISerialization
     {
-        public AssemblyModel Read(string path)
+        public Object Read(string path)
         {
             AssemblyModel assembly;
             if (string.IsNullOrEmpty(path))
@@ -37,7 +37,7 @@ namespace DatabaseSerialization
             return assembly;
         }
 
-        public void Save(AssemblyModel context, String path)
+        public void Save(Object context, String path)
         {
             if (string.IsNullOrEmpty(path))
             {
@@ -52,7 +52,7 @@ namespace DatabaseSerialization
                 }
                 ctx.Database.Create();
                 
-                AssemblyDbModel serializationModel = new AssemblyDbModel(context);
+                AssemblyDbModel serializationModel = new AssemblyDbModel((AssemblyModel)context);
                 ctx.AssemblyModels.Add(serializationModel);
                 ctx.SaveChanges();
             }

@@ -16,7 +16,6 @@ namespace ReflectionModel
                 throw new ArgumentNullException();
 
             LoadedAssembly = Assembly.ReflectionOnlyLoadFrom(assemblyFile);
-           // ModelViewTypeFactory.CurrentAssemblyExtractor = this;
             foreach (AssemblyName assemblyName in LoadedAssembly.GetReferencedAssemblies())
             {
                 try

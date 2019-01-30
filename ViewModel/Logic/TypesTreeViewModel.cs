@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading;
 using System.Windows.Input;
 using Interfaces;
+using Model;
 using Model.MetadataClasses;
 using ReflectionModel;
 using ViewModel.ModelRepresentation.Types;
@@ -18,18 +19,17 @@ namespace ViewModel.Logic
     public class TypesTreeViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged = (s, e) => {};
-        //private AssemblyMetadata _assemblyModel;
         private Reflector _reflector;
         private readonly SynchronizationContext _context;
+
+        [Import]
+        private Repository _repository = null;
 
         [Import]
         private IFileChooser _fileChooser = null;
         
         [Import]
         private ILogging _logger = null;
-
-        [Import]
-        private ISerialization _serializer = null;
 
         private ObservableCollection<TypeViewModelAbstract> _items;
         public ObservableCollection<TypeViewModelAbstract> Items
@@ -102,6 +102,7 @@ namespace ViewModel.Logic
             if (!String.IsNullOrEmpty(SelectedPath))
             {
                 _reflector = new Reflector(SelectedPath);
+                _repository._model = _reflector.AssemblyModel.ToModel();
                 
                 TypeViewModelAbstract item = ModelViewTypeFactory.CreateTypeViewClass(_reflector.AssemblyModel);
                 SetNewData(item);
@@ -112,8 +113,10 @@ namespace ViewModel.Logic
         public void SerializeData()
         {
             _logger.Debug("Start serialize data");
+            if (_repository._model == null)
+                return;
 
-            _serializer.Save(_reflector.AssemblyModel.ToModel(), SerializationPath);
+            _repository.Save(SerializationPath);
 
             _logger.Info("End serialize data");
         }
@@ -122,7 +125,8 @@ namespace ViewModel.Logic
         {
             _logger.Debug("Start deserialize data");
 
-            _reflector.AssemblyModel = new AssemblyMetadata(_serializer.Read(SerializationPath));
+            _repository.Read(SerializationPath);
+            _reflector.AssemblyModel = new AssemblyMetadata(_repository._model);
                 
             TypeViewModelAbstract item = ModelViewTypeFactory.CreateTypeViewClass(_reflector.AssemblyModel);
             SetNewData(item);
