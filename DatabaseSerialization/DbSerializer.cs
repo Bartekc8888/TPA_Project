@@ -1,5 +1,6 @@
 ﻿using System;
 using System.ComponentModel.Composition;
+using System.Configuration;
 using System.Data.Entity;
 using System.Data.SqlClient;
 using System.IO;
@@ -11,7 +12,6 @@ using Model.MetadataClasses;
 namespace DatabaseSerialization
 {
     [Export(typeof(ISerialization))]
-    [ExportMetadata("Name", "Database")]
     public class DbSerializer : ISerialization
     {
         public AssemblyModel Read(string path)
@@ -19,8 +19,7 @@ namespace DatabaseSerialization
             AssemblyModel assembly;
             if (string.IsNullOrEmpty(path))
             {
-                path = System.Configuration.ConfigurationManager.ConnectionStrings["FileDatabase"].ConnectionString;
-                path = $@"{path.Replace("|DataDirectory|", (string)AppDomain.CurrentDomain.GetData("DataDirectory"))}";
+                path = GetDbConnectionString();
             }
 
             using (DatabaseContext ctx = new DatabaseContext(path))
@@ -42,8 +41,7 @@ namespace DatabaseSerialization
         {
             if (string.IsNullOrEmpty(path))
             {
-                path = System.Configuration.ConfigurationManager.ConnectionStrings["FileDatabase"].ConnectionString;
-                path = $@"{path.Replace("|DataDirectory|", (string)AppDomain.CurrentDomain.GetData("DataDirectory"))}";
+                path = GetDbConnectionString();
             }
 
             using (DatabaseContext ctx = new DatabaseContext(path))
@@ -58,6 +56,16 @@ namespace DatabaseSerialization
                 ctx.AssemblyModels.Add(serializationModel);
                 ctx.SaveChanges();
             }
+        }
+
+        private string GetDbConnectionString()
+        {
+            string dbPath = ConfigurationManager.AppSettings["modelDb"];
+            dbPath = Path.GetFullPath(dbPath);
+            string path = ConfigurationManager.ConnectionStrings["FileDatabase"].ConnectionString;
+            path = $@"{path.Replace("|DataDirectory|", dbPath)}";
+
+            return path;
         }
     }
 }

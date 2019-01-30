@@ -1,6 +1,7 @@
 ﻿using Interfaces;
 using System;
 using System.ComponentModel.Composition;
+using System.Configuration;
 using System.IO;
 using System.Threading.Tasks;
 
@@ -9,18 +10,30 @@ namespace DatabaseLogging
     [Export(typeof(ILogging))]
     public class DbLogging : ILogging
     {
-        private string path;
+        private string connectionString;
 
         public DbLogging(string path)
         {
-            this.path = path;
+            string dbPath;
+            if (string.IsNullOrEmpty(path))
+            {
+                dbPath = ConfigurationManager.AppSettings["modelDb"];
+                dbPath = Path.GetFullPath(dbPath);
+            }
+            else
+            {
+                dbPath = path;
+            }
+            
+            path = ConfigurationManager.ConnectionStrings["FileDatabase"].ConnectionString;
+            connectionString = $@"{path.Replace("|DataDirectory|", dbPath)}";
         }
         
         private async Task SaveLog(string type, string message)
         {
             await Task.Run(async () =>
              {
-                 using (LoggingDatabaseContext DbContext = new LoggingDatabaseContext(path))
+                 using (LoggingDatabaseContext DbContext = new LoggingDatabaseContext(connectionString))
                  {
                      DbContext.Database.CreateIfNotExists();
                      Log log = new Log

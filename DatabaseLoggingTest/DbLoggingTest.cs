@@ -12,6 +12,7 @@ namespace DatabaseLoggingTest
     public class DbLoggingTest
     {
         private static string dbPath;
+        private static string _connectionString;
 
         [ClassInitialize]
         public static void ClassInitializeMethod(TestContext context)
@@ -20,7 +21,7 @@ namespace DatabaseLoggingTest
             string testingWorkingFolder = Environment.CurrentDirectory;
             var instance = System.Data.Entity.SqlServer.SqlProviderServices.Instance;
             dbPath = Path.Combine(testingWorkingFolder, dbRelativePath);
-            AppDomain.CurrentDomain.SetData("DataDirectory", dbPath);
+            _connectionString = $@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={dbPath};Integrated Security = True;Connect Timeout = 30;";
         }
 
         [TestMethod]
@@ -37,7 +38,7 @@ namespace DatabaseLoggingTest
             }).GetAwaiter().GetResult();
 
             string result1, result2, result3, result4, result5;
-            using (LoggingDatabaseContext DbContext = new LoggingDatabaseContext(dbPath))
+            using (LoggingDatabaseContext DbContext = new LoggingDatabaseContext(_connectionString))
             {
                 result1 = DbContext.Set<Log>().Find(1).Message;
                 result2 = DbContext.Set<Log>().Find(2).Message;

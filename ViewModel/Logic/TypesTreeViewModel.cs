@@ -70,14 +70,7 @@ namespace ViewModel.Logic
         public ICommand DeserializeCommand { get; set; }
 
         public TypesTreeViewModel()
-        {
-            string executable = System.Reflection.Assembly.GetExecutingAssembly().Location;
-            string path = Path.GetDirectoryName(executable);
-            path += @"..\..\..\..\DatabaseSerializationTest\Database\TpaModelDatabase.mdf";
-            path = Path.GetFullPath(path);
-            
-            AppDomain.CurrentDomain.SetData("DataDirectory", path);
-            
+        {            
             _context = SynchronizationContext.Current;
             
             SelectedPath = "";

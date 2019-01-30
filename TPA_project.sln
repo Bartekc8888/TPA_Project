@@ -37,6 +37,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseLogging", "Database
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DatabaseLoggingTest", "DatabaseLoggingTest\DatabaseLoggingTest.csproj", "{57FECBAE-4C0C-4536-9FF5-4313EED2C902}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Databases", "Databases", "{A7A8FCF9-FF26-46F7-8553-7F329CF0C4DB}"
+	ProjectSection(SolutionItems) = preProject
+		Databases\TpaLoggingDatabase.mdf = Databases\TpaLoggingDatabase.mdf
+		Databases\TpaModelDatabase.mdf = Databases\TpaModelDatabase.mdf
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
