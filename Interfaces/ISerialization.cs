@@ -7,6 +7,5 @@ namespace Interfaces
     {
         AssemblyModel Read(String path);
         void Save(AssemblyModel context, String path);
-        string GetName();
     }
 }

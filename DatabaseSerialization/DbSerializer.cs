@@ -59,10 +59,5 @@ namespace DatabaseSerialization
                 ctx.SaveChanges();
             }
         }
-
-        string ISerialization.GetName()
-        {
-            return "Db";
-        }
     }
 }

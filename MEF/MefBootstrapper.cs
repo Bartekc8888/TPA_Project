@@ -2,9 +2,11 @@
 using Logging;
 using System;
 using System.Collections.Generic;
+using System.Collections.Specialized;
 using System.ComponentModel.Composition;
 using System.ComponentModel.Composition.Hosting;
 using System.ComponentModel.Composition.Primitives;
+using System.Configuration;
 using System.IO;
 using System.Reflection;
 using System.Windows;
@@ -49,8 +51,17 @@ namespace MEF
 
         protected virtual AggregateCatalog CreateAggregateCatalog()
         {
-            return new AggregateCatalog(new DirectoryCatalog("."), new DirectoryCatalog(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "*.exe"),
-                new AssemblyCatalog(Assembly.GetExecutingAssembly()));
+            NameValueCollection paths = (NameValueCollection)ConfigurationManager.GetSection("paths");
+            string[] pathsCatalogs = paths.AllKeys;
+            List<DirectoryCatalog> directoryCatalogs = new List<DirectoryCatalog>();
+            foreach (string pathsCatalog in pathsCatalogs)
+            {
+                if (Directory.Exists(pathsCatalog))
+                    directoryCatalogs.Add(new DirectoryCatalog(pathsCatalog));
+            }
+            directoryCatalogs.Add(new DirectoryCatalog(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "*.exe"));
+            
+            return new AggregateCatalog(directoryCatalogs);
         }
 
         protected virtual void RegisterDefaultTypesIfMissing()

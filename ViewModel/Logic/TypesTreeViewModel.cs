@@ -27,8 +27,8 @@ namespace ViewModel.Logic
         [Import]
         private ILogging logger;
 
-        [ImportMany(typeof(ISerialization))]
-        private IEnumerable<ISerialization> _serializer;
+        [Import]
+        private ISerialization _serializer;
         
         private ObservableCollection<TypeViewModelAbstract> _items;
         public ObservableCollection<TypeViewModelAbstract> Items
@@ -117,45 +117,23 @@ namespace ViewModel.Logic
 
         public void SerializeData()
         {
-            if (!String.IsNullOrEmpty(SerializationPath) && _items.Count > 0)
-            {
-                logger.Debug("Start serialize data");
+            logger.Debug("Start serialize data");
 
-                _serializer.First(serialization => serialization.GetName() == "Xml").Save(_assemblyModel.ToModel(), SerializationPath);
+            _serializer.Save(_assemblyModel.ToModel(), SerializationPath);
 
-                logger.Info("End serialize data");
-            }
-            else if (_items.Count > 0)
-            {
-                logger.Debug("Start db serialize data");
-                
-                _serializer.First(serialization => serialization.GetName() == "Db").Save(_assemblyModel.ToModel(), SerializationPath);
-                
-                logger.Info("End db serialize data");
-            }
+            logger.Info("End serialize data");
         }
 
         public void DeserializeData()
         {
-            if (!String.IsNullOrEmpty(SerializationPath))
-            {
-                logger.Debug("Start deserialize data");
+            logger.Debug("Start deserialize data");
 
-                _assemblyModel = new AssemblyMetadata(_serializer.First(serialization => serialization.GetName() == "Xml").Read(SerializationPath));
-
-                logger.Info("End deserialize data");
-            }
-            else
-            {
-                logger.Debug("Start db deserialize data");
+            _assemblyModel = new AssemblyMetadata(_serializer.Read(SerializationPath));
                 
-                _assemblyModel = new AssemblyMetadata(_serializer.First(serialization => serialization.GetName() == "Db").Read(SerializationPath));
-                
-                logger.Info("End db deserialize data");
-            }
-            
             TypeViewModelAbstract item = ModelViewTypeFactory.CreateTypeViewClass(_assemblyModel);
             SetNewData(item);
+
+            logger.Info("End deserialize data");
         }
 
         private void SetNewData(TypeViewModelAbstract item)

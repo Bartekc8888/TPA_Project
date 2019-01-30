@@ -14,6 +14,11 @@ namespace Serialization
     {
         public void Save(AssemblyModel context, string filePath)
         {
+            if (string.IsNullOrEmpty(filePath))
+            {
+                throw new ArgumentException("File path cannot be empty");
+            }
+            
             AssemblySerializationModel assemblySerializationModel = new AssemblySerializationModel(context);
 
             XmlWriterSettings xmlWriterSettings = new XmlWriterSettings { Indent = true };
@@ -26,17 +31,17 @@ namespace Serialization
 
         AssemblyModel ISerialization.Read(string filePath)
         {
+            if (string.IsNullOrEmpty(filePath))
+            {
+                throw new ArgumentException("File path cannot be empty");
+            }
+            
             DataContractSerializer serializer = new DataContractSerializer(typeof(AssemblySerializationModel));
             using (XmlReader xr = XmlReader.Create(filePath))
             {
                 AssemblySerializationModel assemblySerializationModel = (AssemblySerializationModel)serializer.ReadObject(xr);
                 return assemblySerializationModel.ToModel();
             }
-        }
-
-        string ISerialization.GetName()
-        {
-            return "Xml";
         }
     }
 }
