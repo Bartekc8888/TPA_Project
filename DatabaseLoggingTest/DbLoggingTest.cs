@@ -8,6 +8,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 namespace DatabaseLoggingTest
 {
     [TestClass]
+    [DeploymentItem(@"Database\TpaLoggingDatabase.mdf", @"Database")]
     public class DbLoggingTest
     {
         private static string dbPath;
@@ -15,7 +16,7 @@ namespace DatabaseLoggingTest
         [ClassInitialize]
         public static void ClassInitializeMethod(TestContext context)
         {
-            string dbRelativePath = @"Database\TpaModelDatabase.mdf";
+            string dbRelativePath = @"Database\TpaLoggingDatabase.mdf";
             string testingWorkingFolder = Environment.CurrentDirectory;
             var instance = System.Data.Entity.SqlServer.SqlProviderServices.Instance;
             dbPath = Path.Combine(testingWorkingFolder, dbRelativePath);
