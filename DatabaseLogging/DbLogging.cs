@@ -28,6 +28,16 @@ namespace DatabaseLogging
             path = ConfigurationManager.ConnectionStrings["FileDatabase"].ConnectionString;
             connectionString = $@"{path.Replace("|DataDirectory|", dbPath)}";
         }
+
+        public DbLogging()
+        {
+            string dbPath, path;
+            dbPath = ConfigurationManager.AppSettings["modelDb"];
+            dbPath = Path.GetFullPath(dbPath);
+            path = ConfigurationManager.ConnectionStrings["FileDatabase"].ConnectionString;
+            connectionString = $@"{path.Replace("|DataDirectory|", dbPath)}";
+
+        }
         
         private async Task SaveLog(string type, string message)
         {

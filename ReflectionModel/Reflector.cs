@@ -30,6 +30,11 @@ namespace ReflectionModel
             AssemblyModel = new AssemblyMetadata(LoadedAssembly);
         }
 
+        public Reflector()
+        {
+
+        }
+
         public Reflector(Assembly assembly)
         {
             AssemblyModel = new AssemblyMetadata(assembly);

@@ -8,6 +8,7 @@ using System.Linq;
 using System.Threading;
 using System.Windows.Input;
 using Interfaces;
+using MEF;
 using Model;
 using Model.MetadataClasses;
 using ReflectionModel;
@@ -22,14 +23,14 @@ namespace ViewModel.Logic
         private Reflector _reflector;
         private readonly SynchronizationContext _context;
 
-        [Import]
-        private Repository _repository = null;
+        [ImportMany]
+        private MefChooser<Repository> _repository = null;
 
-        [Import]
-        private IFileChooser _fileChooser = null;
+        [ImportMany]
+        private MefChooser<IFileChooser> _fileChooser = null;
         
-        [Import]
-        private ILogging _logger = null;
+        [ImportMany]
+        private MefChooser<ILogging> _logger;
 
         private ObservableCollection<TypeViewModelAbstract> _items;
         public ObservableCollection<TypeViewModelAbstract> Items
@@ -86,15 +87,15 @@ namespace ViewModel.Logic
 
         public bool IsPathValid()
         {
-            _logger.Debug("Check if file path is correct");
+            _logger.Imported().Debug("Check if file path is correct");
             string extension = Path.GetExtension(SelectedPath);
             return File.Exists(SelectedPath) && (extension == ".dll" || extension == ".exe");
         }
 
         public void ChooseFile()
         {
-            SelectedPath = _fileChooser.ChooseFilePath();
-            _logger.Info("File was chosen");
+            SelectedPath = _fileChooser.Imported().ChooseFilePath();
+            _logger.Imported().Info("File was chosen");
         }
 
         public void ExtractData()
@@ -102,36 +103,40 @@ namespace ViewModel.Logic
             if (!String.IsNullOrEmpty(SelectedPath))
             {
                 _reflector = new Reflector(SelectedPath);
-                _repository._model = _reflector.AssemblyModel.ToModel();
+                _repository.Imported()._model = _reflector.AssemblyModel.ToModel();
                 
                 TypeViewModelAbstract item = ModelViewTypeFactory.CreateTypeViewClass(_reflector.AssemblyModel);
                 SetNewData(item);
-                _logger.Info("New data was set");
+                _logger.Imported().Info("New data was set");
             }
         }
 
         public void SerializeData()
         {
-            _logger.Debug("Start serialize data");
-            if (_repository._model == null)
+            _logger.Imported().Debug("Start serialize data");
+            if (_repository.Imported()._model == null)
                 return;
 
-            _repository.Save(SerializationPath);
+            _repository.Imported().Save(SerializationPath);
 
-            _logger.Info("End serialize data");
+            _logger.Imported().Info("End serialize data");
         }
 
         public void DeserializeData()
         {
-            _logger.Debug("Start deserialize data");
+            _logger.Imported().Debug("Start deserialize data");
 
-            _repository.Read(SerializationPath);
-            _reflector.AssemblyModel = new AssemblyMetadata(_repository._model);
+            _repository.Imported().Read(SerializationPath);
+            if(_reflector == null)
+            {
+                _reflector = new Reflector();
+            }
+            _reflector.AssemblyModel = new AssemblyMetadata(_repository.Imported()._model);
                 
             TypeViewModelAbstract item = ModelViewTypeFactory.CreateTypeViewClass(_reflector.AssemblyModel);
             SetNewData(item);
 
-            _logger.Info("End deserialize data");
+            _logger.Imported().Info("End deserialize data");
         }
 
         private void SetNewData(TypeViewModelAbstract item)

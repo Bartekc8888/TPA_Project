@@ -10,12 +10,13 @@ using System.IO;
 using System.Reflection;
 using System.Windows;
 using Interfaces;
+using System.Diagnostics;
+using Model;
 
 namespace MEF
 {
     public abstract class MefBootstrapper
     {
-        protected ILogging Logger { get; set; }
         protected Object Shell { get; set; }
         protected AggregateCatalog AggregateCatalog { get; set; }
         public CompositionContainer Container { get; set; }
@@ -23,10 +24,6 @@ namespace MEF
 
         public virtual void Run()
         {
-            Logger = CreateLogger();
-            if (Logger == null)
-                throw new InvalidOperationException("Null Logger Exception");
-         
             AggregateCatalog = CreateAggregateCatalog();
             RegisterDefaultTypesIfMissing();
             Container = CreateContainer();
@@ -42,12 +39,6 @@ namespace MEF
             OnInitialized();
         }
 
-
-        protected virtual ILogging CreateLogger()
-        {
-            return new FileLogging("fileLogs.txt", "Logging");
-        }
-
         protected virtual AggregateCatalog CreateAggregateCatalog()
         {
             NameValueCollection paths = (NameValueCollection)ConfigurationManager.GetSection("paths");
@@ -59,7 +50,6 @@ namespace MEF
                     directoryCatalogs.Add(new DirectoryCatalog(pathsCatalog));
             }
             directoryCatalogs.Add(new DirectoryCatalog(Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location), "*.exe"));
-            
             return new AggregateCatalog(directoryCatalogs);
         }
 
@@ -91,7 +81,6 @@ namespace MEF
 
         protected virtual void RegisterBootstrapperProvidedTypes()
         {
-            Container.ComposeExportedValue(Logger);
             Container.ComposeExportedValue(AggregateCatalog);
         }
 

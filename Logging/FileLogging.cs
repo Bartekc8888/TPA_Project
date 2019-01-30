@@ -10,10 +10,14 @@ namespace Logging
     {
         private TraceListener listener;
 
-        public FileLogging(string fileName, string instanceName)
+        public FileLogging()
         {
-            listener = new TextWriterTraceListener(fileName, instanceName);
-        }        
+            listener = new TextWriterTraceListener("logs.txt", "TpaLogs");
+        }
+        public FileLogging(string path, string instance)
+        {
+            listener = new TextWriterTraceListener(path, instance);
+        }
 
         public Task Debug(string message)
         {
