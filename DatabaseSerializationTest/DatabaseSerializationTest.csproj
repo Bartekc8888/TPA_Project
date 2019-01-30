@@ -84,10 +84,6 @@
       <Project>{35e4e22c-a782-4df2-a1a0-6812c8119a0a}</Project>
       <Name>ReflectionModel</Name>
     </ProjectReference>
-    <ProjectReference Include="..\ViewModel\ViewModel.csproj">
-      <Project>{7e55f384-f838-4a71-8969-c36dfa1d45ce}</Project>
-      <Name>ViewModel</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Content Include="Database\TPA.ApplicationArchitecture.dll">

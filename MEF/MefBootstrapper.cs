@@ -1,5 +1,4 @@
-﻿using Logging;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
 using System.ComponentModel.Composition;
@@ -8,10 +7,6 @@ using System.ComponentModel.Composition.Primitives;
 using System.Configuration;
 using System.IO;
 using System.Reflection;
-using System.Windows;
-using Interfaces;
-using System.Diagnostics;
-using Model;
 
 namespace MEF
 {

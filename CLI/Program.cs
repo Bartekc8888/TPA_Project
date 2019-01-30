@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.Composition;
-
+﻿
 namespace CLI
 {
     class Program

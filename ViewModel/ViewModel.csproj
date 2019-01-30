@@ -79,10 +79,6 @@
       <Project>{3607551a-815d-41a3-86dd-3354fa425489}</Project>
       <Name>Interfaces</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Logging\Logging.csproj">
-      <Project>{AEDFE307-4793-418A-8E44-6A4AE844810F}</Project>
-      <Name>Logging</Name>
-    </ProjectReference>
     <ProjectReference Include="..\MEF\MEF.csproj">
       <Project>{AC85CC35-E191-404F-9027-36AC753A47B6}</Project>
       <Name>MEF</Name>

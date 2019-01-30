@@ -1,10 +1,8 @@
 using System;
 using System.Data.Entity.SqlServer;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using DatabaseSerialization;
-using DatabaseSerialization.MetadataClasses.Types;
 using Interfaces;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Model.MetadataClasses;
