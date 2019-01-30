@@ -3,7 +3,7 @@ using Model.MetadataClasses;
 using Model.MetadataClasses.Types;
 using Model.MetadataClasses.Types.Members;
 using Model.MetadataDefinitions;
-using ViewModel.ExtractionTools;
+using ReflectionModel;
 using ViewModel.Logic;
 using ViewModel.ModelRepresentation.Types.MethodTypes;
 using ViewModel.ModelRepresentation.Types.ReferenceTypes;
@@ -13,7 +13,7 @@ namespace ViewModel.ModelRepresentation.Types
 {
     public static class ModelViewTypeFactory
     {
-        public static AssemblyExtractor CurrentAssemblyExtractor { get; set; }
+        public static Reflector CurrentAssemblyExtractor { get; set; }
         
         public static TypeViewModelAbstract CreateTypeViewClass(TypeMetadata type, string name = "")
         {

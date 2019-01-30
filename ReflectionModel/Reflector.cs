@@ -2,21 +2,21 @@
 using System.IO;
 using System.Reflection;
 using Model.MetadataClasses;
-using ViewModel.ModelRepresentation.Types;
 
-namespace ViewModel.ExtractionTools
+namespace ReflectionModel
 {
-    public class AssemblyExtractor
+    public class Reflector
     {
         public Assembly LoadedAssembly { get; }
-        
-        public AssemblyExtractor(string assemblyFile)
+        public AssemblyMetadata AssemblyModel { get; set; }
+
+        public Reflector(string assemblyFile)
         {
             if (string.IsNullOrEmpty(assemblyFile))
                 throw new ArgumentNullException();
 
             LoadedAssembly = Assembly.ReflectionOnlyLoadFrom(assemblyFile);
-            ModelViewTypeFactory.CurrentAssemblyExtractor = this;
+           // ModelViewTypeFactory.CurrentAssemblyExtractor = this;
             foreach (AssemblyName assemblyName in LoadedAssembly.GetReferencedAssemblies())
             {
                 try
@@ -31,11 +31,9 @@ namespace ViewModel.ExtractionTools
             AssemblyModel = new AssemblyMetadata(LoadedAssembly);
         }
 
-        public AssemblyExtractor(Assembly assembly)
+        public Reflector(Assembly assembly)
         {
             AssemblyModel = new AssemblyMetadata(assembly);
         }
-
-        public AssemblyMetadata AssemblyModel { get; set; }
     }
 }

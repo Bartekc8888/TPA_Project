@@ -49,7 +49,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ExtractionTools\AssemblyExtractor.cs" />
     <Compile Include="Logic\IFileChooser.cs" />
     <Compile Include="Logic\RelayCommand.cs" />
     <Compile Include="Logic\TypeViewModelAbstract.cs" />

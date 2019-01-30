@@ -3,8 +3,8 @@ using System.Linq;
 using Interfaces;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Model.MetadataClasses;
+using ReflectionModel;
 using Serialization;
-using ViewModel.ExtractionTools;
 
 namespace SerializationTest
 {
@@ -15,7 +15,7 @@ namespace SerializationTest
         public void CheckiIfSerializationWorks()
         {
             ISerialization serializer = new XmlSerialization();
-            AssemblyExtractor ae = new AssemblyExtractor("Database/TPA.ApplicationArchitecture.dll");
+            Reflector ae = new Reflector("Database/TPA.ApplicationArchitecture.dll");
             AssemblyModel am = ae.AssemblyModel.ToModel();
             serializer.Save(am, "serialized.xml");
             AssemblyModel deserialized = serializer.Read("serialized.xml");

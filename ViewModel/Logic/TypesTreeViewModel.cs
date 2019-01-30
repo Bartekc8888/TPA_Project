@@ -9,7 +9,7 @@ using System.Threading;
 using System.Windows.Input;
 using Interfaces;
 using Model.MetadataClasses;
-using ViewModel.ExtractionTools;
+using ReflectionModel;
 using ViewModel.ModelRepresentation.Types;
 
 namespace ViewModel.Logic
@@ -18,7 +18,8 @@ namespace ViewModel.Logic
     public class TypesTreeViewModel : INotifyPropertyChanged
     {
         public event PropertyChangedEventHandler PropertyChanged = (s, e) => {};
-        private AssemblyMetadata _assemblyModel;
+        //private AssemblyMetadata _assemblyModel;
+        private Reflector _reflector;
         private readonly SynchronizationContext _context;
 
         [Import]
@@ -100,9 +101,9 @@ namespace ViewModel.Logic
         {
             if (!String.IsNullOrEmpty(SelectedPath))
             {
-                _assemblyModel = new AssemblyExtractor(SelectedPath).AssemblyModel;
+                _reflector = new Reflector(SelectedPath);
                 
-                TypeViewModelAbstract item = ModelViewTypeFactory.CreateTypeViewClass(_assemblyModel);
+                TypeViewModelAbstract item = ModelViewTypeFactory.CreateTypeViewClass(_reflector.AssemblyModel);
                 SetNewData(item);
                 _logger.Info("New data was set");
             }
@@ -112,7 +113,7 @@ namespace ViewModel.Logic
         {
             _logger.Debug("Start serialize data");
 
-            _serializer.Save(_assemblyModel.ToModel(), SerializationPath);
+            _serializer.Save(_reflector.AssemblyModel.ToModel(), SerializationPath);
 
             _logger.Info("End serialize data");
         }
@@ -121,9 +122,9 @@ namespace ViewModel.Logic
         {
             _logger.Debug("Start deserialize data");
 
-            _assemblyModel = new AssemblyMetadata(_serializer.Read(SerializationPath));
+            _reflector.AssemblyModel = new AssemblyMetadata(_serializer.Read(SerializationPath));
                 
-            TypeViewModelAbstract item = ModelViewTypeFactory.CreateTypeViewClass(_assemblyModel);
+            TypeViewModelAbstract item = ModelViewTypeFactory.CreateTypeViewClass(_reflector.AssemblyModel);
             SetNewData(item);
 
             _logger.Info("End deserialize data");

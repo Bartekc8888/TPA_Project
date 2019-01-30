@@ -11,7 +11,7 @@ using Model.MetadataClasses;
 using Model.MetadataClasses.Types;
 using Model.MetadataClasses.Types.Members;
 using Model.MetadataDefinitions;
-using ViewModel.ExtractionTools;
+using ReflectionModel;
 
 namespace DatabaseSerializationTest
 {
@@ -35,7 +35,7 @@ namespace DatabaseSerializationTest
             Assert.IsTrue(databaseFile.Exists, $"{Environment.CurrentDirectory}");
             _connectionString = $@"Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename={dbPath};Integrated Security = True;Connect Timeout = 30;";
             
-            AssemblyExtractor ae = new AssemblyExtractor(@"Database\TPA.ApplicationArchitecture.dll");
+            Reflector ae = new Reflector(@"Database\TPA.ApplicationArchitecture.dll");
             _assemblyModel = ae.AssemblyModel.ToModel();
             
             ISerialization serialization = new DbSerializer();
